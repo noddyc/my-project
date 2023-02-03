@@ -6,6 +6,8 @@ import axios from 'axios'
 import qs from 'qs'
 import moment from 'moment'
 import {useState, useEffect } from 'react'
+import LeftSideBar from "./LeftSideBar";
+import InfoNavBar from "./InfoNavBar";
 
 const AuctionHist = (props)=>{
     const [isOpen, setIsOpen] = useState(false)
@@ -70,9 +72,9 @@ const AuctionHist = (props)=>{
 
     return (
         <div>
-        <Navbar page={props.page}></Navbar>
+        <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>        
         <div className="flex flex-row navbarSM:flex navbarSM:flex-col">
-            <ProfileBox info={props.info}></ProfileBox>
+            <LeftSideBar></LeftSideBar>
             <div className="body">
                 <div className="displayOption">
                   <label htmlFor="cardbutton">Detailed Display: </label>
@@ -121,6 +123,7 @@ const AuctionHist = (props)=>{
                   </div> )}) : d()
                   }
             </div> 
+            <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
         </div>
     </div>
     );

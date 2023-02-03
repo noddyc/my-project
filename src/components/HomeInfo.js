@@ -9,8 +9,8 @@ const HomeInfo = (props)=>{
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className="flex flex-col w-4/5 border-orange-500 border-solid navbarSM:w-screen">
-            <div className="border-solid border flex flex-col pl-20">
+        <div className="flex flex-col w-11/12 navbarSM:w-screen">
+            <div className="flex flex-col pl-20">
                 <h1>About</h1>
                 <div>Full Name</div>
                 <h5>Burt Macklin</h5>
@@ -23,6 +23,71 @@ const HomeInfo = (props)=>{
                               setIsOpen(true);
                           }}>Change Info</button>
                 </div>
+
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+                <h1>About</h1>
+                <div>Full Name</div>
+                <h5>Burt Macklin</h5>
+                <div>Address</div>
+                <h5>2128 Monroe Ave Apt 4</h5>
+                <div>Phone</div>
+                <h5>217-819-9168</h5>
+
             </div>
 
             <div className="text-center">

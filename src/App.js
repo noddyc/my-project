@@ -4,6 +4,7 @@ import Home from "./components/Home"
 import AuctionHist from "./components/AuctionHist";
 import LiveAuction from "./components/LiveAuction";
 import BidHist from "./components/BidHist";
+import AddAuction from "./components/AddAuction"
 import Navbar from "./components/Navbar"
 import Logout from './components/Logout'
 import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
@@ -14,6 +15,7 @@ import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 
 function App() {
   const [info, setInfo] = useState({})
+  const [toggleInfo, setToggleInfo] = useState("translate-x-full")
   const auth = useAuthUser();
 
   useEffect(()=>{
@@ -46,10 +48,11 @@ function App() {
       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path=''>
-          <Route path="/main" element={<Home info={info} setInfo={setInfo}/>}/>
-          <Route path="/liveauction" element={<LiveAuction info={info} setInfo={setInfo}/>}/>
-          <Route path="/auctionhist" element={<AuctionHist info={info} setInfo={setInfo}/>}/>
-          <Route path="/bidhist" element={<BidHist info={info} setInfo={setInfo}/>}/>
+          <Route path="/main" element={<Home info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+          <Route path="/liveauction" element={<LiveAuction info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+          <Route path="/auctionhist" element={<AuctionHist info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+          <Route path="/bidhist" element={<BidHist info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+          <Route path="/addauction" element={<AddAuction info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
         </Route>
         <Route path='/registration' element={<Registration/>}/>
         <Route path='/logout' element={<Logout/>}/>
