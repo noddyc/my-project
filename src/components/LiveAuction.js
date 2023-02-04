@@ -7,7 +7,6 @@ import {useIsAuthenticated} from 'react-auth-kit';
 import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
-import './LiveAuction.css'
 import moment from 'moment-timezone'
 import Modal from './Modal'
 import ModalInfo from "./ModalInfo";
@@ -15,6 +14,7 @@ import LeftSideBar from "./LeftSideBar";
 import InfoNavBar from "./InfoNavBar";
 import { useTable, usePagination, useSortBy } from 'react-table'
 import { COLUMNS } from './columns'
+import LiveAuctionSection from "./LiveAuctionSection";
 
 
 const BUTTON_WRAPPER_STYLES = {
@@ -130,147 +130,11 @@ const LiveAuction = (props)=>{
     return (
     <div>
       <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
-
-      <div className="border-4 border-orange-900 flex flex-row navbarSM:flex navbarSM:flex-col ">
-            <LeftSideBar></LeftSideBar>
-            <AuctionForm></AuctionForm>
-      </div>
         <div className="flex flex-row navbarSM:flex navbarSM:flex-col">
-            <LeftSideBar></LeftSideBar>
-            <div className="body">
-              <div className="displayOption">
-                  <label htmlFor="cardbutton">Detailed Display: </label>
-                  <input type="checkbox" id="cardbutton" 
-                  onClick={(e)=>{
-                    if(detail ==='false'){
-                      setDetail('true');
-                      console.log(detail)
-                    }else{
-                      setDetail('false');
-                      console.log(detail)
-                    }
-                  }} value={detail}/>
-                </div>
-                 {
-                 detail !=='false' ? display.map((d, index) => {
-                 return (
-                  <div className="card" key={index}>          
-                      <div className="card-header">
-                        <h3>{d.product_name}</h3>
-                        <p>{d.product_description} {d.product_description} {d.product_description} {d.product_description} {d.product_description} {d.product_description} </p>
-                      </div>
-
-                      <div className="card-img">
-                          <img src={require('../assets/card-img.jpeg')} alt="" />
-                      </div>
-
-                    <div className="card-details">
-                        <div className="price">
-                          <p>Total Price:{'\u00A0'}{'\u00A0'}</p>
-                          <strong>${d.product_price}</strong>
-                        </div>
-
-                        <div className="time">
-                          <p><span>Start time: {'\u00A0'}{'\u00A0'}</span>{moment(d.start_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>
-                          <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>
-                        </div>
-
-                        <div className="card-footer">
-                          <button onClick={() => {
-                              setInd(index);
-                              setIsOpen(true);
-                          }}>Join Now</button>
-                        </div>
-                    </div>
-                  </div> )}) :(
-                                  <div>
-                                  <table {...getTableProps()}>
-                                  <thead>
-                                    {headerGroups.map(headerGroup => (
-                                      <tr {...headerGroup.getHeaderGroupProps()}>
-                                        {headerGroup.headers.map(column => (
-                                          <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                              {column.render('Header')}
-                                              <span>
-                                              {column.isSorted
-                                                ? column.isSortedDesc
-                                                  ? <i className="material-icons">arrow_downward</i>
-                                                  : <i className="material-icons">arrow_upward</i>
-                                                : ''}
-                                              </span>
-                                              </th>
-                                        ))}
-                                      </tr>
-                                    ))}
-                                  </thead>
-                                  <tbody {...getTableBodyProps()}>
-                                    {page.map(row => {
-                                      prepareRow(row)
-                                      return (
-                                        <tr {...row.getRowProps()}>
-                                          {row.cells.map(cell => {
-                                            return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                          })}
-                                          <td><button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
-                                                setInd(display[row.id]);
-                                                setIsOpen(true);
-                                              }}>detail</button></td>
-                                        </tr>
-                                      )
-                                    })}
-                                  </tbody>
-                                </table>
-                                <div>
-                                  <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                                    {'<<'}
-                                  </button>{' '}
-                                  <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                                    Previous
-                                  </button>{' '}
-                                  <button onClick={() => nextPage()} disabled={!canNextPage}>
-                                    Next
-                                  </button>{' '}
-                                  <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                                    {'>>'}
-                                  </button>{' '}
-                                  <span>
-                                    Page{' '}
-                                    <strong>
-                                      {pageIndex + 1} of {pageOptions.length}
-                                    </strong>{' '}
-                                  </span>
-                                  <span>
-                                    | Go to page:{' '}
-                                    <input
-                                      type='number'
-                                      defaultValue={pageIndex + 1}
-                                      onChange={e => {
-                                        const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                                        gotoPage(pageNumber)
-                                      }}
-                                      style={{ width: '50px' }}
-                                    />
-                                  </span>{' '}
-                                  <select
-                                    value={pageSize}
-                                    onChange={e => setPageSize(Number(e.target.value))}>
-                                    {[10, 25, 50].map(pageSize => (
-                                      <option key={pageSize} value={pageSize}>
-                                        Show {pageSize}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                </div>
-
-                  )
-                  
-                  }
-            </div>  
-            <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
-            <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind}>
-            </Modal>
+              {/* <LeftSideBar></LeftSideBar> */}
+              <LiveAuctionSection></LiveAuctionSection>
         </div>
+
     </div>
     );
 }

@@ -8,26 +8,45 @@ const InfoNavBar = (props)=>{
 
     return (
         <div className={`flex flex-col items-center h-screen w-80
-        fixed right-0 top-0 bg-white ${props.toggleInfo}
-        border-solid border border-orange-500 text-2xl text-center navbarSM:hidden`}>
-                {/* navbarSM:w-screen navbarSM:text-base navbarSM:h-1/4 pb-8" */}
+        fixed right-0 top-0  ${props.toggleInfo}
+        border-l-2  border-inputColor text-2xl text-center transition-all duration-500 bg-white navbarSM:hidden`}>
+               
+            <div className="flex justify-end w-full"><i style={{cursor:"pointer", display:"block"}} onClick={buttonHandler} className="material-icons">close</i></div>
+            <div className="flex justify-center w-full">
+                <img src={require("../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
+                rounded-full rounded-brtl-xl"></img>
+            </div>
 
-            <div><button style={{cursor:"pointer"}} onClick={buttonHandler}>closed</button></div>
-            <img src={require("../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
-            rounded-full rounded-brtl-xl"></img>
-            <div className="">Username: </div>
-            <h5>{username}</h5>
-            <div className="">Firstname: </div>
-            <h5>{props.info.firstname}</h5>
-            <div className="">Lastname: </div>
-            <h5>{props.info.lastname}</h5>
-            <div className="">Email: </div>
-            <h5>{props.info.email}</h5>
-            <div className="">Timezone: </div>
-            <h5>{Intl.DateTimeFormat().resolvedOptions().timeZone}</h5>
-            <div className="">Address: </div>
-            <h5>{props.info.address}</h5>
+            <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full '>
+                    <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-sm leading-4 text-gray-700 text-left pl-10'>Username</label>
+                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{props.info.username}</h5>
+            </div>
             
+            <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full '>
+                    <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-sm leading-4 text-gray-700 text-left pl-10'>FirstName</label>
+                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{props.info.firstname}</h5>
+            </div>
+            
+            <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full '>
+                    <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-sm leading-4 text-gray-700 text-left pl-10'>LastName</label>
+                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{props.info.lastname}</h5>
+            </div>
+
+        
+            <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full '>
+                    <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-sm leading-4 text-gray-700 text-left pl-10'>Email</label>
+                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{props.info.email}</h5>
+            </div>
+
+            <div className='flex flex-col  justify-center items-start p-0 h-20 gap-2 w-full '>
+                    <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-sm leading-4 text-gray-700 text-left pl-10'>Timezone</label>
+                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{Intl.DateTimeFormat().resolvedOptions().timeZone}</h5>
+            </div>
+
+            <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full '>
+                    <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-sm leading-4 text-gray-700 text-left pl-10'>Address</label>
+                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{props.info.address}</h5>
+            </div>            
         </div>
     );
 }

@@ -1,10 +1,17 @@
-import React from 'react';
+import {React, useState} from 'react';
 
 function AuctionForm(props) {
+    const [name, setName]= useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+
+
     return (
         <div className=' border-2 border-green-900 h-screen w-full flex-col items-center justify-center bg-formColor relative'>
             <div className='border-t-2 border-r-2 border-l-2 border-inputColor w-1/2 absolute left-1/4 top-16  bg-white'>
-                <h1 className='h-24 not-italic font-normal text-center text-[60px] leading-[94px] font-roboto text-gray-700'>Add New Auction</h1></div>
+                <h1 className='h-24 not-italic font-normal text-center text-[60px] leading-[94px] font-roboto text-gray-700'>Create Auction</h1></div>
             <form className='border-b-2 border-r-2 border-l-2 border-inputColor  flex flex-col justify-center items-center p-4 gap-8 w-1/2
             absolute left-1/4 top-40 bg-white'>
                 <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
