@@ -1,100 +1,79 @@
-import Navbar from "./Navbar";
-import ProfileBox from "./ProfileBox";
 import { useRef, useState, useEffect } from "react";
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
-import ModalInfo from "./ModalInfo";
+import moment from "moment";
+import { useAuthUser } from "react-auth-kit";
+import qs from 'qs'
+import axios from 'axios'
 
 const HomeInfo = (props)=>{
+    const [display, setDisplay] = useState({});
     const [isOpen, setIsOpen] = useState(false)
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [lastname, setLastName] = useState("");
+    const [firstname, setFirstName] = useState("");
+    const [adress, setAdress] = useState("");
+    const auth = useAuthUser();
+
+    useEffect(()=>{
+        try{              
+            let data = qs.stringify({
+                'id': auth().id 
+              });
+            let config = {
+            method: 'post',
+            url: 'http://localhost:9001/user/getInfo',
+            headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data : data
+            };
+              
+            axios(config)
+            .then((response) => {
+                let data = response.data;
+                // console.log(data)
+                setDisplay({...display, ...data})
+                console.log(display)
+            })
+        }catch(err){
+            console.log([err.message])
+        }
+    }, [])
 
     return (
-        <div className="flex flex-col w-11/12 navbarSM:w-screen">
-            <div className="flex flex-col pl-20">
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <div className="editButton">
-                <button style={{width:"200px", height:"30px", overflowWrap: "wrap"}} onClick={() => {
-                              setIsOpen(true);
-                          }}>Change Info</button>
-                </div>
+        <div className="border-solid border flex flex-col items-center h-screen w-full
+        border-orange-500 text-2xl text-center navbarSM:w-screen navbarSM:text-base navbarSM:h-1/4 pb-8 pt-8">
+            <div className="border-2 border-inputColor flex flex-col items-start p-0
+                  isolate w-1/2 h-[90%] gap-4 rounded-lg">        
 
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
-                <h1>About</h1>
-                <div>Full Name</div>
-                <h5>Burt Macklin</h5>
-                <div>Address</div>
-                <h5>2128 Monroe Ave Apt 4</h5>
-                <div>Phone</div>
-                <h5>217-819-9168</h5>
+                <div>
+                    <label>Username: </label>
+                    <input className="border-2 border-inputColor " placeholder={display.username}></input>
+                </div>  
 
-            </div>
+                <div>
+                    <label>Email: </label>
+                    <input className="border-2 border-inputColor " placeholder={display.email}></input>
+                </div>  
 
-            <div className="text-center">
-                <span>Next Section</span>
-            </div>
-            <ModalInfo open={isOpen} onClose={() => setIsOpen(false)} d={props.info} setInfo={props.setInfo}>
-            </ModalInfo>
+                <div>
+                    <label>Firstname: </label>
+                    <input className="border-2 border-inputColor " placeholder={display.firstname}></input>
+                </div>  
+
+                <div>
+                    <label>Lastname: </label>
+                    <input className="border-2 border-inputColor " placeholder={display.lastname}></input>
+                </div>  
+
+                <div>
+                    <label>Address: </label>
+                    <input className="border-2 border-inputColor " placeholder={display.address}></input>
+                </div> 
+
+            </div> 
         </div>
         );
 }

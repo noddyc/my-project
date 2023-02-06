@@ -17,7 +17,7 @@ import { COLUMNS } from './columns'
 import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
 
-function LiveAuctionSection(props) {
+function AuctionHistSection(props) {
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false)
@@ -58,7 +58,7 @@ function LiveAuctionSection(props) {
         try{              
           // only display in progress auctions
             let data = qs.stringify({
-                'statues': ['IN_PROGRESS'] 
+                'statues': ['CLOSED','CANCELED','COMPLETED'] 
               }, {arrayFormat:`indices`});
               let config = {
                 method: 'post',
@@ -70,36 +70,13 @@ function LiveAuctionSection(props) {
               };
               axios(config)
               .then((response) => {
-                let data = response.data;
-                setDisplay(data)
-                let arr = [];
-                data.forEach((e, index)=>{
-                    arr.push({  
-                    id: index,
-                    name:e.product_name,
-                    auctioneer:e.ownerId,
-                    closing_time: moment(e.end_time).format("YYYY/MM/DD-HH:MM:SS"),
-                    price: e.product_price,
-                    auction_id: e.id,
-                    description: e.product_description,
-                    slot_0: e.slot_0,
-                    slot_1: e.slot_1,
-                    slot_2: e.slot_2,
-                    slot_3: e.slot_3,
-                    slot_4: e.slot_4,
-                    slot_5: e.slot_5,
-                    slot_6: e.slot_6,
-                    slot_7: e.slot_7,
-                    slot_8: e.slot_8,
-                    slot_9: e.slot_9,
-                    })
-                })
-                setMOCK_DATA(arr);
+                setDisplay(response.data);
               })
+              console.log(display)
         }catch(err){
             console.log([err.message])
         }
-    }, [detectChange])
+    }, [])
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
@@ -255,6 +232,9 @@ function LiveAuctionSection(props) {
                                 console.log(ind)
                             }}>Join Now</button>
                     </div>
+
+                     
+            
                   </div> )}) : (
                             <div className="self-center flex flex-col justify-center items-center absolute top-36">
                                 <table {...getTableProps() }
@@ -311,4 +291,4 @@ function LiveAuctionSection(props) {
             </div>
     );
 }
-export default LiveAuctionSection;
+export default AuctionHistSection;

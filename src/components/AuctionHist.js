@@ -1,24 +1,32 @@
-import ProfileBox from "./ProfileBox";
 import Navbar from "./Navbar";
-import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
+import ProfileBox from "./ProfileBox";
+import { useRef, useState, useEffect, useMemo } from "react";
+import React from 'react';
+import HomeInfo from "./HomeInfo";
+import {useIsAuthenticated} from 'react-auth-kit';
 import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
-import axios from 'axios'
-import qs from 'qs'
-import moment from 'moment'
-import {useState, useEffect } from 'react'
+import axios from 'axios';
+import qs from 'qs';
+import moment from 'moment-timezone'
+import Modal from './Modal'
+import ModalInfo from "./ModalInfo";
 import LeftSideBar from "./LeftSideBar";
 import InfoNavBar from "./InfoNavBar";
+import { useTable, usePagination, useSortBy } from 'react-table'
+import { COLUMNS } from './columns'
+import AuctionHistSection from "./AuctionHistSection";
 
-const AuctionHist = (props)=>{
-    const [isOpen, setIsOpen] = useState(false)
-    const [display, setDisplay] = useState([]);
-    const [ind, setInd] = useState(0);
-    const [detail, setDetail] = useState("false");
 
+const AuctionHist = (props)=>{  
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
-    const obj = useOutletContext();
-    const auth = useAuthUser();
+    const [isOpen, setIsOpen] = useState(false)
+    const [display, setDisplay] = useState([]);
+    const [ind, setInd] = useState({});
+    const [detail, setDetail] = useState("false");
+    const [sortDir, setSortDir] = useState(1);
+
+    const [MOCK_DATA, setMOCK_DATA] = useState([])
 
     function d(){
       let computedArr = display.map((d,index)=>{
@@ -37,19 +45,18 @@ const AuctionHist = (props)=>{
       return <ul style={{margin:'100px'}}>{computedArr}</ul>;
     }
 
-
     useEffect(()=>{
-        if(!isAuthenticated()){
-            navigate('/')
-        }
+      if(!isAuthenticated()){
+          navigate('/')
+      }
     },[])
 
-
+  
     useEffect(()=>{
         try{              
           // only display in progress auctions
             let data = qs.stringify({
-                'statues': ['CLOSED','CANCELED','COMPLETED'] 
+                'statues': ['IN_PROGRESS'] 
               }, {arrayFormat:`indices`});
               let config = {
                 method: 'post',
@@ -61,71 +68,67 @@ const AuctionHist = (props)=>{
               };
               axios(config)
               .then((response) => {
-                setDisplay(response.data);
+                let data = response.data;
+                setDisplay(data)
+                let arr = [];
+                data.forEach((e, index)=>{
+                    arr.push({
+                    id: index,
+                    name:e.product_name,
+                    auctioneer:e.ownerId,
+                    closing_time: moment(e.end_time).format("YYYY/MM/DD-HH:MM:SS"),
+                    price: e.product_price,
+                    })
+                })
+                setMOCK_DATA(arr);
               })
-              console.log(display)
         }catch(err){
             console.log([err.message])
         }
     }, [])
 
+    const columns = useMemo(() => COLUMNS, [])
+    const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
+  
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      footerGroups,
+      rows,
+      page,
+      nextPage,
+      previousPage,
+      canPreviousPage,
+      canNextPage,
+      pageOptions,
+      state,
+      gotoPage,
+      pageCount,
+      setPageSize,
+      prepareRow
+    } = useTable(
+      {
+        columns,
+        data,
+        initialState: { pageIndex: 0 }
+      },
+      useSortBy,
+      usePagination
+    )
+  
+    const { pageIndex, pageSize } = state
+
     return (
-        <div>
-        <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>        
-        <div className="flex flex-row navbarSM:flex navbarSM:flex-col">
+    <div className="h-screen relative">
+      <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
+      <div className="flex flex-row h-[calc(100%-80px)] navbarSM:flex navbarSM:flex-col">
             <LeftSideBar></LeftSideBar>
-            <div className="body">
-                <div className="displayOption">
-                  <label htmlFor="cardbutton">Detailed Display: </label>
-                  <input type="checkbox" id="cardbutton" 
-                  onClick={(e)=>{
-                    if(detail ==='false'){
-                      setDetail('true');
-                      console.log(detail)
-                    }else{
-                      setDetail('false');
-                      console.log(detail)
-                    }
-                  }} value={detail}/>
-                </div>
-                 {
-                 detail !=='false' ? display.map((d, index) => {
-                 return (
-                  <div className="card" key={index}>          
-                      <div className="card-header">
-                        <h3>{d.product_name}</h3>
-                        <p>{d.product_description} {d.product_description} {d.product_description} {d.product_description} {d.product_description} {d.product_description} </p>
-                      </div>
-
-                      <div className="card-img">
-                          <img src={require('../assets/card-img.jpeg')} alt="" />
-                      </div>
-
-                    <div className="card-details">
-                        <div className="price">
-                          <p>Total Price:{'\u00A0'}{'\u00A0'}</p>
-                          <strong>${d.product_price}</strong>
-                        </div>
-
-                        <div className="time">
-                          <p><span>Start time: {'\u00A0'}{'\u00A0'}</span>{moment(d.start_time).format('MM/DD/YYYY HH:mm:ss')}</p>
-                          <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).format('MM/DD/YYYY HH:mm:ss')}</p>
-                        </div>
-
-                        <div className="card-footer">
-                          <button onClick={() => {
-                              setInd(index);
-                              setIsOpen(true);
-                          }}>Join Now</button>
-                        </div>
-                    </div>
-                  </div> )}) : d()
-                  }
-            </div> 
-            <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
-        </div>
+            <AuctionHistSection></AuctionHistSection>
+      </div>
+      <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>
     );
 }
 
-export default AuctionHist;
+export default  AuctionHist;

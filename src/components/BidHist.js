@@ -1,6 +1,6 @@
 import ProfileBox from "./ProfileBox";
 import Navbar from "./Navbar";
-import {useIsAuthenticated} from 'react-auth-kit';
+import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
 import { useEffect, useState } from "react";
 import LeftSideBar from "./LeftSideBar";
@@ -11,6 +11,7 @@ import moment from 'moment';
 import Modal from "./Modal"
 
 const BidHist = (props)=>{
+    const auth = useAuthUser();
     const [isOpen, setIsOpen] = useState(false)
     const [display, setDisplay] = useState([]);
     const [ind, setInd] = useState(0);
@@ -29,7 +30,7 @@ const BidHist = (props)=>{
 
     useEffect(()=>{
         let data = qs.stringify({
-            'userId': '3' 
+            'userId': auth().id 
           });
         let config = {
         method: 'post',
