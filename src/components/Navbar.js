@@ -8,6 +8,7 @@ import {NavLink, Outlet} from 'react-router-dom'
 const Navbar = (props) =>{
     const navigate = useNavigate();
     const [toggle, setToggle] = useState("hidden");
+    const [toggleHeight, setToggleHeight] = useState("");
 
     const navLinkStyles = ({isActive})=>{
         return{
@@ -24,16 +25,16 @@ const Navbar = (props) =>{
         console.log("hello")
         if(toggle==="hidden"){
             setToggle("flex");
-            console.log(toggle)
+            setToggleHeight("h-[250px]")
         }else{
             setToggle("hidden");
-            console.log(toggle)
+            setToggleHeight("");
         }
     }
     
     return(
-        <nav className="flex items-center justify-around relative text-white
-         bg-black navbarSM:flex-col navbarSM:items-start">
+        <nav className={`flex items-center justify-around relative text-white
+         bg-black navbarSM:flex-col navbarSM:items-start navbarSM:${toggleHeight}`}>
             <div className="flex-grow text-2xl my-2 mr-2 ml-4">Website Name</div>
             <a href="#/" onClick={barmenuHandler} className={`hidden flex-col justify-between h-5 absolute top-3 right-4 w-8 navbarSM:flex`}>
                 <span className="bg-white h-1 w-full rounded-2xl"></span>

@@ -136,14 +136,14 @@ const BidHist = (props)=>{
                         }
                   </div>  
                   <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
-                  <Modal open={isOpen} onClose={() => setIsOpen(false)} d={display[ind]}
+                  {/* <Modal open={isOpen} onClose={() => setIsOpen(false)} d={display[ind]}
                                 // product_name={d.product_name} product_description={d.product_description}
                                 // product_price={d.product_price/10} start_time={d.start_time}
                                 // end_time={d.end_time} slots={[d.slot_0, d.slot_1, d.slot_2, d.slot_3
                                 // , d.slot_4, d.slot_5, d.slot_6, d.slot_7, d.slot_8, d.slot_9]}
                                 // auctionId={d}
                                 >
-                  </Modal>
+                  </Modal> */}
               </div>
         </div>
         );

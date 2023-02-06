@@ -10,6 +10,7 @@ export const GlobalFilter = ({ filter, setFilter }) => {
     <span>
       Search:{' '}
       <input
+        className="border-2 border-inputColor" 
         value={value || ''}
         onChange={e => {
           setValue(e.target.value);

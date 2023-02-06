@@ -23,8 +23,10 @@ function LiveAuctionSection(props) {
     const [isOpen, setIsOpen] = useState(false)
     const [display, setDisplay] = useState([]);
     const [ind, setInd] = useState({});
-    const [detail, setDetail] = useState("false");
+    const [detail, setDetail] = useState("true");
     const [sortDir, setSortDir] = useState(1);
+    const [detectChange, setDetectChange] = useState(false);
+    
 
     const [MOCK_DATA, setMOCK_DATA] = useState([])
 
@@ -72,12 +74,24 @@ function LiveAuctionSection(props) {
                 setDisplay(data)
                 let arr = [];
                 data.forEach((e, index)=>{
-                    arr.push({
+                    arr.push({  
                     id: index,
                     name:e.product_name,
                     auctioneer:e.ownerId,
                     closing_time: moment(e.end_time).format("YYYY/MM/DD-HH:MM:SS"),
                     price: e.product_price,
+                    auction_id: e.id,
+                    description: e.product_description,
+                    slot_0: e.slot_0,
+                    slot_1: e.slot_1,
+                    slot_2: e.slot_2,
+                    slot_3: e.slot_3,
+                    slot_4: e.slot_4,
+                    slot_5: e.slot_5,
+                    slot_6: e.slot_6,
+                    slot_7: e.slot_7,
+                    slot_8: e.slot_8,
+                    slot_9: e.slot_9,
                     })
                 })
                 setMOCK_DATA(arr);
@@ -85,7 +99,7 @@ function LiveAuctionSection(props) {
         }catch(err){
             console.log([err.message])
         }
-    }, [])
+    }, [detectChange])
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
@@ -133,31 +147,25 @@ function LiveAuctionSection(props) {
     const { pageIndex, pageSize } = state
 
     return (
-        <div className=' border-2 border-green-900 h-screen w-full flex-col items-center justify-center bg-formColor relative'>
-            {/* <div className='border-2 border-inputColor w-10/12 bg-white
-            flex flex-col items-start p-8 h-5/6 gap-2 
-            absolute left-20 top-16 '> */}
-            <div className='border-2 border-inputColor w-10/12 bg-white
-            flex flex-col items-start p-8 h-5/6 gap-2 
-             '>
-                <div className="mb-8">
-                    <label htmlFor="cardbutton">Detailed Display: </label>
+            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative  navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
+                <div className="mb-8 mt-2 ml-2 absolute top-0 navbarSM:hidden">
+                    <label htmlFor="cardbutton">Table Display: </label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
-                        if(detail ==='false'){
-                        setDetail('true');
-                        console.log(detail)
-                        }else{
+                        if(detail ==='true'){
                         setDetail('false');
-                        console.log(detail)
+                        }else{
+                        setDetail('true');
+
                         }
                     }} value={detail}/>
                 </div>
 
-                <div className="flex-row justify-center items-cente" style={{display : detail !=='false'?"none":""}}>
-                <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} className="border-2 border-inputColor" />
+                <div className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
+                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                 </div>
-                <div className="flex-row justify-center items-center" style={{display : detail !=='false'?"none":""}}>
+
+                <div className=" self-center absolute top-24" style={{display : detail !=='false'?"none":""}}>
                     <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                         {'<<'}
                     </button>{' '}
@@ -179,6 +187,7 @@ function LiveAuctionSection(props) {
                     <span>
                         | Go to page:{' '}
                         <input
+                        className="border-2 border-inputColor"
                         type='number'
                         defaultValue={pageIndex + 1}
                         onChange={e => {
@@ -200,13 +209,13 @@ function LiveAuctionSection(props) {
                 </div>
 
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16">
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16">
                 {
                  detail !=='false' ? display.map((d, index) => {
                  return (
                   <div className="border-2 border-inputColor flex flex-col items-start p-0
                   isolate w-[300px] gap-4 rounded-lg" key={index} >          
-                      <div className=" flex flex-col  w-[300px] h-8 items-center justify-center">
+                      <div className=" flex flex-col  w-[300px] h-8 items-center justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>
                       </div>
 
@@ -216,7 +225,7 @@ function LiveAuctionSection(props) {
 
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-2">
+                      overflow-scroll text-roboto pl-2 pr-2">
                         <p>{d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description}
@@ -239,33 +248,34 @@ function LiveAuctionSection(props) {
 
                      <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
                         <button className="flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg"
-                        onClick={() => {
-                                setInd(index);
+                        onClick={() => {  
+                                setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
+                                  name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
                                 setIsOpen(true);
+                                console.log(ind)
                             }}>Join Now</button>
                     </div>
 
                      
             
                   </div> )}) : (
-                            <div className="h-full w-full flex flex-col items-start pt-4 pl-4">
+                            <div className="self-center flex flex-col justify-center items-center absolute top-36">
                                 <table {...getTableProps() }
-                                   className="flex flex-col items-start h-[758px] p-0 mb-8">
+                                   className="flex flex-col items-start w-11/12">
                                   <thead className="">
                                     {headerGroups.map(headerGroup => (
                                       <tr {...headerGroup.getHeaderGroupProps()}
                                       className="">
                                         {headerGroup.headers.map(column => (
-                                          <th className="max-w-[200px] min-w-[200px] border p-2 border-solid h-10 leading-10" 
+                                          <th className="max-w-[200px] min-w-[200px] border p-2 border-solid max-h-10 min-h-10 " 
                                         
                                           {...column.getHeaderProps(column.getSortByToggleProps())}>
                                               {column.render('Header')} 
-                                              {/* <div>{column.canFilter ? column.render('Filter') : null}</div> */}
                                               <span>
                                               {column.isSorted
                                                 ? column.isSortedDesc
-                                                  ? <i className="material-icons" style={{display:"inline"}}>arrow_downward</i>
-                                                  : <i className="material-icons" style={{display:"inline"}}>arrow_upward</i>
+                                                  ? <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_downward</i>
+                                                  : <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_upward</i>
                                                 : ''}
                                               </span>
                                               </th>
@@ -274,19 +284,20 @@ function LiveAuctionSection(props) {
                                     ))}
                                   </thead>
                                   <tbody className="" {...getTableBodyProps()}>
-                                    {page.map(row => {
+                                    {page.map((row,index) => {
                                       prepareRow(row)
                                       return (
                                         <tr {...row.getRowProps()}>
                                           {row.cells.map(cell => {
-                                            return <td className="max-w-[200px] min-w-[200px] max-h-[50px] min-h-[50px] border p-2 border-solid"
-                                             {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[50px] min-h-[50px] overflow-scroll break-normal">{cell.render('Cell')}</div>
+                                            return <td className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid"
+                                             {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
                                             </td>
                                           })}
-                                          <td className="max-w-[200px] min-w-[200px] max-h-[50px] min-h-[50px] border p-2 border-solid">
-                                            <div className="max-w-[200px] min-w-[200px] max-h-[50px] min-h-[50px] overflow-scroll break-normal">
+                                          <td className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid">
+                                            <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
                                             <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
-                                                setInd(display[row.id]);
+                                                setInd(row);
+                                                console.log(ind)
                                                 setIsOpen(true);
                                               }}>detail</button>
                                               </div></td>
@@ -298,10 +309,9 @@ function LiveAuctionSection(props) {
                             </div>
                   )
                 }
-                
                 </div>
+                <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></Modal>
             </div>
-        </div>
     );
 }
 export default LiveAuctionSection;

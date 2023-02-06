@@ -19,7 +19,6 @@ const AuctionHist = (props)=>{
     const navigate = useNavigate();
     const obj = useOutletContext();
     const auth = useAuthUser();
-    console.log(auth())
 
     function d(){
       let computedArr = display.map((d,index)=>{

@@ -29,7 +29,7 @@ const AddAuction = (props)=>{
 return(
     <div className="flex-col">
         <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
-        <div className="border-4 border-orange-900 flex flex-row navbarSM:flex navbarSM:flex-col ">
+        <div className=" flex flex-row navbarSM:flex navbarSM:flex-col ">
             <LeftSideBar></LeftSideBar>
             <AuctionForm></AuctionForm>
         </div>

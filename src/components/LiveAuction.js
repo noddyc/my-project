@@ -17,14 +17,6 @@ import { COLUMNS } from './columns'
 import LiveAuctionSection from "./LiveAuctionSection";
 
 
-const BUTTON_WRAPPER_STYLES = {
-  position: 'relative',
-  zIndex: 1
-}
-
-// let browserTimeZone = moment.tz(new Date(), new Date().getTimezoneOffset)
-// console.log(browserTimeZone)
-
 const LiveAuction = (props)=>{  
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
@@ -128,13 +120,13 @@ const LiveAuction = (props)=>{
     const { pageIndex, pageSize } = state
 
     return (
-    <div>
+    <div className="h-screen relative">
       <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
-        <div className="flex flex-row navbarSM:flex navbarSM:flex-col">
-              {/* <LeftSideBar></LeftSideBar> */}
-              <LiveAuctionSection></LiveAuctionSection>
-        </div>
-
+      <div className="flex flex-row h-[calc(100%-80px)] navbarSM:flex navbarSM:flex-col">
+            <LeftSideBar></LeftSideBar>
+            <LiveAuctionSection></LiveAuctionSection>
+      </div>
+      <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>
     );
 }
