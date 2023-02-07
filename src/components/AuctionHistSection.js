@@ -3,21 +3,19 @@ import ProfileBox from "./ProfileBox";
 import { useRef, useState, useEffect, useMemo } from "react";
 import React from 'react';
 import HomeInfo from "./HomeInfo";
-import {useIsAuthenticated} from 'react-auth-kit';
+import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment-timezone'
-import Modal from './Modal'
-import ModalInfo from "./ModalInfo";
-import LeftSideBar from "./LeftSideBar";
-import InfoNavBar from "./InfoNavBar";
+import BidModal from './BidModal'
 import { useTable, usePagination, useSortBy,useFilters, useGlobalFilter } from 'react-table'
-import { COLUMNS } from './columns'
+import { COLUMNS } from './auctionhistcolumns'
 import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
 
-function AuctionHistSection(props) {
+function BidHistSection(props) {
+    const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false)
@@ -56,10 +54,11 @@ function AuctionHistSection(props) {
   
     useEffect(()=>{
         try{              
-          // only display in progress auctions
             let data = qs.stringify({
-                'statues': ['CLOSED','CANCELED','COMPLETED'] 
+                'statues': ['CLOSED','CANCELED','COMPLETED'],
+                'ownerId': auth().id,
               }, {arrayFormat:`indices`});
+
               let config = {
                 method: 'post',
                 url: 'http://localhost:9001/auction/displayAuction',
@@ -70,9 +69,16 @@ function AuctionHistSection(props) {
               };
               axios(config)
               .then((response) => {
-                setDisplay(response.data);
+                let data = response.data;
+                let arr = [];
+                data.forEach((e, index)=>{
+                    console.log(e)
+                    arr.push(e)
+                })
+                // console.log(arr);
+                setDisplay(arr)
+                setMOCK_DATA(arr);
               })
-              console.log(display)
         }catch(err){
             console.log([err.message])
         }
@@ -192,7 +198,7 @@ function AuctionHistSection(props) {
                  return (
                   <div className="border-2 border-inputColor flex flex-col items-start p-0
                   isolate w-[300px] gap-4 rounded-lg" key={index} >          
-                      <div className=" flex flex-col  w-[300px] h-8 items-center justify-center overflow-scroll">
+                      <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>
                       </div>
 
@@ -218,23 +224,32 @@ function AuctionHistSection(props) {
                             <strong>${d.product_price}</strong>
                      </div>
 
-                     <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
-                     <p><span>Start time: {'\u00A0'}{'\u00A0'}</span>{moment(d.start_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2">
                         <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>     
                      </div>
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                        <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winnning_number===null?"-":d.winnning_number}</p>     
+                     </div>
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                        <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
+                     </div>
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{d.status}</p>     
+                     </div>
+
 
                      <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
                         <button className="flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg"
                         onClick={() => {  
-                                setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
-                                  name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
+                  
+                                setInd({original: {...d}});
                                 setIsOpen(true);
                                 console.log(ind)
-                            }}>Join Now</button>
+                            }}>Detail</button>
                     </div>
-
-                     
-            
                   </div> )}) : (
                             <div className="self-center flex flex-col justify-center items-center absolute top-36">
                                 <table {...getTableProps() }
@@ -287,8 +302,8 @@ function AuctionHistSection(props) {
                   )
                 }
                 </div>
-                <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></Modal>
+                {/* <AuctionHistModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></AuctionHistModal> */}
             </div>
     );
 }
-export default AuctionHistSection;
+export default BidHistSection;

@@ -3,21 +3,19 @@ import ProfileBox from "./ProfileBox";
 import { useRef, useState, useEffect, useMemo } from "react";
 import React from 'react';
 import HomeInfo from "./HomeInfo";
-import {useIsAuthenticated} from 'react-auth-kit';
+import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment-timezone'
-import Modal from './Modal'
-import ModalInfo from "./ModalInfo";
-import LeftSideBar from "./LeftSideBar";
-import InfoNavBar from "./InfoNavBar";
+import BidModal from './BidModal'
 import { useTable, usePagination, useSortBy,useFilters, useGlobalFilter } from 'react-table'
-import { COLUMNS } from './columns'
+import { COLUMNS } from './bidcolumns'
 import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
 
-function LiveAuctionSection(props) {
+function BidHistSection(props) {
+    const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false)
@@ -56,13 +54,11 @@ function LiveAuctionSection(props) {
   
     useEffect(()=>{
         try{              
-          // only display in progress auctions
             let data = qs.stringify({
-                'statues': ['IN_PROGRESS'] 
-              }, {arrayFormat:`indices`});
+                'userId': auth().id });
               let config = {
                 method: 'post',
-                url: 'http://localhost:9001/auction/displayAuction',
+                url: 'http://localhost:9001/bid/displayBid',
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded', 
                 },
@@ -71,35 +67,27 @@ function LiveAuctionSection(props) {
               axios(config)
               .then((response) => {
                 let data = response.data;
-                setDisplay(data)
                 let arr = [];
                 data.forEach((e, index)=>{
-                    arr.push({  
-                    id: index,
-                    name:e.product_name,
-                    auctioneer:e.ownerId,
-                    closing_time: moment(e.end_time).format("YYYY/MM/DD-HH:MM:SS"),
-                    price: e.product_price,
-                    auction_id: e.id,
-                    description: e.product_description,
-                    slot_0: e.slot_0,
-                    slot_1: e.slot_1,
-                    slot_2: e.slot_2,
-                    slot_3: e.slot_3,
-                    slot_4: e.slot_4,
-                    slot_5: e.slot_5,
-                    slot_6: e.slot_6,
-                    slot_7: e.slot_7,
-                    slot_8: e.slot_8,
-                    slot_9: e.slot_9,
-                    })
+                    console.log(e.Auction)
+                    arr.push({id: e.id, userId:e.userId, slot_number:e.slot_number,
+                    auctionId: e.auctionId, end_time: e.Auction['end_time'],
+                    product_description: e.Auction['product_description'],
+                    product_name: e.Auction['product_name'],
+                    product_price: e.Auction['product_price'], 
+                    slotsOpen: e.Auction['slotsOpen'],
+                    status: e.Auction['status'],
+                    onwerId: e.Auction['ownerId'],
+                    winning_number: e.Auction['winnning_number']===null?"-":e.Auction['winnning_number']})
                 })
+                // console.log(arr);
+                setDisplay(arr)
                 setMOCK_DATA(arr);
               })
         }catch(err){
             console.log([err.message])
         }
-    }, [detectChange])
+    }, [])
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
@@ -241,19 +229,40 @@ function LiveAuctionSection(props) {
                             <strong>${d.product_price}</strong>
                      </div>
 
-                     <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
-                     <p><span>Start time: {'\u00A0'}{'\u00A0'}</span>{moment(d.start_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2">
                         <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>     
                      </div>
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2">
+                        <p><span>Owner: {'\u00A0'}{'\u00A0'}</span>{d.onwerId}</p>     
+                     </div>
+
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                        <p><span>Slot picked: {'\u00A0'}{'\u00A0'}</span>{d.slot_number}</p>     
+                     </div>
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                        <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winning_number}</p>     
+                     </div>
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                        <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
+                     </div>
+
+                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{d.status}</p>     
+                     </div>
+
 
                      <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
                         <button className="flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg"
                         onClick={() => {  
-                                setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
-                                  name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
+                  
+                                setInd({original: {...d}});
                                 setIsOpen(true);
                                 console.log(ind)
-                            }}>Join Now</button>
+                            }}>Detail</button>
                     </div>
                   </div> )}) : (
                             <div className="self-center flex flex-col justify-center items-center absolute top-36">
@@ -307,8 +316,8 @@ function LiveAuctionSection(props) {
                   )
                 }
                 </div>
-                <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></Modal>
+                <BidModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></BidModal>
             </div>
     );
 }
-export default LiveAuctionSection;
+export default BidHistSection;

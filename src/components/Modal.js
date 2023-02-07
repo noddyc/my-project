@@ -95,7 +95,7 @@ export default function Modal(props) {
 
 
                     <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
-                            <p>Total Price{'\u00A0'}{'\u00A0'}</p>
+                            <p>Bid Price{'\u00A0'}{'\u00A0'}</p>
                             <strong>${Math.round(d.price/10*100)/100}</strong>
                      </div>
 
