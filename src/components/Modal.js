@@ -7,6 +7,7 @@ import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-rou
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
 import ConfirmModal from './ConfirmModal';
+import moment from 'moment'
 
 
 const MODAL_STYLES = {

@@ -1,17 +1,11 @@
-import Navbar from "./Navbar";
-import ProfileBox from "./ProfileBox";
 import { useRef, useState, useEffect, useMemo } from "react";
 import React from 'react';
-import HomeInfo from "./HomeInfo";
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
-import moment from 'moment-timezone'
 import Modal from './Modal'
-import ModalInfo from "./ModalInfo";
-import LeftSideBar from "./LeftSideBar";
-import InfoNavBar from "./InfoNavBar";
+import moment from 'moment-timezone'
 import { useTable, usePagination, useSortBy,useFilters, useGlobalFilter } from 'react-table'
 import { COLUMNS } from './columns'
 import { GlobalFilter } from './GlobalFilter'
@@ -39,8 +33,8 @@ function LiveAuctionSection(props) {
           setIsOpen(true);
       }}>
           {d.product_name}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-          {moment(d.start_time).format('MM/DD/YYYY HH:mm:ss')}{'\u00A0'}-
-          {'\u00A0'}{moment(d.end_time).format('MM/DD/YYYY HH:mm:ss')}{'\u00A0'}
+          {d.start_time}{'\u00A0'}-
+          {'\u00A0'}{d.end_time}{'\u00A0'}
           ${d.product_price}
           </li>
       })
@@ -71,7 +65,6 @@ function LiveAuctionSection(props) {
               axios(config)
               .then((response) => {
                 let data = response.data;
-                setDisplay(data)
                 let arr = [];
                 data.forEach((e, index)=>{
                     console.log(e)
@@ -79,7 +72,8 @@ function LiveAuctionSection(props) {
                     id: index,
                     name:e.product_name,
                     auctioneer:e.ownerId,
-                    closing_time: moment(e.end_time).clone().tz(props.info.timezone).format('MM/DD/YYYY HH:mm:ss'),
+                    start_time: new Date().toDateString(),
+                    closing_time: (moment(e.end_time).clone().tz(props.info.timezone))!==undefined? (moment(e.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):"",
                     price: e.product_price,
                     auction_id: e.id,
                     description: e.product_description,
@@ -96,6 +90,7 @@ function LiveAuctionSection(props) {
                     ownerId: e.ownerId
                     })
                 })
+                setDisplay(arr)
                 setMOCK_DATA(arr);
               })
         }catch(err){
@@ -150,7 +145,8 @@ function LiveAuctionSection(props) {
 
     return (
             <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative  navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0 navbarSM:hidden">
+                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Auctions</h1></div>
+                <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
                     <label htmlFor="cardbutton">Table Display: </label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
@@ -163,11 +159,11 @@ function LiveAuctionSection(props) {
                     }} value={detail}/>
                 </div>
 
-                <div className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
+                <div className="flex-row justify-center items-center ml-2 absolute top-32" style={{display : detail !=='false'?"none":""}}>
                   <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                 </div>
 
-                <div className=" self-center absolute top-24" style={{display : detail !=='false'?"none":""}}>
+                <div className=" self-center absolute top-44" style={{display : detail !=='false'?"none":""}}>
                     <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                         {'<<'}
                     </button>{' '}
@@ -211,14 +207,14 @@ function LiveAuctionSection(props) {
                 </div>
 
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16">
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-16">
                 {
                  detail !=='false' ? display.map((d, index) => {
                  return (
                   <div className="border-2 border-inputColor flex flex-col items-start p-0
                   isolate w-[300px] gap-4 rounded-lg" key={index} >          
                       <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
-                        <h3>{d.product_name}</h3>
+                        <h3>{d.name}</h3>
                       </div>
 
                       <div className="max-w-[300px] max-h-[188px] overflow-hidden">
@@ -228,19 +224,13 @@ function LiveAuctionSection(props) {
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
                       overflow-scroll text-roboto pl-2 pr-2">
-                        <p>{d.product_description} {d.product_description} {d.product_description} 
-                        {d.product_description} {d.product_description} {d.product_description} 
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
+                        <p>{d.description} 
                         </p>
                       </div>
                       
                       <div className=" flex flex-col  w-[300px] h-8 pl-2">
                             <p>Total Price{'\u00A0'}{'\u00A0'}</p>
-                            <strong>${d.product_price}</strong>
+                            <strong>${d.price}</strong>
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-8 pl-2">
@@ -249,8 +239,8 @@ function LiveAuctionSection(props) {
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
-                        <p><span>Start time: {'\u00A0'}{'\u00A0'}</span><strong>{moment(d.start_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</strong></p>
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{moment(d.end_time).clone().tz(props.info.timezone).format('MM/DD/YYYY HH:mm:ss')}</strong></p>     
+                        <p><span>Start time: {'\u00A0'}{'\u00A0'}</span><strong>{d.start_time}</strong></p>
+                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{d.closing_time}</strong></p>     
                      </div>
 
                      <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
@@ -263,7 +253,7 @@ function LiveAuctionSection(props) {
                             }}>Join Now</button>
                     </div>
                   </div> )}) : (
-                            <div className="self-center flex flex-col justify-center items-center absolute top-36">
+                            <div className="self-center flex flex-col justify-center items-center mt-24">
                                 <table {...getTableProps() }
                                    className="flex flex-col items-start w-11/12">
                                   <thead className="">
