@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import { useRef, useState, useEffect } from "react";
-import moment from 'moment'
 import axios from 'axios';
 import qs from 'qs'
 import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
+import ConfirmModal from './ConfirmModal';
+
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -15,7 +16,7 @@ const MODAL_STYLES = {
   transform: 'translate(-50%, -50%)',
   backgroundColor: '#FFF',
   padding: '50px',
-  zIndex: 1000
+  zIndex: 500
 }
 
 const OVERLAY_STYLES = {
@@ -25,53 +26,30 @@ const OVERLAY_STYLES = {
   right: 0,
   bottom: 0,
   backgroundColor: 'rgba(0, 0, 0, .05)',
-  zIndex: 1000
+  zIndex: 500
 }
 let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6', 'slot_7','slot_8','slot_9']
+
 
 export default function Modal(props) {
     let d = props.d.original
     console.log(props)
 
-    // const [slot, setSlot] = useState("");
-    const slotRef = useRef();
-    const [errMsg, setErrMsg] = useState("");
-    const [successMsg, setSuccessMsg] = useState("")
-    const auth = useAuthUser();
-    const navigate = useNavigate();
-
-    const handleSubmit= _.debounce(async (e)=>{
-        try{
-            console.log("start")
-            if(slotRef.current.value === ""){
-                throw new Error("No slot is selected");
+    const slotFilled = () => {
+        let count = 0;
+        slotArr.forEach((i, index)=>{
+            if(d[slotArr[index]] === null){
+                count++;
             }
-            let data = qs.stringify({
-              'auctionId': d.auction_id,
-              'userId': auth().id,
-              'pick': slotRef.current.value,
-              'timezone' : 'America/New York'
-            });
-    
-            let config = {
-                method: 'post',
-                url: 'http://localhost:9001/auction/joinAuction',
-                headers: { 
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data : data
-              };
-            axios(config).then((response) => {
-                console.log(JSON.stringify(response.data));
-                props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Joined auction successfully")
-            })
-            setTimeout(()=>{setSuccessMsg(""); props.onClose()}, 500);
-        }catch(err){
-            console.log(err)
-            setErrMsg("Failed to join auction");
-        }
-    }, 800)
+        })
+        return count===0;
+    }
+
+
+    const slotRef = useRef('');
+    const [openConfirm, setOpenConfirm] = useState(false)
+    const auth = useAuthUser();
+
 
     if (!props.open) return null
     return ReactDom.createPortal(
@@ -105,40 +83,45 @@ export default function Modal(props) {
                         <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{d.closing_time}</p>     
                      </div>
 
-                    <div className="flex flex-col  w-[300px] h-8 pl-2 mb-8 navbarSM:w-[180px]">
+                    <div className= {`flex flex-col  w-[300px] h-8 pl-2 mb-8 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
                         <label htmlFor="slots" >Choose an open slot: </label>
-                        <select name="slots" id="slots" className='w-3/4 border-2 border-inputColor' ref={slotRef} onChange={()=>{setErrMsg("");setSuccessMsg("")}}>
-                            <option value="">-</option>
+                        <select name="slots" id="slots" className= {`w-3/4 border-2 border-inputColor`} ref={slotRef}>
+                            <option value=''>-</option>
                             {
+                             (
                                 slotArr.map((i, index)=>{
                                     if(d[slotArr[index]] === null){
                                         return (<option key={index} value={index}>{index}</option>)
                                     }
-                                })
+                                }))
                             } 
                         </select>
                     </div>
 
-                    <div className='w-full navbarSM:w-[180px]'> 
-                        <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
-                    </div>
-
-                    <div className='w-full navbarSM:w-[180px]'> 
-                        <p className={successMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
+                    <div className= {`flex flex-col  w-[300px] h-8 pl-2 mb-8 navbarSM:w-[180px] ${slotFilled()?'':'hidden'}`}>
+                        <span>This auction has no open slots</span>
                     </div>
 
                     <div className="flex flex-row justify-center items-center gap-32 w-[300px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
                         <button className="flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
                         onClick={()=>{
-                            setErrMsg("");
-                            setSuccessMsg("");
                             props.onClose();
                         }}>Close</button>
 
-                        <button className="flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
-                        onClick={handleSubmit}>Submit</button>
+                        <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80 ${slotFilled()?'hidden':''}`}
+                        onClick={()=>{
+                            console.log(slotRef.current.value)
+                            if(slotRef.current.value!==''){
+                                setOpenConfirm(true)
+                            }else{
+                                return;
+                            }
+                            }}>Submit</button>
                     </div>
                 </div>
+                <ConfirmModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} slot={slotRef.current?slotRef.current.value:''}
+                setUpperOnClose = {props.onClose}
+                setDetectChange={props.setDetectChange}></ConfirmModal>
         </div>
         </>,
         document.getElementById('portal')

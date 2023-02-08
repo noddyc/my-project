@@ -1,7 +1,8 @@
-import {React, useState} from 'react';
+import {React, useState, useContext} from 'react';
 import moment from 'moment'
 import axios from 'axios'
 import qs from 'qs'
+import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 
 
 function AuctionForm(props) {
@@ -11,6 +12,8 @@ function AuctionForm(props) {
     const [endTime, setEndTime] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const auth = useAuthUser();
+
 
 
     let priceRegex = /^(?!^0\.00$)(([1-9][\d]{0,6})|([0]))\.[\d]{2}$/;
@@ -20,8 +23,12 @@ function AuctionForm(props) {
         let date1 = new Date();
         const diffTime = date2 - date1;
         return diffTime < (1000 * 60 * 60 * 24)
+    }
 
-
+    const dateConversion = (e)=>{
+        const timeInA = moment.tz(e, props.info.timezone);
+        const timeInB = timeInA.clone().tz('UTC');
+        return timeInB.format();
     }
 
     const handleSubmit= async(e)=>{
@@ -32,11 +39,12 @@ function AuctionForm(props) {
             }
             let obj = {
                 start_time: new Date(),
-                end_time: endTime,
+                end_time: dateConversion(endTime),
                 product_price: price,
                 product_name: name,
                 product_description: description,
                 status: "IN_PROGRESS",
+                ownerId: auth().id,
             }
             let data = qs.stringify(obj);
             let config = {
@@ -91,7 +99,7 @@ function AuctionForm(props) {
 
                 <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
                     <label htmlFor='price' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>Price: </label>
-                    <input id='price' type="number" min="0.00" step="0.01" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 border-2 border-inputColor'
+                    <input id='price' type="number" min="0.01" step="0.01" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 border-2 border-inputColor'
                     value={price} onChange={(e)=>{setErrMsg("");
                     setSuccessMsg("");
                     setPrice(e.target.value)}} placeholder="0.01"/>
@@ -101,7 +109,12 @@ function AuctionForm(props) {
                     <label htmlFor='end_time' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700 '>End Time: </label>
                     <input id='end_time' type="datetime-local" className='w-full 
                     border-2 border-inputColor p-4 h-12 bg-white rounded-lg gap-2' value={endTime}
-                    onChange={(e)=>{setErrMsg("");
+                    onChange={(e)=>{
+                    // const timeInA = moment.tz(e.target.value, 'America/New_York');
+                    // const timeInB = timeInA.clone().tz('UTC');
+                    // console.log(timeInA.format());
+                    // console.log(timeInB.format());
+                    setErrMsg("");
                     setSuccessMsg("");
                     setEndTime(e.target.value)}}/>
                     <h5 className='text-center'><i className="material-icons" style={{display:"inline", fontSize:"1rem"}}>info</i> End time must be 24 hours from current time.</h5>
@@ -121,6 +134,7 @@ function AuctionForm(props) {
                         setDescription("");
                         setPrice("");
                         setEndTime("");
+                        setSuccessMsg("")
                     }}>Cancel</button>
                     <button className='flex flex-col justify-center items-center p-4 w-40 h-12 bg-buttonColor text-white rounded-lg
                      navbarSM:w-20'

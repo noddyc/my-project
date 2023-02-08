@@ -4,7 +4,6 @@ const InfoNavBar = (props)=>{
     const navigate = useNavigate();
     let username = props.info.username === undefined?"   ":
     props.info.username.toUpperCase();
-
     const buttonHandler=()=>{
         props.setToggleInfo("translate-x-full");
     }

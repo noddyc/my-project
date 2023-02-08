@@ -23,7 +23,7 @@ const LiveAuction = (props)=>{
       <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
       <div className="flex flex-row h-[calc(100%-80px)] navbarSM:flex navbarSM:flex-col">
             <LeftSideBar></LeftSideBar>
-            <LiveAuctionSection></LiveAuctionSection>
+            <LiveAuctionSection info={props.info}></LiveAuctionSection>
       </div>
       <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>

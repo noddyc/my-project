@@ -3,7 +3,7 @@ import ProfileBox from "./ProfileBox";
 import { useRef, useState, useEffect, useMemo } from "react";
 import React from 'react';
 import HomeInfo from "./HomeInfo";
-import {useIsAuthenticated} from 'react-auth-kit';
+import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
@@ -18,6 +18,7 @@ import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
 
 function LiveAuctionSection(props) {
+    const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false)
@@ -26,9 +27,8 @@ function LiveAuctionSection(props) {
     const [detail, setDetail] = useState("true");
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
-    
-
-    const [MOCK_DATA, setMOCK_DATA] = useState([])
+    const [MOCK_DATA, setMOCK_DATA] = useState([]);
+  
 
     function d(){
       let computedArr = display.map((d,index)=>{
@@ -74,11 +74,12 @@ function LiveAuctionSection(props) {
                 setDisplay(data)
                 let arr = [];
                 data.forEach((e, index)=>{
+                    console.log(e)
                     arr.push({  
                     id: index,
                     name:e.product_name,
                     auctioneer:e.ownerId,
-                    closing_time: moment(e.end_time).format("YYYY/MM/DD-HH:MM:SS"),
+                    closing_time: moment(e.end_time).clone().tz(props.info.timezone).format('MM/DD/YYYY HH:mm:ss'),
                     price: e.product_price,
                     auction_id: e.id,
                     description: e.product_description,
@@ -92,6 +93,7 @@ function LiveAuctionSection(props) {
                     slot_7: e.slot_7,
                     slot_8: e.slot_8,
                     slot_9: e.slot_9,
+                    ownerId: e.ownerId
                     })
                 })
                 setMOCK_DATA(arr);
@@ -241,13 +243,18 @@ function LiveAuctionSection(props) {
                             <strong>${d.product_price}</strong>
                      </div>
 
+                     <div className=" flex flex-col  w-[300px] h-8 pl-2">
+                            <p>Owner{'\u00A0'}{'\u00A0'}</p>
+                            <strong>{d.ownerId}</strong>
+                     </div>
+
                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
-                     <p><span>Start time: {'\u00A0'}{'\u00A0'}</span>{moment(d.start_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>     
+                        <p><span>Start time: {'\u00A0'}{'\u00A0'}</span><strong>{moment(d.start_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</strong></p>
+                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{moment(d.end_time).clone().tz(props.info.timezone).format('MM/DD/YYYY HH:mm:ss')}</strong></p>     
                      </div>
 
                      <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
-                        <button className="flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg"
+                        <button className={`flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg ${d.ownerId === auth().id ? "invisible":"" }`}
                         onClick={() => {  
                                 setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
                                   name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
@@ -286,11 +293,11 @@ function LiveAuctionSection(props) {
                                       return (
                                         <tr {...row.getRowProps()}>
                                           {row.cells.map(cell => {
-                                            return <td className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid"
+                                            return <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}
                                              {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
                                             </td>
                                           })}
-                                          <td className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid">
+                                          <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}>
                                             <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
                                             <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
                                                 setInd(row);

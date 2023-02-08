@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import InfoNavBar from "./InfoNavBar";
 import ProfileBox from "./ProfileBox";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext} from "react";
 import React from 'react';
 import HomeInfo from "./HomeInfo";
 import LeftSideBar from "./LeftSideBar";
@@ -17,6 +17,7 @@ const AddAuction = (props)=>{
     const navigate = useNavigate();
     const obj = useOutletContext();
     const auth = useAuthUser();
+    console.log(props)
 
 
     useEffect(()=>{
@@ -31,7 +32,7 @@ return(
         <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
         <div className=" flex flex-row navbarSM:flex navbarSM:flex-col ">
             <LeftSideBar></LeftSideBar>
-            <AuctionForm></AuctionForm>
+            <AuctionForm info={props.info}></AuctionForm>
         </div>
         <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>

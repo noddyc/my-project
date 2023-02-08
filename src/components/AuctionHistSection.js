@@ -8,7 +8,7 @@ import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment-timezone'
-import BidModal from './BidModal'
+import AuctionHistModal from './AuctionHistModal'
 import { useTable, usePagination, useSortBy,useFilters, useGlobalFilter } from 'react-table'
 import { COLUMNS } from './auctionhistcolumns'
 import { GlobalFilter } from './GlobalFilter'
@@ -55,7 +55,7 @@ function BidHistSection(props) {
     useEffect(()=>{
         try{              
             let data = qs.stringify({
-                'statues': ['CLOSED','CANCELED','COMPLETED'],
+                'statues': ['CLOSED','CANCELED','COMPLETED','IN_PROGRESS'],
                 'ownerId': auth().id,
               }, {arrayFormat:`indices`});
 
@@ -196,8 +196,8 @@ function BidHistSection(props) {
                 {
                  detail !=='false' ? display.map((d, index) => {
                  return (
-                  <div className="border-2 border-inputColor flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 rounded-lg" key={index} >          
+                  <div className={`border-2 border-inputColor flex flex-col items-start p-0
+                  isolate w-[300px] gap-4 rounded-lg ${d.status==='COMPLETED'?"bg-green-100":""} ${d.status==='CANCELED' || d.status==="CLOSED" ?"bg-red-100":""}`} key={index} >          
                       <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>
                       </div>
@@ -225,7 +225,7 @@ function BidHistSection(props) {
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2">
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('MM/DD/YYYY HH:mm:ss')}</p>     
+                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{moment(d.end_time).clone().tz(props.info.timezone).format('MM/DD/YYYY HH:mm:ss')}</strong></p>     
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
@@ -277,15 +277,16 @@ function BidHistSection(props) {
                                   </thead>
                                   <tbody className="" {...getTableBodyProps()}>
                                     {page.map((row,index) => {
+                                      console.log(index)
                                       prepareRow(row)
                                       return (
                                         <tr {...row.getRowProps()}>
                                           {row.cells.map(cell => {
-                                            return <td className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid"
+                                            return <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}
                                              {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
                                             </td>
                                           })}
-                                          <td className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid">
+                                          <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}>
                                             <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
                                             <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
                                                 setInd(row);
@@ -302,7 +303,7 @@ function BidHistSection(props) {
                   )
                 }
                 </div>
-                {/* <AuctionHistModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></AuctionHistModal> */}
+                <AuctionHistModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></AuctionHistModal>
             </div>
     );
 }

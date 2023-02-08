@@ -26,6 +26,8 @@ export const COLUMNS = [
     Footer: 'closing_time',
     accessor: 'closing_time',
     sticky: 'left',
+    
+    
     sortType:(a,b) => {
         console.log(a.values.closing_time);
         return new moment(a.values.closing_time) - new moment(b.values.closing_time)
