@@ -136,7 +136,8 @@ function BidHistSection(props) {
 
     return (
             <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative  navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0 navbarSM:hidden">
+                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Bid History</h1></div>
+                <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
                     <label htmlFor="cardbutton">Table Display: </label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
@@ -149,11 +150,11 @@ function BidHistSection(props) {
                     }} value={detail}/>
                 </div>
 
-                <div className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
+                <div className="flex-row justify-center items-center ml-2 absolute top-32" style={{display : detail !=='false'?"none":""}}>
                   <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                 </div>
 
-                <div className=" self-center absolute top-24" style={{display : detail !=='false'?"none":""}}>
+                <div className=" self-center absolute top-44" style={{display : detail !=='false'?"none":""}}>
                     <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                         {'<<'}
                     </button>{' '}
@@ -197,7 +198,7 @@ function BidHistSection(props) {
                 </div>
 
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16">
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-16">
                 {
                  detail !=='false' ? display.map((d, index) => {
                   console.log(d)
@@ -266,7 +267,7 @@ function BidHistSection(props) {
                             }}>Detail</button>
                     </div>
                   </div> )}) : (
-                            <div className="self-center flex flex-col justify-center items-center absolute top-36">
+                            <div className="self-center flex flex-col justify-center items-center  mt-24">
                                 <table {...getTableProps() }
                                    className="flex flex-col items-start w-11/12">
                                   <thead className="">

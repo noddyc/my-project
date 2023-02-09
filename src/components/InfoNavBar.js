@@ -42,7 +42,7 @@ const InfoNavBar = (props)=>{
 
             <div className='flex flex-col  justify-center items-start p-0 h-20 gap-2 w-full '>
                     <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-sm leading-4 text-gray-700 text-left pl-10'>Timezone</label>
-                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{Intl.DateTimeFormat().resolvedOptions().timeZone}</h5>
+                    <h5 className="pl-10 not-italic font-semibold text-sm leading-4 text-gray-700">{props.info.timezone}</h5>
             </div>
 
             <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full mb-10'>

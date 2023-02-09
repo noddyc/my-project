@@ -6,6 +6,7 @@ import { useAuthUser } from "react-auth-kit";
 import qs from 'qs'
 import axios from 'axios'
 import {throttle,debounce} from 'lodash'
+import { timezonelist } from "./timezonelist";
 
 
 
@@ -15,6 +16,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 
 const HomeInfo = (props)=>{
+   
     const navigate = useNavigate();
     const [display, setDisplay] = useState({});
     const [username, setUsername] = useState("");
@@ -24,6 +26,7 @@ const HomeInfo = (props)=>{
     const [lastname, setLastName] = useState("");
     const [firstname, setFirstName] = useState("");
     const [address, setAddress] = useState("");
+    const [timezone, setTimeZone] = useState("");
     const auth = useAuthUser();
 
     const count=()=>{
@@ -41,6 +44,9 @@ const HomeInfo = (props)=>{
             count++;
         }
         if(address){
+            count++;
+        }
+        if(timezone){
             count++;
         }
         if(email){
@@ -93,7 +99,7 @@ const HomeInfo = (props)=>{
             axios(config)
             .then((response) => {
                 let data = response.data;
-                // console.log(data)
+                console.log(data)
                 setDisplay({...display, ...data})
                 console.log(display)
             })
@@ -174,12 +180,14 @@ const HomeInfo = (props)=>{
 
     const submitHandler = async(e)=>{
         try{
+            console.log(timezone)
             let data = qs.stringify({
                 'id': auth().id,
                 'username': username,
                 'firstname': firstname,
                 'lastname': lastname,
                 'address': address,
+                'timezone': timezone
               });
               let config = {
                 method: 'post',
@@ -191,6 +199,7 @@ const HomeInfo = (props)=>{
               };
               let resp = await axios(config).then((response)=>{
                     if(response.data[0] === 1){
+                        props.setChange((prev)=>{return !prev})
                         navigate('/', {replace:true});
                     }
                 }
@@ -200,6 +209,11 @@ const HomeInfo = (props)=>{
         }
           
     }
+
+    const handleChange = event => {
+        setTimeZone(event.target.value);
+      };
+
 
     return (
         <div className='h-screen w-full flex-col items-center justify-center relative'>
@@ -244,6 +258,19 @@ const HomeInfo = (props)=>{
                     <label>Address: </label>
                     <input className="border-2 border-inputColor " placeholder={display.address}
                     onChange={(e)=>{setAddress(e.target.value)}}></input>
+                </div>
+
+                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
+                    <label htmlFor="timezone" >Choose an timezone to change: {`(${display.timezone})`} </label>
+                        <select name="timezone" id="timezone" className= {`w-3/4 border-2 border-inputColor`} onChange={handleChange}>
+                            <option value=''>-</option>
+                            {
+                             (
+                                timezonelist.map((i, index)=>{
+                                    return (<option key={index} value={i}>{i}</option>)
+                                }))
+                            } 
+                        </select>
                 </div>
                 
                 <button className={`flex flex-col justify-center items-center p-4 w-40 h-12 bg-buttonColor text-white rounded-lg

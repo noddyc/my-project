@@ -15,6 +15,7 @@ import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 
 function App() {
   const [info, setInfo] = useState({})
+  const [change, setChange] = useState(false)
   const [toggleInfo, setToggleInfo] = useState("translate-x-full")
   const auth = useAuthUser();
 
@@ -41,14 +42,14 @@ function App() {
         console.log(err.message)
     }
 
-  }, [])
+  }, [change])
 
   return (
       <div className="App">
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path=''>
-            <Route path="/main" element={<Home info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            <Route path="/main" element={<Home info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo} setChange={setChange} />}/>
             <Route path="/liveauction" element={<LiveAuction info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
             <Route path="/auctionhist" element={<AuctionHist info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
             <Route path="/bidhist" element={<BidHist info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>

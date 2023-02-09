@@ -30,7 +30,7 @@ return(
         <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
         <div className="flex flex-row navbarSM:flex navbarSM:flex-col">
             <LeftSideBar></LeftSideBar>
-            <HomeInfo info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></HomeInfo>
+            <HomeInfo info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo} setChange={props.setChange}></HomeInfo>
             <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
         </div>
     </div>
