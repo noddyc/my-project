@@ -227,7 +227,8 @@ function BidHistSection(props) {
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2">
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{moment(d.end_time).clone().tz(props.info.timezone).format('MM/DD/YYYY HH:mm:ss')}</strong></p>     
+                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>     
+                        {/* (moment(e.end_time).clone().tz(props.info.timezone))!==undefined? (moment(e.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):"" */}
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
