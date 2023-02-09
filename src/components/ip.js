@@ -1,1 +1,1 @@
-export const ip = "http://52.87.235.156:9001"
+export const ip = "http://localhost:9001/"
