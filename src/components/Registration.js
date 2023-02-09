@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from 'axios';
 import qs from 'qs';
 import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
+import {ip} from './ip'
 
 // regex validate user
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -135,7 +136,7 @@ const Registration = () =>{
     
                 let emailConfig = {
                     method: 'post',
-                    url: 'http://localhost:9001/user/checkDuplicateEmail',
+                    url: `${ip}/user/checkDuplicateEmail`,
                     headers: { 
                       'Content-Type': 'application/x-www-form-urlencoded'
                     },
@@ -160,7 +161,7 @@ const Registration = () =>{
     
                 let usernameConfig = {
                     method: 'post',
-                    url: 'http://localhost:9001/user/checkDuplicateUserName',
+                    url:  `${ip}/user/checkDuplicateUserName`,
                     headers: { 
                       'Content-Type': 'application/x-www-form-urlencoded'
                     },
@@ -188,7 +189,7 @@ const Registration = () =>{
     
                 let config = {
                     method: 'put',
-                    url: 'http://localhost:9001/user/addUser',
+                    url: `${ip}/user/addUser`,
                     headers: { 
                       'Content-Type': 'application/x-www-form-urlencoded'
                     },

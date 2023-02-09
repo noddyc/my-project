@@ -3,6 +3,7 @@ import moment from 'moment'
 import axios from 'axios'
 import qs from 'qs'
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
+import {ip} from './ip'
 
 
 function AuctionForm(props) {
@@ -49,7 +50,7 @@ function AuctionForm(props) {
             let data = qs.stringify(obj);
             let config = {
                 method: 'put',
-                url: 'http://localhost:9001/auction/addAuction',
+                url: `${ip}/auction/addAuction`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },

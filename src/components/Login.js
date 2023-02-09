@@ -3,6 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { useSignIn, useIsAuthenticated} from 'react-auth-kit';
 import {BrowserRouter as Router, useNavigate, Route, Switch} from "react-router-dom"
+import {ip} from './ip'
 
 // regex validate password
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -63,7 +64,7 @@ const Login = (props) =>{
             });
             let config = {
                 method: 'post',
-                url: 'http://localhost:9001/user/loginUser',
+                url: `${ip}/user/loginUser`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },

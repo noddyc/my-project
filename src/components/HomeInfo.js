@@ -7,6 +7,7 @@ import qs from 'qs'
 import axios from 'axios'
 import {throttle,debounce} from 'lodash'
 import { timezonelist } from "./timezonelist";
+import {ip} from './ip'
 
 
 
@@ -89,7 +90,7 @@ const HomeInfo = (props)=>{
               });
             let config = {
             method: 'post',
-            url: 'http://localhost:9001/user/getInfo',
+            url: `${ip}/user/getInfo`,
             headers: { 
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -123,7 +124,7 @@ const HomeInfo = (props)=>{
           });
         let config = {
             method: 'post',
-            url: 'http://localhost:9001/user/checkDuplicateUserName',
+            url: `${ip}/user/checkDuplicateUserName`,
             headers: { 
               'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -154,7 +155,7 @@ const HomeInfo = (props)=>{
           });
         let config = {
             method: 'post',
-            url: 'http://localhost:9001/user/checkDuplicateEmail',
+            url: `${ip}/user/checkDuplicateEmail`,
             headers: { 
               'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -191,7 +192,7 @@ const HomeInfo = (props)=>{
               });
               let config = {
                 method: 'post',
-                url: 'http://localhost:9001/user/updateUser',
+                url: `${ip}/user/updateUser`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },

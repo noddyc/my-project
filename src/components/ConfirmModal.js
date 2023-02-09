@@ -6,6 +6,7 @@ import qs from 'qs'
 import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
+import {ip} from './ip'
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -51,7 +52,7 @@ export default function ConfirmModal(props) {
     
             let config = {
                 method: 'post',
-                url: 'http://localhost:9001/auction/joinAuction',
+                url: `${ip}/auction/joinAuction`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },

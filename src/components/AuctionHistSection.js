@@ -13,6 +13,7 @@ import { useTable, usePagination, useSortBy,useFilters, useGlobalFilter } from '
 import { COLUMNS } from './auctionhistcolumns'
 import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
+import {ip} from './ip'
 
 function BidHistSection(props) {
     const auth = useAuthUser();
@@ -61,7 +62,7 @@ function BidHistSection(props) {
 
               let config = {
                 method: 'post',
-                url: 'http://localhost:9001/auction/displayAuction',
+                url: `${ip}/auction/displayAuction`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded', 
                 },

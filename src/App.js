@@ -11,6 +11,7 @@ import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-rou
 import React, {useState, useEffect, useContext} from 'react'
 import axios from "axios";
 import qs from 'qs';
+import {ip} from './components/ip.js'
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 
 function App() {
@@ -21,12 +22,13 @@ function App() {
 
   useEffect(()=>{
     try{
+        console.log(ip)
         let data = qs.stringify({
             'id': auth().id 
           }); 
         let config = {
             method: 'post',
-            url: 'http://localhost:9001/user/getInfo',
+            url: `${ip}/user/getInfo`,
             headers: { 
               'Content-Type': 'application/x-www-form-urlencoded'
             },
