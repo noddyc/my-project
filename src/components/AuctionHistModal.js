@@ -7,6 +7,7 @@ import qs from 'qs'
 import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
+import ConfirmAuctionHistModal from './ConfirmAuctionHistModal';
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -29,9 +30,12 @@ const OVERLAY_STYLES = {
 }
 let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6', 'slot_7','slot_8','slot_9']
 
-export default function BidModal(props) {
+export default function AuctionHistModal(props) {
     console.log(props)
     let d = props.d.original
+
+    const [openConfirm, setOpenConfirm] = useState(false)
+    const auth = useAuthUser();
 
 
     if (!props.open) return null
@@ -96,8 +100,19 @@ export default function BidModal(props) {
                         onClick={()=>{
                             props.onClose();
                         }}>Close</button>
+
+
+                        <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80 ${d.status ==='IN_PROGRESS' ||
+                        d.status ==='CLOSED'?'':'invisible'}`}
+                        onClick={()=>{
+                                setOpenConfirm(true)
+                              }
+                            }>Cancel</button>
                     </div>
                 </div>
+                <ConfirmAuctionHistModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 
+                setUpperOnClose = {props.onClose}
+                setDetectChange={props.setDetectChange}></ConfirmAuctionHistModal>
         </div>
         </>,
         document.getElementById('portal')

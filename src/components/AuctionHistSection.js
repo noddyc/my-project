@@ -15,7 +15,7 @@ import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
 import {ip} from './ip'
 
-function BidHistSection(props) {
+function AuctionHistSection(props) {
     const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
@@ -83,7 +83,7 @@ function BidHistSection(props) {
         }catch(err){
             console.log([err.message])
         }
-    }, [])
+    }, [detectChange])
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
@@ -306,8 +306,8 @@ function BidHistSection(props) {
                   )
                 }
                 </div>
-                <AuctionHistModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></AuctionHistModal>
+                <AuctionHistModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></AuctionHistModal>
             </div>
     );
 }
-export default BidHistSection;
+export default AuctionHistSection;
