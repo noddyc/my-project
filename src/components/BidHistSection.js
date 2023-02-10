@@ -26,6 +26,7 @@ function BidHistSection(props) {
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
     
+    
 
     const [MOCK_DATA, setMOCK_DATA] = useState([])
 
@@ -88,7 +89,7 @@ function BidHistSection(props) {
         }catch(err){
             console.log([err.message])
         }
-    }, [])
+    }, [detectChange])
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
@@ -321,7 +322,7 @@ function BidHistSection(props) {
                   )
                 }
                 </div>
-                <BidModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></BidModal>
+                <BidModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></BidModal>
             </div>
     );
 }

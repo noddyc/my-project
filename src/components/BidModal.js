@@ -7,6 +7,7 @@ import qs from 'qs'
 import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
+import ConfirmBidModal from './ConfirmBidModal'
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -39,6 +40,7 @@ export default function BidModal(props) {
     const [successMsg, setSuccessMsg] = useState("")
     const auth = useAuthUser();
     const navigate = useNavigate();
+    const [openConfirm, setOpenConfirm] = useState(false)
 
 
     if (!props.open) return null
@@ -95,8 +97,17 @@ export default function BidModal(props) {
                         onClick={()=>{
                             props.onClose();
                         }}>Close</button>
+
+
+                        <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80`}
+                        onClick={()=>{
+                           setOpenConfirm(true)
+                            }}>Withdraw</button>
                     </div>
                 </div>
+                <ConfirmBidModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 
+                setUpperOnClose = {props.onClose}
+                setDetectChange={props.setDetectChange}></ConfirmBidModal>
         </div>
         </>,
         document.getElementById('portal')
