@@ -60,7 +60,7 @@ export default function Modal(props) {
                 <div className="flex flex-col items-start p-0
                   isolate w-[300px] gap-4 navbarSM:w-[180px]">
                     <div className=" flex flex-col  w-[300px] h-8 items-center justify-center overflow-scroll navbarSM:w-[180px]">
-                        <h3>{d.name}</h3>
+                        <h3>{d.product_name}</h3>
                     </div>
 
                     <div className="max-w-[300px] max-h-[188px] overflow-hidden navbarSM:w-[180px]">
@@ -69,19 +69,19 @@ export default function Modal(props) {
 
                     <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
                       overflow-scroll text-roboto pl-2 pr-2 navbarSM:w-[180px]">
-                        <p>Description: {d.description}</p>
+                        <p>Description: {d.product_description}</p>
                     </div>
 
 
                     <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
                             <p>Bid Price{'\u00A0'}{'\u00A0'}</p>
-                            <strong>${Math.round(d.price/10*100)/100}</strong>
+                            <strong>${Math.round(d.product_price/10*100)/100}</strong>
                      </div>
 
 
 
                      <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{d.closing_time}</p>     
+                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</p>     
                      </div>
 
                     <div className= {`flex flex-col  w-[300px] h-8 pl-2 mb-8 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>

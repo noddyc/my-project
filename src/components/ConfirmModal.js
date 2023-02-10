@@ -39,12 +39,12 @@ export default function ConfirmModal(props) {
 
     const submitHandler = _.debounce(async (e)=>{
         try{
-            console.log(props.slot)
+            console.log(props.data)
             if(props.slot === ""){
                 throw new Error("No slot is selected");
             }
             let data = qs.stringify({
-              'auctionId': props.data.auction_id,
+              'auctionId': props.data.id,
               'userId': auth().id,
               'pick': props.slot,
               'timezone' : 'America/New York'
@@ -65,9 +65,9 @@ export default function ConfirmModal(props) {
             }).catch((error) => {
                 console.log("error222")
                 setErrMsg("Failed to join auction");
-                setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 600);
+                setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
               })
-            setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 600);
+            setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }catch(err){
             console.log("here111");
             console.log(err);
@@ -86,7 +86,7 @@ export default function ConfirmModal(props) {
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
                             <h1>Confirm Bid Detail: {'\u00A0'}{'\u00A0'}</h1>
                             <p>Product Name <strong>{props.data.product_name}</strong></p>
-                            <p>Bid Price  <strong>${Math.round(props.data.price/10*100)/100}</strong></p>
+                            <p>Bid Price  <strong>${Math.round(props.data.product_price/10*100)/100}</strong></p>
                             <p>Slot Picked <strong>{props.slot}</strong></p>
                      </div>
 

@@ -3,6 +3,7 @@ import moment from 'moment'
 import axios from 'axios'
 import qs from 'qs'
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
+import { useNavigate} from "react-router-dom"
 import {ip} from './ip'
 
 
@@ -14,6 +15,7 @@ function AuctionForm(props) {
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const auth = useAuthUser();
+    const navigate = useNavigate();
 
 
 
@@ -39,7 +41,7 @@ function AuctionForm(props) {
                 throw new Error("Fields must be valid or end time must be 24 hours from current time");
             }
             let obj = {
-                start_time: new Date(),
+                start_time: dateConversion(new Date()),
                 end_time: dateConversion(endTime),
                 product_price: price,
                 product_name: name,
@@ -60,6 +62,13 @@ function AuctionForm(props) {
                 (response)=>{
                     console.log(JSON.stringify(response.data))
                     setSuccessMsg("Auction created successfully")
+                    setTimeout(()=>{
+                        setName("")
+                        setDescription("")
+                        setPrice("")
+                        setEndTime("")
+                        setSuccessMsg("")
+                    },1000);
                 }
             ).catch(()=>{
                 setErrMsg("Failed to add auction");
@@ -115,6 +124,7 @@ function AuctionForm(props) {
                     // const timeInB = timeInA.clone().tz('UTC');
                     // console.log(timeInA.format());
                     // console.log(timeInB.format());
+                    console.log(e.target.value)
                     setErrMsg("");
                     setSuccessMsg("");
                     setEndTime(e.target.value)}}/>

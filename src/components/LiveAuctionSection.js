@@ -69,27 +69,28 @@ function LiveAuctionSection(props) {
                 let arr = [];
                 data.forEach((e, index)=>{
                     console.log(e)
-                    arr.push({  
-                    id: index,
-                    name:e.product_name,
-                    auctioneer:e.ownerId,
-                    start_time: new Date().toDateString(),
-                    closing_time: (moment(e.end_time).clone().tz(props.info.timezone))!==undefined? (moment(e.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):"",
-                    price: e.product_price,
-                    auction_id: e.id,
-                    description: e.product_description,
-                    slot_0: e.slot_0,
-                    slot_1: e.slot_1,
-                    slot_2: e.slot_2,
-                    slot_3: e.slot_3,
-                    slot_4: e.slot_4,
-                    slot_5: e.slot_5,
-                    slot_6: e.slot_6,
-                    slot_7: e.slot_7,
-                    slot_8: e.slot_8,
-                    slot_9: e.slot_9,
-                    ownerId: e.ownerId
-                    })
+                    arr.push(e)
+                    // arr.push({  
+                    // id: index,
+                    // name:e.product_name,
+                    // auctioneer:e.ownerId,
+                    // start_time: new Date().toDateString(),
+                    // closing_time: (moment(e.end_time).clone().tz(props.info.timezone))!==undefined? (moment(e.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):"",
+                    // price: e.product_price,
+                    // auction_id: e.id,
+                    // description: e.product_description,
+                    // slot_0: e.slot_0,
+                    // slot_1: e.slot_1,
+                    // slot_2: e.slot_2,
+                    // slot_3: e.slot_3,
+                    // slot_4: e.slot_4,
+                    // slot_5: e.slot_5,
+                    // slot_6: e.slot_6,
+                    // slot_7: e.slot_7,
+                    // slot_8: e.slot_8,
+                    // slot_9: e.slot_9,
+                    // ownerId: e.ownerId
+                    // })
                 })
                 setDisplay(arr)
                 setMOCK_DATA(arr);
@@ -215,7 +216,7 @@ function LiveAuctionSection(props) {
                   <div className="border-2 border-inputColor flex flex-col items-start p-0
                   isolate w-[300px] gap-4 rounded-lg" key={index} >          
                       <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
-                        <h3>{d.name}</h3>
+                        <h3>{d.product_name}</h3>
                       </div>
 
                       <div className="max-w-[300px] max-h-[188px] overflow-hidden">
@@ -225,13 +226,13 @@ function LiveAuctionSection(props) {
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
                       overflow-scroll text-roboto pl-2 pr-2">
-                        <p>{d.description} 
+                        <p>{d.product_description} 
                         </p>
                       </div>
                       
                       <div className=" flex flex-col  w-[300px] h-8 pl-2">
                             <p>Total Price{'\u00A0'}{'\u00A0'}</p>
-                            <strong>${d.price}</strong>
+                            <strong>${d.product_price}</strong>
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-8 pl-2">
@@ -240,15 +241,17 @@ function LiveAuctionSection(props) {
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
-                        <p><span>Start time: {'\u00A0'}{'\u00A0'}</span><strong>{d.start_time}</strong></p>
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{d.closing_time}</strong></p>     
+                        <p><span>Start time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.start_time).clone().tz(props.info.timezone))!==undefined? (moment(d.start_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>
+                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>     
                      </div>
 
                      <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
                         <button className={`flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg ${d.ownerId === auth().id ? "invisible":"" }`}
                         onClick={() => {  
-                                setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
-                                  name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
+                                console.log(display[index])
+                                // setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
+                                //   name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
+                                setInd({original:{...display[index]}});
                                 setIsOpen(true);
                                 console.log(ind)
                             }}>Join Now</button>
@@ -305,7 +308,7 @@ function LiveAuctionSection(props) {
                   )
                 }
                 </div>
-                <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange}></Modal>
+                <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></Modal>
             </div>
     );
 }
