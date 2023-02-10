@@ -12,10 +12,15 @@ function LeftSideBar(props) {
     }
     
     return (
-        <div className='flex flex-col w-24 justify-start bg-slate-300 h-screen pt-10 fixed top-0 bottom-0 z-50 opacity-0 hover:opacity-100
+        <div className='flex flex-col w-24 justify-start bg-slate-300 h-screen pt-10 fixed top-0 bottom-0 z-50
         navbarSM:hidden'>
         {/* // <div className='border-4 border-red-900 w-24 justify-start bg-slate-300 h-screen pt-10 fixed top-0 bottom-0 flex flex-col items-center navbarSM:hidden'> */}
             <div className=''>
+                <div className='flex flex-col justify-center items-center h-20 mb-10'>
+                    {/* <i className="material-icons">home</i> */}
+                    <div className='flex-col justify-center items-center'><span className='text-center table'>Auction Website</span><br/></div>
+                </div>
+
                 <NavLink className='flex flex-col justify-center items-center h-20 mb-10' style={navLinkStyles} to='/main'>
                     <i className="material-icons">home</i>
                     <div className='flex-col justify-center items-center'><span className='text-center table'>Home</span><br/></div>
