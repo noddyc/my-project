@@ -12,21 +12,23 @@ export const COLUMNS = [
   {
     Header: 'Name',
     Footer: 'name',
-    accessor: 'name',
+    accessor: 'product_name',
     sticky: 'left'
   },
   {
     Header: 'Auctioneer',
     Footer: 'auctioneer',
-    accessor: 'auctioneer',
+    accessor: 'ownerId',
     sticky: 'left'
   },
   {
     Header: 'Closing Time',
     Footer: 'closing_time',
-    accessor: 'closing_time',
+    accessor: 'end_time',
     sticky: 'left',
-    
+    Cell:(row)=>{
+      return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
+    },
     
     sortType:(a,b) => {
         console.log(a.values.closing_time);
@@ -36,7 +38,7 @@ export const COLUMNS = [
   {
     Header: 'Price',
     Footer: 'price',
-    accessor: 'price',
+    accessor: 'product_price',
     sticky: 'left'
   },
 ]

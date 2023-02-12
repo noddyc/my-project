@@ -152,53 +152,6 @@ function BidHistSection(props) {
                     }} value={detail}/>
                 </div>
 
-                <div className="flex-row justify-center items-center ml-2 absolute top-32" style={{display : detail !=='false'?"none":""}}>
-                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-                </div>
-
-                <div className=" self-center absolute top-44" style={{display : detail !=='false'?"none":""}}>
-                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                        {'<<'}
-                    </button>{' '}
-                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                        Previous
-                    </button>{' '}
-                    <button onClick={() => nextPage()} disabled={!canNextPage}>
-                        Next
-                    </button>{' '}
-                    <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                        {'>>'}
-                    </button>{' '}
-                    <span>
-                        Page{' '}
-                        <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                        </strong>{' '}
-                    </span>
-                    <span>
-                        | Go to page:{' '}
-                        <input
-                        className="border-2 border-inputColor"
-                        type='number'
-                        defaultValue={pageIndex + 1}
-                        onChange={e => {
-                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                            gotoPage(pageNumber)
-                        }}
-                        style={{ width: '50px' }}
-                        />
-                    </span>{' '}
-                    <select
-                        value={pageSize}
-                        onChange={e => setPageSize(Number(e.target.value))}>
-                        {[10, 25, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                        ))}
-                    </select>
-                </div>
-
 
                 <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-16">
                 {
@@ -272,8 +225,55 @@ function BidHistSection(props) {
                     </div>
                   </div> )}) : (
                             <div className="self-center flex flex-col justify-center items-center  mt-24">
+                                <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
+                                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+                                </div>
+
+                                <div id="buttonNot" className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
+                                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                                        {'<<'}
+                                    </button>{' '}
+                                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                                        Previous
+                                    </button>{' '}
+                                    <button onClick={() => {console.log("hello I clicked");
+                                      nextPage()}} disabled={!canNextPage}>
+                                        Next
+                                    </button>{' '}
+                                    <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                                        {'>>'}
+                                    </button>{' '}
+                                    <span>
+                                        Page{' '}
+                                        <strong>
+                                        {pageIndex + 1} of {pageOptions.length}
+                                        </strong>{' '}
+                                    </span>
+                                    <span>
+                                        | Go to page:{' '}
+                                        <input
+                                        className="border-2 border-inputColor"
+                                        type='number'
+                                        defaultValue={pageIndex + 1}
+                                        onChange={e => {
+                                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
+                                            gotoPage(pageNumber)
+                                        }}
+                                        style={{ width: '50px' }}
+                                        />
+                                    </span>{' '}
+                                    <select
+                                        value={pageSize}
+                                        onChange={e => setPageSize(Number(e.target.value))}>
+                                        {[10, 25, 50].map(pageSize => (
+                                        <option key={pageSize} value={pageSize}>
+                                            Show {pageSize}
+                                        </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <table {...getTableProps() }
-                                   className="flex flex-col items-start w-11/12">
+                                   className="flex flex-col items-start w-11/12 mt-4">
                                   <thead className="">
                                     {headerGroups.map(headerGroup => (
                                       <tr {...headerGroup.getHeaderGroupProps()}
