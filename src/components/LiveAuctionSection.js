@@ -70,27 +70,6 @@ function LiveAuctionSection(props) {
                 data.forEach((e, index)=>{
                     console.log(e)
                     arr.push(e)
-                    // arr.push({  
-                    // id: index,
-                    // name:e.product_name,
-                    // auctioneer:e.ownerId,
-                    // start_time: new Date().toDateString(),
-                    // closing_time: (moment(e.end_time).clone().tz(props.info.timezone))!==undefined? (moment(e.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):"",
-                    // price: e.product_price,
-                    // auction_id: e.id,
-                    // description: e.product_description,
-                    // slot_0: e.slot_0,
-                    // slot_1: e.slot_1,
-                    // slot_2: e.slot_2,
-                    // slot_3: e.slot_3,
-                    // slot_4: e.slot_4,
-                    // slot_5: e.slot_5,
-                    // slot_6: e.slot_6,
-                    // slot_7: e.slot_7,
-                    // slot_8: e.slot_8,
-                    // slot_9: e.slot_9,
-                    // ownerId: e.ownerId
-                    // })
                 })
                 setDisplay(arr)
                 setMOCK_DATA(arr);
