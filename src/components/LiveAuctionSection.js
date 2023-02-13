@@ -11,6 +11,7 @@ import { COLUMNS } from './columns'
 import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
 import {ip} from './ip'
+import {throttle,debounce} from 'lodash'
 
 function LiveAuctionSection(props) {
     const auth = useAuthUser();
@@ -23,24 +24,30 @@ function LiveAuctionSection(props) {
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
     const [MOCK_DATA, setMOCK_DATA] = useState([]);
+
+    const [keyword, setKeyWord] = useState("");
+
+    const keywordHandler = debounce((e)=>{
+      setKeyWord(e.target.value)
+    }, 1000)
   
 
-    function d(){
-      let computedArr = display.map((d,index)=>{
-        return <li key={index} style={{marginBottom:"10px", 
-        border:"1px solid black", padding:"10px", cursor:"pointer",
-        borderRadius: '10px'}} onClick={() => {
-          setInd(index);
-          setIsOpen(true);
-      }}>
-          {d.product_name}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-          {d.start_time}{'\u00A0'}-
-          {'\u00A0'}{d.end_time}{'\u00A0'}
-          ${d.product_price}
-          </li>
-      })
-      return <ul style={{margin:'100px'}}>{computedArr}</ul>;
-    }
+    // function d(){
+    //   let computedArr = display.map((d,index)=>{
+    //     return <li key={index} style={{marginBottom:"10px", 
+    //     border:"1px solid black", padding:"10px", cursor:"pointer",
+    //     borderRadius: '10px'}} onClick={() => {
+    //       setInd(index);
+    //       setIsOpen(true);
+    //   }}>
+    //       {d.product_name}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+    //       {d.start_time}{'\u00A0'}-
+    //       {'\u00A0'}{d.end_time}{'\u00A0'}
+    //       ${d.product_price}
+    //       </li>
+    //   })
+    //   return <ul style={{margin:'100px'}}>{computedArr}</ul>;
+    // }
 
     useEffect(()=>{
       if(!isAuthenticated()){
@@ -67,7 +74,18 @@ function LiveAuctionSection(props) {
               .then((response) => {
                 let data = response.data;
                 let arr = [];
-                data.forEach((e, index)=>{
+                data.filter((e)=>{
+                  if(keyword === ""){
+                    return true;
+                  }
+                  for(let props in e){
+                    if(typeof JSON.stringify(e[props]) === 'string' && JSON.stringify(e[props]).toLowerCase().includes(keyword.toLowerCase())){
+                      return true;
+                    }
+                  }
+                  return false;
+
+                }).forEach((e, index)=>{
                     console.log(e)
                     arr.push(e)
                 })
@@ -77,7 +95,7 @@ function LiveAuctionSection(props) {
         }catch(err){
             console.log([err.message])
         }
-    }, [detectChange])
+    }, [detectChange, keyword])
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
@@ -128,7 +146,7 @@ function LiveAuctionSection(props) {
             <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative  navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
                 <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Auctions</h1></div>
                 <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
-                    <label htmlFor="cardbutton">Table Display: </label>
+                    <label htmlFor="cardbutton">Table Display:</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
                         if(detail ==='true'){
@@ -140,17 +158,23 @@ function LiveAuctionSection(props) {
                     }} value={detail}/>
                 </div>
 
+                <div className={`mt-2 ml-2 absolute top-24 gap-2 ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
+                  <label>Search: </label>
+                  <input className="border-2 border-inputColor" placeholder="Enter keyword" onChange={keywordHandler}></input>
+                </div>
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-16">
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-24">
+
                 {
                  detail !=='false' ? display.map((d, index) => {
                  return (
+
+
                   <div className="border-2 border-inputColor flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 rounded-lg" key={index} >          
+                  isolate w-[300px] gap-4 rounded-lg" key={index} >  
                       <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>
                       </div>
-
                       <div className="max-w-[300px] max-h-[188px] overflow-hidden">
                           <img className="object-center" src={require('../assets/card-img.jpeg')} alt="" />
                       </div>
@@ -189,7 +213,7 @@ function LiveAuctionSection(props) {
                             }}>Join Now</button>
                     </div>
                   </div> )}) : (
-                            <div className="self-center flex flex-col justify-center items-center mt-24">
+                            <div className="self-center flex flex-col justify-center items-center mt-24 ">
                                  <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
                                   <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                                 </div>
@@ -238,7 +262,7 @@ function LiveAuctionSection(props) {
                                     </select>
                                 </div>
                                 <table {...getTableProps() }
-                                   className="flex flex-col items-start w-11/12 mt-4">
+                                   className="flex flex-col items-start w-11/12 mt-8">
                                   <thead className="">
                                     {headerGroups.map(headerGroup => (
                                       <tr {...headerGroup.getHeaderGroupProps()}

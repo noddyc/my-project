@@ -14,6 +14,7 @@ import { COLUMNS } from './bidcolumns'
 import { GlobalFilter } from './GlobalFilter'
 import { ColumnFilter } from './ColumnFilter'
 import {ip} from './ip'
+import {throttle,debounce} from 'lodash'
 
 function BidHistSection(props) {
     const auth = useAuthUser();
@@ -29,6 +30,12 @@ function BidHistSection(props) {
     
 
     const [MOCK_DATA, setMOCK_DATA] = useState([])
+
+    const [keyword, setKeyWord] = useState("");
+
+    const keywordHandler = debounce((e)=>{
+      setKeyWord(e.target.value)
+    }, 1000)
 
     function d(){
       let computedArr = display.map((d,index)=>{
@@ -153,7 +160,13 @@ function BidHistSection(props) {
                 </div>
 
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-16">
+                <div className={`mt-2 ml-2 absolute top-24 gap-2 ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
+                  <label>Search: </label>
+                  <input className="border-2 border-inputColor" placeholder="Enter keyword" onChange={keywordHandler}></input>
+                </div>
+
+
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-24">
                 {
                  detail !=='false' ? display.map((d, index) => {
                   console.log(d)
@@ -273,7 +286,7 @@ function BidHistSection(props) {
                                     </select>
                                 </div>
                                 <table {...getTableProps() }
-                                   className="flex flex-col items-start w-11/12 mt-4">
+                                   className="flex flex-col items-start w-11/12 mt-8">
                                   <thead className="">
                                     {headerGroups.map(headerGroup => (
                                       <tr {...headerGroup.getHeaderGroupProps()}
