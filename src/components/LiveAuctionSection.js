@@ -29,7 +29,7 @@ function LiveAuctionSection(props) {
 
     const keywordHandler = debounce((e)=>{
       setKeyWord(e.target.value)
-    }, 1000)
+    }, 500)
   
 
     // function d(){

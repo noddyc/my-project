@@ -26,22 +26,22 @@ function LeftSideBar(props) {
                     <div className='flex-col justify-center items-center'><span className='text-center table'>Home</span><br/></div>
                 </NavLink>
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/liveauction'>
-                    <i className="material-icons">home</i>
+                    <i className="material-icons">star</i>
                     <div className='flex-col justify-center items-center'><span className='text-center table'>Live</span><span className='text-center table'>Auctions</span></div>
                 </NavLink>
 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/auctionhist'>
-                    <i className="material-icons">home</i>
+                    <i className="material-icons">timer</i>
                     <div className='flex-col justify-center items-center'><span className='text-center table'>Auctions</span><span className='text-center table'>History</span></div>
                 </NavLink>
 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/bidhist'>
-                    <i className="material-icons">home</i>
+                    <i className="material-icons">timelapse</i>
                     <div className='flex-col justify-center items-center'><span className='text-center table'>Bids</span><span className='text-center table'>History</span></div>
                 </NavLink>
 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/addauction'>
-                    <i className="material-icons">home</i>
+                    <i className="material-icons">open_in_new</i>
                     <div className='flex-col justify-center items-center'><span className='text-center table'>Add</span><span className='text-center table'>Auction</span></div>
                 </NavLink>
             </div>

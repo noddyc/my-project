@@ -35,7 +35,7 @@ function BidHistSection(props) {
 
     const keywordHandler = debounce((e)=>{
       setKeyWord(e.target.value)
-    }, 1000)
+    }, 500)
 
     function d(){
       let computedArr = display.map((d,index)=>{
@@ -96,7 +96,7 @@ function BidHistSection(props) {
         }catch(err){
             console.log([err.message])
         }
-    }, [detectChange])
+    }, [detectChange, keyword])
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])

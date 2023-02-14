@@ -9,7 +9,7 @@ const Navbar = (props) =>{
     const navigate = useNavigate();
     // const [toggle, setToggle] = useState("hidden");
     const [toggle, setToggle] = useState("");
-    const [toggleHeight, setToggleHeight] = useState(false);
+    const [toggleHeight, setToggleHeight] = useState('h-[80px]');
 
     const navLinkStyles = ({isActive})=>{
         return{
@@ -26,23 +26,22 @@ const Navbar = (props) =>{
         console.log("hello")
         if(toggle==="hidden"){
             setToggle("flex");
-            setToggleHeight(false)
+            setToggleHeight('h-[220px]')
         }else{
             setToggle("hidden");
-            setToggleHeight(true);
+            setToggleHeight('h-[80px]');
         }
     }
     // navbarSM:${toggleHeight}
     
     return(
-        <nav className={`flex items-center justify-around relative text-white
-         bg-black navbarSM:flex-col navbarSM:items-start navbarSM:h-[220px]`}>
+        <nav className={`flex items-center justify-around relative text-white bg-black navbarSM:flex-col ${toggleHeight} navbarSM:items-start`}>
             <div className="flex-grow text-2xl my-2 mr-2 ml-4"></div>
-            {/* <a href="#/" onClick={barmenuHandler} className={`hidden flex-col justify-between h-5 absolute top-3 right-4 w-8 navbarSM:flex`}>
+            <a href="#/" onClick={barmenuHandler} className={`hidden flex-col justify-between h-5 absolute top-3 right-4 w-8 navbarSM:flex`}>
                 <span className="bg-white h-1 w-full rounded-2xl"></span>
                 <span className="bg-white h-1 w-full rounded-2xl"></span>
                 <span className="bg-white h-1 w-full rounded-2xl"></span>
-            </a> */}
+            </a>
             <div className={`h-full m-0 px-2 py-0 gap-2 navbarSM:w-full navbarSM:hidden`}>
                 <ul className={`flex m-0 px-2 py-0 gap-2  navbarSM:flex-col navbarSM:w-full`}>
                     <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0;"><span>John Munson</span><label className="w-[126.67px] h-4 not-italic font-medium text-xs leading-4 text-center tracking-[0.5px]" >Admin</label></div>
@@ -52,7 +51,7 @@ const Navbar = (props) =>{
                 </ul>
             </div>
 
-            <div className={`h-full hidden navbarSM:w-full navbarSM:flex`}>
+            <div className={`h-full hidden navbarSM:w-full navbarSM:${toggle}`}>
                 <ul className={`flex m-0 p-0 navbarSM:flex-col navbarSM:w-full`}>
                     <NavLink style={navLinkStyles} to='/main' className="list-none  navbarSM:text-center"><span className="block p-4 text-white no-underline navbarSM:py-2 navbarSM:px-4">Home</span></NavLink>
                     <NavLink  style={navLinkStyles} to='/liveauction' className="list-none  navbarSM:text-center"><span  className="block p-4 text-white no-underline navbarSM:py-2 navbarSM:px-4">Live Auctions</span></NavLink>
