@@ -1,15 +1,11 @@
-import Navbar from "./Navbar";
-import InfoNavBar from "./InfoNavBar";
-import ProfileBox from "./ProfileBox";
-import { useRef, useState, useEffect } from "react";
+import Navbar from "../Utils/Navbar";
+import InfoNavBar from "../Utils/InfoNavBar";
+import {useEffect } from "react";
 import React from 'react';
 import HomeInfo from "./HomeInfo";
-import LeftSideBar from "./LeftSideBar";
+import LeftSideBar from "../Utils/LeftSideBar";
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
-import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
-import axios from 'axios';
-import qs from 'qs';
-import { stringify } from "postcss";
+import {useNavigate, useOutletContext} from 'react-router-dom'
 
 const Home = (props)=>{
     const isAuthenticated = useIsAuthenticated();
@@ -27,7 +23,7 @@ const Home = (props)=>{
 
 return(
     <div>
-        <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
+        <Navbar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
         <div className="flex flex-row navbarSM:flex navbarSM:flex-col">
             <LeftSideBar></LeftSideBar>
             <HomeInfo info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo} setChange={props.setChange}></HomeInfo>

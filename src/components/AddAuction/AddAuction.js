@@ -1,16 +1,12 @@
-import Navbar from "./Navbar";
-import InfoNavBar from "./InfoNavBar";
-import ProfileBox from "./ProfileBox";
-import { useRef, useState, useEffect, useContext} from "react";
+import Navbar from "../Utils/Navbar";
+import InfoNavBar from "../Utils/InfoNavBar";
+import {useEffect} from "react";
 import React from 'react';
-import HomeInfo from "./HomeInfo";
-import LeftSideBar from "./LeftSideBar";
+import LeftSideBar from "../Utils/LeftSideBar";
 import AuctionForm from "./AuctionForm";
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
-import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
-import axios from 'axios';
-import qs from 'qs';
-import { stringify } from "postcss";
+import {useNavigate, useOutletContext} from 'react-router-dom'
+
 
 const AddAuction = (props)=>{
     const isAuthenticated = useIsAuthenticated();
@@ -29,7 +25,7 @@ const AddAuction = (props)=>{
 
 return(
     <div className="flex-col">
-        <Navbar toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
+        <Navbar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
         <div className=" flex flex-row navbarSM:flex navbarSM:flex-col ">
             <LeftSideBar></LeftSideBar>
             <AuctionForm info={props.info}></AuctionForm>

@@ -1,18 +1,17 @@
-import Registration from "./components/Registration"
-import Login from "./components/Login"
-import Home from "./components/Home"
-import AuctionHist from "./components/AuctionHist";
-import LiveAuction from "./components/LiveAuction";
-import BidHist from "./components/BidHist";
-import AddAuction from "./components/AddAuction"
-import Navbar from "./components/Navbar"
-import Logout from './components/Logout'
-import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
-import React, {useState, useEffect, useContext} from 'react'
+import Registration from "./components/Registration/Registration"
+import Login from "./components/Login/Login"
+import Home from "./components/Home/Home"
+import AuctionHist from "./components/AuctionHist/AuctionHist";
+import LiveAuction from "./components/LiveAuction/LiveAuction";
+import BidHist from "./components/BidHist/BidHist";
+import AddAuction from "./components/AddAuction/AddAuction"
+import Logout from './components/Logout/Logout'
+import {Routes,Route} from "react-router-dom"
+import React, {useState, useEffect} from 'react'
 import axios from "axios";
 import qs from 'qs';
-import {ip} from './components/ip.js'
-import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
+import {ip} from './components/Utils/ip.js'
+import {useAuthUser} from 'react-auth-kit';
 
 function App() {
   const [info, setInfo] = useState({})

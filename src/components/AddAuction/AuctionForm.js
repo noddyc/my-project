@@ -1,10 +1,10 @@
-import {React, useState, useContext} from 'react';
+import {React, useState} from 'react';
 import moment from 'moment'
 import axios from 'axios'
 import qs from 'qs'
-import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
+import { useAuthUser} from 'react-auth-kit';
 import { useNavigate} from "react-router-dom"
-import {ip} from './ip'
+import {ip} from '../Utils/ip'
 
 
 function AuctionForm(props) {

@@ -1,13 +1,12 @@
-import { useRef, useState, useEffect,useCallback } from "react";
+import {useState, useEffect} from "react";
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, useNavigate} from "react-router-dom"
-import moment from "moment";
+import {useNavigate} from "react-router-dom"
 import { useAuthUser } from "react-auth-kit";
 import qs from 'qs'
 import axios from 'axios'
-import {throttle,debounce} from 'lodash'
-import { timezonelist } from "./timezonelist";
-import {ip} from './ip'
+import {debounce} from 'lodash'
+import { timezonelist } from "../Utils/timezonelist";
+import {ip} from '../Utils/ip'
 
 
 
@@ -226,7 +225,7 @@ const HomeInfo = (props)=>{
             absolute left-1/4 top-40 bg-white navbarSM:w-3/4 navbarSM:left-[15%]'>
 
                 <div className='flex flex-col items-start p-0 h-20 gap-2 w-full mb-32'>
-                    <img src={require("../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
+                    <img src={require("../../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
                     rounded-full rounded-brtl-xl"></img>
                 </div>
 

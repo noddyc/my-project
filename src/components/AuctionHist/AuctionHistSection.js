@@ -1,20 +1,17 @@
-import Navbar from "./Navbar";
-import ProfileBox from "./ProfileBox";
-import { useRef, useState, useEffect, useMemo } from "react";
+import {useState, useEffect, useMemo } from "react";
 import React from 'react';
-import HomeInfo from "./HomeInfo";
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
-import {NavLink, Outlet, useNavigate, useOutletContext} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment-timezone'
 import AuctionHistModal from './AuctionHistModal'
 import { useTable, usePagination, useSortBy,useFilters, useGlobalFilter } from 'react-table'
 import { COLUMNS } from './auctionhistcolumns'
-import { GlobalFilter } from './GlobalFilter'
-import { ColumnFilter } from './ColumnFilter'
-import {ip} from './ip'
-import {throttle,debounce} from 'lodash'
+import { GlobalFilter } from '../Utils/GlobalFilter'
+import { ColumnFilter } from '../Utils/ColumnFilter'
+import {ip} from '../Utils/ip'
+import {debounce} from 'lodash'
 
 function AuctionHistSection(props) {
     const auth = useAuthUser();
@@ -171,7 +168,7 @@ function AuctionHistSection(props) {
                       </div>
 
                       <div className="max-w-[300px] max-h-[188px] overflow-hidden">
-                          <img className="object-center" src={require('../assets/card-img.jpeg')} alt="" />
+                          <img className="object-center" src={require('../../assets/card-img.jpeg')} alt="" />
                       </div>
 
 

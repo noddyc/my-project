@@ -15,7 +15,7 @@ const InfoNavBar = (props)=>{
                
             <div className="flex justify-end w-full"><i style={{cursor:"pointer", display:"block"}} onClick={buttonHandler} className="material-icons">close</i></div>
             <div className="flex justify-center w-full">
-                <img src={require("../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
+                <img src={require("../../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
                 rounded-full rounded-brtl-xl"></img>
             </div>
 

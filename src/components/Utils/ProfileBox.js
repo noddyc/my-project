@@ -1,16 +1,6 @@
 import React from 'react';
 
 const ProfileBox = (props)=>{
-
-    // const [date, setDate] = useState(new Date());
-    // useEffect(()=>{
-    //     let timer = setInterval(()=>{
-    //         setDate(new Date(), 1000)});
-    //     return function cleanup(){
-    //         clearInterval(timer)
-    //     }
-    // }, [])
-    // console.log(props.info)
     let username = props.info.username === undefined?"   ":
     props.info.username.toUpperCase();
     return (

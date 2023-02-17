@@ -1,10 +1,7 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { useRef, useState, useEffect } from "react";
-import axios from 'axios';
-import qs from 'qs'
-import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
-import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
+import { useRef, useState} from "react";
+import {useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
 import ConfirmModal from './ConfirmModal';
 import moment from 'moment'
@@ -64,7 +61,7 @@ export default function Modal(props) {
                     </div>
 
                     <div className="max-w-[300px] max-h-[188px] overflow-hidden navbarSM:w-[180px]">
-                          <img className="object-center" src={require('../assets/card-img.jpeg')} alt="" />
+                          <img className="object-center" src={require('../../assets/card-img.jpeg')} alt="" />
                     </div>
 
                     <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
@@ -84,7 +81,7 @@ export default function Modal(props) {
                         <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</p>     
                      </div>
 
-                    <div className= {`flex flex-col  w-[300px] h-8 pl-2 mb-8 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
+                    <div className= {`flex flex-col  w-[300px] h-8 pl-2 mb-16 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
                         <label htmlFor="slots" >Choose an open slot: </label>
                         <select name="slots" id="slots" className= {`w-3/4 border-2 border-inputColor`} ref={slotRef}>
                             <option value=''>-</option>
@@ -97,11 +94,18 @@ export default function Modal(props) {
                                 }))
                             } 
                         </select>
+                        
+                        <label htmlFor="split">Choose split option</label>
+                        <select name="split" id="split" className= {`w-3/4 border-2 border-inputColor`} >
+                            <option value= 'false'>no</option>
+                            <option value= 'true'>yes</option>
+                        </select>
                     </div>
 
                     <div className= {`flex flex-col  w-[300px] h-8 pl-2 mb-8 navbarSM:w-[180px] ${slotFilled()?'':'hidden'}`}>
                         <span>This auction has no open slots</span>
                     </div>
+
 
                     <div className="flex flex-row justify-center items-center gap-32 w-[300px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
                         <button className="flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"

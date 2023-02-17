@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import axios from 'axios';
 import qs from 'qs';
-import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
-import {ip} from './ip'
+import {useNavigate} from "react-router-dom"
+import {ip} from '../Utils/ip'
 
 // regex validate user
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;

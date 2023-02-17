@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { useRef, useState, useEffect } from "react";
+import {useState} from "react";
 import axios from 'axios';
 import qs from 'qs'
-import {BrowserRouter, Routes, Link, Route, Switch, useNavigate} from "react-router-dom"
-import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
+import {useNavigate} from "react-router-dom"
+import {useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
-import {ip} from './ip'
+import {ip} from '../Utils/ip'
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -30,8 +30,8 @@ const OVERLAY_STYLES = {
 let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6', 'slot_7','slot_8','slot_9']
 
 
-export default function ConfirmAuctionHistModal(props) {
-    console.log(props.data)
+export default function ConfirmModal(props) {
+
     const auth = useAuthUser();
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("")
@@ -39,15 +39,20 @@ export default function ConfirmAuctionHistModal(props) {
 
     const submitHandler = _.debounce(async (e)=>{
         try{
+            console.log(props.data)
+            if(props.slot === ""){
+                throw new Error("No slot is selected");
+            }
             let data = qs.stringify({
               'auctionId': props.data.id,
               'userId': auth().id,
-              'status': props.data.status,
+              'pick': props.slot,
+              'timezone' : 'America/New York'
             });
     
             let config = {
                 method: 'post',
-                url: `${ip}/auction/cancelAuction`,
+                url: `${ip}/auction/joinAuction`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -56,17 +61,17 @@ export default function ConfirmAuctionHistModal(props) {
             axios(config).then((response) => {
                 console.log(JSON.stringify(response.data));
                 props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Cancel auction successfully");
+                setSuccessMsg("Joined auction successfully");
             }).catch((error) => {
                 console.log("error222")
-                setErrMsg("Failed to cancel auction");
+                setErrMsg("Failed to join auction");
                 setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
               })
             setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }catch(err){
             console.log("here111");
             console.log(err);
-            setErrMsg("Failed to cancel auction");
+            setErrMsg("Failed to join auction");
         }
     }, 800)
 
@@ -79,10 +84,10 @@ export default function ConfirmAuctionHistModal(props) {
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
-                            <h1>Cancel auction Detail: {'\u00A0'}{'\u00A0'}</h1>
+                            <h1>Confirm Bid Detail: {'\u00A0'}{'\u00A0'}</h1>
                             <p>Product Name <strong>{props.data.product_name}</strong></p>
-                            <p>Product Price  <strong>${props.data.product_price}</strong></p>
-                            <p>Slot Filled <strong>{props.data.slotsOpen}</strong></p>
+                            <p>Bid Price  <strong>${Math.round(props.data.product_price/10*100)/100}</strong></p>
+                            <p>Slot Picked <strong>{props.slot}</strong></p>
                      </div>
 
                      <div className='w-full navbarSM:w-[180px]'> 

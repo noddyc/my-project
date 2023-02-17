@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { useRef, useState, useEffect } from "react";
-import moment from 'moment'
+import { useRef} from "react";
 
 const MODAL_STYLES = {
   position: 'fixed',

@@ -3,7 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { useSignIn, useIsAuthenticated} from 'react-auth-kit';
 import {BrowserRouter as Router, useNavigate, Route, Switch} from "react-router-dom"
-import {ip} from './ip'
+import {ip} from '../Utils/ip'
 
 // regex validate password
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
