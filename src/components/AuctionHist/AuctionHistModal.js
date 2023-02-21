@@ -25,7 +25,7 @@ const OVERLAY_STYLES = {
   backgroundColor: 'rgba(0, 0, 0, .05)',
   zIndex: 1000
 }
-let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6', 'slot_7','slot_8','slot_9']
+let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7','slot8','slot9']
 
 export default function AuctionHistModal(props) {
     console.log(props)
@@ -66,42 +66,46 @@ export default function AuctionHistModal(props) {
 
                     <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
                       overflow-scroll text-roboto pl-2 pr-2 navbarSM:w-[180px]">
-                        <p>Description: {d.product_description}</p>
+                        <p>{d.product_description}</p>
                     </div>
 
 
                     <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
-                            <p>Total Price:{'\u00A0'}{'\u00A0'}</p>
-                            <strong>${d.product_price}</strong>
+                            <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
                      </div>
 
-                     <div className=" flex flex-col w-[300px] h-8 pl-2 mb-2 navbarSM:w-[180px]">
-                        <p><span>Start time: {'\u00A0'}{'\u00A0'}</span>{moment(d.start_time).format("YYYY/MM/DD-HH:MM:SS")}</p>    
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).format("YYYY/MM/DD-HH:MM:SS")}</p>     
+                     <div className=" flex flex-col w-[300px] h-8 pl-2 navbarSM:w-[180px]">  
+                      <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>  
+                     </div>
+
+                     <div className=" flex flex-col flex-wrap overflow-scroll w-[300px] h-64 navbarSM:w-[180px] pl-2">
+                      {slotArr.map((i,index)=>{
+                              if(d?.[i] === null){
+                                  return (<p key={index}><span>Slot {index}: - </span></p>)
+                              }
+                              if(d?.[i]?.split === true){
+                                  if(d?.[i]?.player2 === null){
+                                      return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/-`}</p>)
+                                  }else if(d?.[i]?.player1 === null){
+                                      return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`-/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p>)
+                                  }
+                                  else{
+                                      return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p>)
+                                  }
+                              }
+
+                              if(d?.[i]?.split === false){
+                                  return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}`}</p>)
+                              }
+                              
+                          })}
                      </div>
 
                      <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winning_number}</p>     
+                        <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winnning_number === null?'-':d.winnning_number}</p>     
                      </div>
 
-                     {/* <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Slots open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
-                     </div> */}
-
-                     <div className=" flex flex-col flex-wrap overflow-scroll w-[300px] h-32 pl-2 navbarSM:w-[180px]">
-                        <p><span>Slot0:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_0?d.slot_0:'-'}`}</p>    
-                        <p><span>Slot1:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_1?d.slot_1:'-'}`}</p>    
-                        <p><span>Slot2:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_2?d.slot_2:'-'}`}</p>    
-                        <p><span>Slot3:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_3?d.slot_3:'-'}`}</p>    
-                        <p><span>Slot4:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_4?d.slot_4:'-'}`}</p>   
-                        <p><span>Slot5:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_5?d.slot_5:'-'}`}</p>   
-                        <p><span>Slot6:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_6?d.slot_6:'-'}`}</p>   
-                        <p><span>Slot7:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_7?d.slot_7:'-'}`}</p>   
-                        <p><span>Slot8:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_8?d.slot_8:'-'}`}</p>   
-                        <p><span>Slot9:{'\u00A0'}{'\u00A0'}</span>{`${d.slot_9?d.slot_9:'-'}`}</p>   
-                     </div>
-
-                     <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
+                     <div className=" flex flex-col w-[300px] h-4 pl-2 mb-4 navbarSM:w-[180px]">
                         <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{statusConversion(d.status)}</p>     
                      </div>
 

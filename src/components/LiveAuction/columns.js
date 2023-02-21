@@ -16,9 +16,12 @@ export const COLUMNS = [
     sticky: 'left'
   },
   {
-    Header: 'Auctioneer',
-    Footer: 'auctioneer',
-    accessor: 'ownerId',
+    Header: 'Host',
+    Footer: 'Host',
+    accessor: (data)=>{
+      // console.log(user.User);
+      return data.User.firstname + " " + data.User.lastname;
+    },
     sticky: 'left'
   },
   {
@@ -27,18 +30,21 @@ export const COLUMNS = [
     accessor: 'end_time',
     sticky: 'left',
     Cell:(row)=>{
-      return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
+      return (moment(row.cell.value).clone().tz('UTC')).format("YYYY-MM-DD HH:mm:ss")
+      // return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
     },
     
     sortType:(a,b) => {
         console.log(a.values.closing_time);
-        return new moment(a.values.closing_time) - new moment(b.values.closing_time)
+        return new moment(a.values.end_time) - new moment(b.values.end_time)
     }
   },
   {
     Header: 'Price',
     Footer: 'price',
-    accessor: 'product_price',
+    accessor: (data)=>{
+      return Math.round(data.product_price);
+    },
     sticky: 'left'
   },
 ]

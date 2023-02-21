@@ -14,6 +14,7 @@ import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 
 function AuctionHistSection(props) {
+    const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
     const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
@@ -192,7 +193,7 @@ function AuctionHistSection(props) {
 
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-4 pr-4">
+                      overflow-scroll text-roboto pl-8 pr-8">
                         <p>{d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description}
@@ -204,8 +205,13 @@ function AuctionHistSection(props) {
                       </div>
                       
                       <div className=" flex flex-col  w-[300px] h-8 pl-2">
-                            <p>Total Price{'\u00A0'}{'\u00A0'}</p>
-                            <strong>${d.product_price}</strong>
+                        <p>Product Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
+                        <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${
+                              Math.round(
+                              slotArr.reduce((accumulator, currentValue)=>{
+                              // console.log(d.currentValue)
+                              return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
+                            }, 0)*0.9)}</strong></p>
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2">
@@ -236,7 +242,7 @@ function AuctionHistSection(props) {
                             }}>Detail</button>
                     </div>
                   </div> )}) : (
-                            <div className="self-center flex flex-col justify-center items-center mt-24">
+                            <div className="self-center flex flex-col justify-center items-center mt-24 mb-32">
                                  <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
                                   <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                                 </div>

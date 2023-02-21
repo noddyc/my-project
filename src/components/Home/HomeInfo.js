@@ -222,7 +222,7 @@ const HomeInfo = (props)=>{
                 <h1 className='h-24 not-italic font-normal text-center text-[60px] leading-[94px] font-roboto text-gray-700
                 navbarSM:text-[30px] navbarSM:leading-[94px]'>Change Information</h1></div>
             <div className='border-b-2 border-r-2 border-l-2 border-inputColor  flex flex-col justify-center items-center p-4 gap-8 w-1/2
-            absolute left-1/4 top-40 bg-white navbarSM:w-3/4 navbarSM:left-[15%]'>
+            absolute left-1/4 top-40 bg-white pb-16 navbarSM:w-3/4 navbarSM:left-[15%]'>
 
                 <div className='flex flex-col items-start p-0 h-20 gap-2 w-full mb-32'>
                     <img src={require("../../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
@@ -260,7 +260,7 @@ const HomeInfo = (props)=>{
                     onChange={(e)=>{setAddress(e.target.value)}}></input>
                 </div>
 
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
+                {/* <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
                     <label htmlFor="timezone" >Choose an timezone to change: {`(${display.timezone})`} </label>
                         <select name="timezone" id="timezone" className= {`w-3/4 border-2 border-inputColor`} onChange={handleChange}>
                             <option value=''>-</option>
@@ -272,7 +272,7 @@ const HomeInfo = (props)=>{
                             } 
                         </select>
                 </div>
-                
+                 */}
                 <button className={`flex flex-col justify-center items-center p-4 w-40 h-12 bg-buttonColor text-white rounded-lg
                      navbarSM:w-20 ${(count()) ? "":"opacity-50 cursor-not-allowed"}`} onClick={submitHandler}>Submit</button>
             </div>

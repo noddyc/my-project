@@ -32,7 +32,7 @@ function LeftSideBar(props) {
 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/auctionhist'>
                     <i className="material-icons">timer</i>
-                    <div className='flex-col justify-center items-center'><span className='text-center table'>GAMES</span><span className='text-center table'>HISTORY</span></div>
+                    <div className='flex-col justify-center items-center'><span className='text-center table'>GAME</span><span className='text-center table'>HISTORY</span></div>
                 </NavLink>
 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/bidhist'>

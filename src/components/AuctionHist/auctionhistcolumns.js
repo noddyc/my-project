@@ -30,7 +30,8 @@ export const COLUMNS= [
     accessor: 'end_time',
     sticky: 'left',
     Cell:(row)=>{
-        return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
+      return (moment(row.cell.value).clone().tz('UTC')).format("YYYY-MM-DD HH:mm:ss")
+      // return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
     },
     sortType:(a,b) => {
         console.log(a.values.end_time);
@@ -40,7 +41,17 @@ export const COLUMNS= [
   {
     Header: 'Status',
     Footer: 'Status',
-    accessor: 'status',
+    accessor: (data)=>{
+      if(data.status === "OPEN_LIVE"){
+        return "OPEN LIVE"
+      }else if(data.status === "OPEN_NOT_LIVE"){
+        return "OPEN NOT LIVE"
+      }else if(data.status === "NO_WINNER_WINNER_NOTIFIED"){
+        return "WIN NUM POSTED"
+      }else if(data.status === "WAITING_FOR_DRAW"){
+        return "WAITING FOR DRAW"
+      }
+    },
     sticky: 'left'
   },
 ]

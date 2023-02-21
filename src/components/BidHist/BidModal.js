@@ -74,17 +74,16 @@ export default function BidModal(props) {
 
                     <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
                       overflow-scroll text-roboto pl-2 pr-2 navbarSM:w-[180px]">
-                        <p>Description: {d.product_description}</p>
+                        <p>{d.product_description}</p>
                     </div>
 
 
-                    <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
-                            <p>Total Price:{'\u00A0'}{'\u00A0'}</p>
-                            <strong>${d.product_price}</strong>
+                    <div className=" flex flex-col  w-[300px] h-4 pl-2 navbarSM:w-[180px]">
+                        <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span>{moment(d.end_time).format("YYYY/MM/DD-HH:MM:SS")}</p>     
+                     <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>
                      </div>
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2 navbarSM:w-[180px]">
@@ -95,9 +94,9 @@ export default function BidModal(props) {
                         <p><span>Slot picked: {'\u00A0'}{'\u00A0'}</span>{d.slot_number}</p>     
                      </div>
 
-                     <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
+                     {/* <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
                         <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winning_number}</p>     
-                     </div>
+                     </div> */}
                      
                      {/* <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
                         <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
@@ -114,7 +113,8 @@ export default function BidModal(props) {
                         }}>Close</button>
 
 
-                        <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80`}
+                        <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor
+                        ${d.status === 'OPEN_LIVE' || d.status === 'OPEN_NOT_LIVE' ?'': 'hidden'} text-white rounded-lg p-1 navbarSM:w-80`}
                         onClick={()=>{
                            setOpenConfirm(true)
                             }}>Withdraw</button>

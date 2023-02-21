@@ -27,7 +27,8 @@ export const COLUMNS = [
     accessor: 'end_time',
     sticky: 'left',
     Cell:(row)=>{
-        return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
+      return (moment(row.cell.value).clone().tz('UTC')).format("YYYY-MM-DD HH:mm:ss")
+      // return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
     },
     sortType:(a,b) => {
         console.log(a.values.end_time);

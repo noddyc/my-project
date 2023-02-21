@@ -234,7 +234,7 @@ function LiveAuctionSection(props) {
                             }}>Join Now</button>
                     </div>
                   </div> )}) : (
-                            <div className="self-center flex flex-col justify-center items-center mt-24 ">
+                            <div className="self-center flex flex-col justify-center items-center mt-24 mb-32">
                                  <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
                                   <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                                 </div>

@@ -29,6 +29,15 @@ const OVERLAY_STYLES = {
 }
 let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6', 'slot_7','slot_8','slot_9']
 
+function slotFilled(dataValues){
+  let count = 0;
+  for(let i = 0; i < slotArr.length; i++){
+    if(dataValues[slotArr[i]] != null){
+      count++;
+    }
+  }
+  return count;
+}
 
 export default function ConfirmAuctionHistModal(props) {
     console.log(props.data)
@@ -114,9 +123,13 @@ export default function ConfirmAuctionHistModal(props) {
                     
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
                             <h1>{(props.data.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':props.data.status==='WAITING_FOR_DRAW'?'Join':'') + ' Detail Confirmation'} {'\u00A0'}{'\u00A0'}</h1>
-                            <p>Product Name <strong>{props.data.product_name}</strong></p>
-                            <p>Product Price  <strong>${props.data.product_price}</strong></p>
-                            <p>Slot Filled <strong>{props.data.slotsOpen}</strong></p>
+                            <p>Product Name: <strong>{props.data.product_name}</strong></p>
+                            {
+                              props.data.status === 'WAITING_FOR_DRAW'? <p>Slot Filled: <strong>{slotFilled(props.data)}</strong></p> : props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?
+                               <p>Winning Number: <strong>{props.data.winnning_number === null ?'-': props.data.winnning_number}</strong></p>: ''
+                            }
+                            <p>{props.data.status === 'WAITING_FOR_DRAW'?<strong>As host, you can join a game with 6 filled slots to make it live within five minutes before drawing</strong>: 
+                            props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>As host, you can roll over this game if no winner is declared</strong>:''}</p>
                      </div>
 
                      <div className='w-full navbarSM:w-[180px]'> 

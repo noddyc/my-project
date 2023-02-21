@@ -86,9 +86,9 @@ export default function ConfirmModal(props) {
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
-                            <h1>Confirm Bid Detail {'\u00A0'}{'\u00A0'}</h1>
+                            <h1>Confirm Slot Detail {'\u00A0'}{'\u00A0'}</h1>
                             <p>Product Name: <strong>{props.data.product_name}</strong></p>
-                            <p>Bid Price:  <strong>${Math.round(props.data.product_price/10*100)/100}</strong></p>
+                            <p>Slot Price:  <strong>${Math.round(props.data.product_price/10*100)/100}</strong></p>
                             <p>Slot Picked: <strong>{props.slot}</strong></p>
                             <p>Split option: <strong>{props.split}</strong></p>
                     </div>

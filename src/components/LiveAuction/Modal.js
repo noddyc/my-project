@@ -113,7 +113,7 @@ export default function Modal(props) {
 
                     <div className=" flex flex-col w-[300px] h-8 navbarSM:w-[180px]">
                             {/* <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${d.product_price}</strong></p> */}
-                            <p>Bid Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price/10)}</strong></p>
+                            <p>Slot Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price/10)}</strong></p>
                      </div>
 
                     <div className= {`flex flex-col  w-[300px] h-8  mb-8 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
