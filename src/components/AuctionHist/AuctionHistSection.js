@@ -34,6 +34,22 @@ function AuctionHistSection(props) {
       setKeyWord(e.target.value)
     }, 500)
 
+
+    const statusConversion = (status, winning)=>{
+      if(status === "OPEN_LIVE"){
+        return "OPEN LIVE"
+      }
+      if(status === "OPEN_NOT_LIVE"){
+        return "OPEN NOT LIVE"
+      }
+      if(status === "WAITING_FOR_DRAW"){
+        return "WAITING FOR DRAW";
+      }
+      if(status === "NO_WINNER_WINNER_NOTIFIED"){
+        return "WINNING NUMBER POSTED"
+      }
+    }
+
     function d(){
       let computedArr = display.map((d,index)=>{
         return <li key={index} style={{marginBottom:"10px", 
@@ -61,7 +77,7 @@ function AuctionHistSection(props) {
     useEffect(()=>{
         try{              
             let data = qs.stringify({
-                'statues': ['CLOSED','CANCELED','COMPLETED','IN_PROGRESS'],
+                'statues': ["OPEN_NOT_LIVE", "OPEN_LIVE", "WAITING_FOR_DRAW", "NO_WINNER_WINNER_NOTIFIED"],
                 'ownerId': auth().id,
               }, {arrayFormat:`indices`});
 
@@ -137,7 +153,7 @@ function AuctionHistSection(props) {
 
     return (
             <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative  navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Auction History</h1></div>
+                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Game History</h1></div>
                 <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
                     <label htmlFor="cardbutton">Table Display: </label>
                     <input type="checkbox" id="cardbutton" 
@@ -161,19 +177,21 @@ function AuctionHistSection(props) {
                 {
                  detail !=='false' ? display.map((d, index) => {
                  return (
-                  <div className={`border-2 border-inputColor flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 rounded-lg ${d.status==='COMPLETED'?"bg-green-100":""} ${d.status==='CANCELED' || d.status==="CLOSED" ?"bg-red-100":""}`} key={index} >          
+                  <div className={`border-4 border-cardBorderColor flex flex-col items-start p-0
+                  isolate w-[300px] gap-4 rounded-lg 
+                  ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE" || d.status==="WAITING_FOR_DRAW"? "bg-green-100":""} 
+                  ${d.status==="NO_WINNER_WINNER_NOTIFIED" ?"bg-red-100":""}`} key={index} >          
                       <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>
                       </div>
 
                       <div className="max-w-[300px] max-h-[188px] overflow-hidden">
-                          <img className="object-center" src={require('../../assets/card-img.jpeg')} alt="" />
+                          <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
                       </div>
 
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-2 pr-2">
+                      overflow-scroll text-roboto pl-4 pr-4">
                         <p>{d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description}
@@ -198,12 +216,12 @@ function AuctionHistSection(props) {
                         <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winnning_number===null?"-":d.winnning_number}</p>     
                      </div>
 
-                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                     {/* <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
                         <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
-                     </div>
+                     </div> */}
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
-                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{d.status}</p>     
+                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{statusConversion(d.status)}</p>     
                      </div>
 
 

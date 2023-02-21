@@ -14,18 +14,22 @@ function AuctionForm(props) {
     const [endTime, setEndTime] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const [dayNight, setDayNight] = useState("day");
     const auth = useAuthUser();
     const navigate = useNavigate();
 
 
 
-    let priceRegex = /^(?!^0\.00$)(([1-9][\d]{0,6})|([0]))\.[\d]{2}$/;
+    let priceRegex = /^[1-9][0-9]*$/;
 
-    const oneDayLess = (endTime)=>{
-        let date2 = new Date(endTime);
-        let date1 = new Date();
-        const diffTime = date2 - date1;
-        return diffTime < (1000 * 60 * 60 * 24)
+    const oneDayAhead = (endTime)=>{
+        let time2 = new Date(endTime);
+        let time1 = new Date();
+
+        const diffInMs = time2.getTime() - time1.getTime();
+
+        return diffInMs >= 24 * 60 * 60 * 1000;
+      
     }
 
     const dateConversion = (e)=>{
@@ -34,15 +38,25 @@ function AuctionForm(props) {
         return timeInB.format();
     }
 
+
+    const handleDayNightChange = (event) => {
+        setDayNight(event.target.value);
+      };
+
+
+    const myMap = {day:'12:40:00', night: '21:22:00'}
+
+
     const handleSubmit= async(e)=>{
         e.preventDefault();
         try{
-            if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || oneDayLess(endTime)){
+            let endTimeDate = new Date(endTime+'T'+myMap[dayNight])
+            if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(endTimeDate)){
                 throw new Error("Fields must be valid or end time must be 24 hours from current time");
             }
             let obj = {
                 start_time: dateConversion(new Date()),
-                end_time: dateConversion(endTime),
+                end_time: dateConversion(endTimeDate),
                 product_price: price,
                 product_name: name,
                 product_description: description,
@@ -61,7 +75,7 @@ function AuctionForm(props) {
             axios(config).then(
                 (response)=>{
                     console.log(JSON.stringify(response.data))
-                    setSuccessMsg("Auction created successfully")
+                    setSuccessMsg("Game created successfully")
                     setTimeout(()=>{
                         setName("")
                         setDescription("")
@@ -71,11 +85,11 @@ function AuctionForm(props) {
                     },1000);
                 }
             ).catch(()=>{
-                setErrMsg("Failed to add auction");
+                setErrMsg("Failed to add game");
             })
         }catch(err){
             if (err.response?.status) {
-                setErrMsg('Failed to add auction');
+                setErrMsg('Failed to add game');
             }
             else{
                 setErrMsg(err.message);
@@ -88,7 +102,7 @@ function AuctionForm(props) {
             <div className='border-t-2 border-r-2 border-l-2 border-inputColor w-1/2 absolute left-1/4 top-16  bg-white
             navbarSM:w-3/4 navbarSM:left-[15%]'>
                 <h1 className='h-24 not-italic font-normal text-center text-[60px] leading-[94px] font-roboto text-gray-700
-                navbarSM:text-[30px] navbarSM:leading-[94px]'>Create Auction</h1></div>
+                navbarSM:text-[30px] navbarSM:leading-[94px]'>Create Game</h1></div>
             <form className='border-b-2 border-r-2 border-l-2 border-inputColor  flex flex-col justify-center items-center p-4 gap-8 w-1/2
             absolute left-1/4 top-40 bg-white navbarSM:w-3/4 navbarSM:left-[15%]'>
                 <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
@@ -96,7 +110,7 @@ function AuctionForm(props) {
                     <input id='name' type='text' maxLength="20" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 
                     border-2 border-inputColor' value={name} onChange={(e)=>{setErrMsg("");
                     setSuccessMsg("");
-                    setName(e.target.value)}} placeholder="Enter Auction Name"/>
+                    setName(e.target.value)}} placeholder="Enter Game Name"/>
                 </div>
 
                 <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
@@ -109,15 +123,16 @@ function AuctionForm(props) {
 
                 <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
                     <label htmlFor='price' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>Price: </label>
-                    <input id='price' type="number" min="0.01" step="0.01" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 border-2 border-inputColor'
+                    <input id='price' type="numeric" min="1" step="1" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 border-2 border-inputColor'
                     value={price} onChange={(e)=>{setErrMsg("");
+                    
                     setSuccessMsg("");
-                    setPrice(e.target.value)}} placeholder="0.01"/>
+                    setPrice(e.target.value)}} placeholder="0"/>
                 </div>
 
                 <div className='flex flex-col items-start p-0 h-28 gap-2 w-full'>
-                    <label htmlFor='end_time' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700 '>End Time: </label>
-                    <input id='end_time' type="datetime-local" className='w-full 
+                    <label htmlFor='date' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>End Date: </label>
+                    <input id='date' name='date' type="date" className='w-full 
                     border-2 border-inputColor p-4 h-12 bg-white rounded-lg gap-2' value={endTime}
                     onChange={(e)=>{
                     // const timeInA = moment.tz(e.target.value, 'America/New_York');
@@ -128,8 +143,18 @@ function AuctionForm(props) {
                     setErrMsg("");
                     setSuccessMsg("");
                     setEndTime(e.target.value)}}/>
-                    <h5 className='text-center'><i className="material-icons" style={{display:"inline", fontSize:"1rem"}}>info</i> End time must be 24 hours from current time.</h5>
+                    <h5 className='text-center'><i className="material-icons" style={{display:"inline", fontSize:"1rem"}}>info</i> End Date must be 24 hours from current time.</h5>
                 </div>
+
+                <div className='flex flex-col items-start p-0 h-28 gap-2 w-full'>
+                    <label htmlFor='day-night' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>Time Option:</label>
+                    <select id='day-night' name='day-night' value={dayNight} onChange={handleDayNightChange} className='w-full 
+                    border-2 border-inputColor h-12 pl-2 bg-white rounded-lg gap-2'>
+                        <option value="day">Day: 12:40:00</option>
+                        <option value="night">Night: 21:22:00</option>
+                    </select>
+                </div>
+
                 <div className='w-full'> 
                     <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
                 </div>

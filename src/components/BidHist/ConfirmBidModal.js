@@ -47,7 +47,7 @@ export default function ConfirmBidModal(props) {
     
             let config = {
                 method: 'post',
-                url: `${ip}/bid/withdrawBid`,
+                url: `${ip}/bid/withdrawBid1`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -56,17 +56,17 @@ export default function ConfirmBidModal(props) {
             axios(config).then((response) => {
                 console.log(JSON.stringify(response.data));
                 props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Withdraw bid successfully");
+                setSuccessMsg("Withdraw selection successfully");
             }).catch((error) => {
                 console.log("error222")
-                setErrMsg("Failed to withdraw bid");
+                setErrMsg("Failed to withdraw selection");
                 setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
               })
             setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }catch(err){
             console.log("here111");
             console.log(err);
-            setErrMsg("Failed to withdraw bid");
+            setErrMsg("Failed to withdraw selection");
         }
     }, 800)
 
@@ -74,7 +74,7 @@ export default function ConfirmBidModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-2 border-inputColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
                 <div className="flex flex-col items-start p-0
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     

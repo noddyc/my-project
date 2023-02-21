@@ -14,6 +14,7 @@ import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 
 function LiveAuctionSection(props) {
+    const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
     const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
@@ -24,8 +25,8 @@ function LiveAuctionSection(props) {
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
     const [MOCK_DATA, setMOCK_DATA] = useState([]);
-
     const [keyword, setKeyWord] = useState("");
+    const [imgPos, setImgPos] = useState([]);
 
     const keywordHandler = debounce((e)=>{
       setKeyWord(e.target.value)
@@ -43,7 +44,7 @@ function LiveAuctionSection(props) {
         try{              
           // only display in progress auctions
             let data = qs.stringify({
-                'statues': ['IN_PROGRESS'] 
+                'statues': ['OPEN_LIVE','OPEN_NOT_LIVE'] 
               }, {arrayFormat:`indices`});
               let config = {
                 method: 'post',
@@ -69,11 +70,12 @@ function LiveAuctionSection(props) {
                   return false;
 
                 }).forEach((e, index)=>{
-                    console.log(e)
+                    // console.log(e)
                     arr.push(e)
                 })
                 setDisplay(arr)
                 setMOCK_DATA(arr);
+                setImgPos(new Array(arr.length).fill(1));
               })
         }catch(err){
             console.log([err.message])
@@ -126,8 +128,8 @@ function LiveAuctionSection(props) {
     const { pageIndex, pageSize } = state
 
     return (
-            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative  navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Auctions</h1></div>
+            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
+                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Games</h1></div>
                 <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
                     <label htmlFor="cardbutton">Table Display:</label>
                     <input type="checkbox" id="cardbutton" 
@@ -150,49 +152,85 @@ function LiveAuctionSection(props) {
 
                 {
                  detail !=='false' ? display.map((d, index) => {
+                //  console.log(d);
                  return (
+                  <div className="border-4 border-cardBorderColor flex flex-col items-start p-0
+                  isolate w-[300px] gap-4 rounded-lg bg-cardBGColor hover:bg-cardHoverColor" key={index} >  
+                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mt-2">
+                            <p>Host:{'\u00A0'}{'\u00A0'}<strong>{d.User.firstname} {d.User.lastname}</strong></p>
+                      </div>
 
+                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
+                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>    
+                        <p><span>Option: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')}</strong></p> 
+                      </div>
 
-                  <div className="border-2 border-inputColor flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 rounded-lg" key={index} >  
-                      <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
+                      
+
+                      <div className=" flex flex-col  w-[300px] h-8  pl-2 justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>
                       </div>
-                      <div className="max-w-[300px] max-h-[188px] overflow-hidden">
-                          <img className="object-center" src={require('../../assets/card-img.jpeg')} alt="" />
-                      </div>
 
-
-                      <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-2 pr-2">
+                      <div className="w-[300px] h-16 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
+                      overflow-scroll text-roboto pl-4 pr-4">
                         <p>{d.product_description} 
                         </p>
                       </div>
                       
-                      <div className=" flex flex-col  w-[300px] h-8 pl-2">
-                            <p>Total Price{'\u00A0'}{'\u00A0'}</p>
-                            <strong>${d.product_price}</strong>
-                     </div>
+                      <div className="max-w-[300px] max-h-[188px] overflow-hidden relative">
+                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r opacity-70 hover:w-6"
+                          onClick={(e)=>{
+                            const updatedItems = [...imgPos];
+                            const newImgPos = updatedItems[index]-1;
+                            if(newImgPos < 1){
+                              updatedItems[index] = 3;
+                              setImgPos(updatedItems);
+                              return;
+                            }
+                            updatedItems[index] = newImgPos;
+                            setImgPos(updatedItems);
+                          }}>
+                              <i className="material-icons text-base">arrow_back_ios</i>
+                          </button>
+                          <img className=" min-w-[290px] min-h-[188px] object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />
+                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l opacity-70 hover:w-6"
+                          onClick={(e)=>{
+                            const updatedItems = [...imgPos];
+                            const newImgPos = updatedItems[index]+1;
+                            if(newImgPos > 3){
+                              updatedItems[index] = 1;
+                              setImgPos(updatedItems);
+                              return;
+                            }
+                            updatedItems[index] = newImgPos;
+                            setImgPos(updatedItems);
+                          }}>
+                              <i className="material-icons text-base">arrow_forward_ios</i>
+                          </button>
+                      </div>
 
-                     <div className=" flex flex-col  w-[300px] h-8 pl-2">
-                            <p>Owner{'\u00A0'}{'\u00A0'}</p>
-                            <strong>{d.ownerId}</strong>
-                     </div>
+                      
+                      <div className=" flex flex-col w-[300px] h-8 pl-2 mb-6">
+                            <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
+                            {/* <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${d.product_price}</strong></p> */}
+                            <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${
+                              Math.round(
+                              slotArr.reduce((accumulator, currentValue)=>{
+                              // console.log(d.currentValue)
+                              return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
+                            }, 0)*0.9)}</strong></p>
+                      </div>
 
-                     <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
-                        <p><span>Start time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.start_time).clone().tz(props.info.timezone))!==undefined? (moment(d.start_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>     
-                     </div>
 
                      <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
                         <button className={`flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg ${d.ownerId === auth().id ? "invisible":"" }`}
                         onClick={() => {  
-                                console.log(display[index])
+                                // console.log(display[index])
                                 // setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
                                 //   name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
                                 setInd({original:{...display[index]}});
                                 setIsOpen(true);
-                                console.log(ind)
+                                // console.log(ind)
                             }}>Join Now</button>
                     </div>
                   </div> )}) : (
@@ -208,7 +246,9 @@ function LiveAuctionSection(props) {
                                     <button onClick={() => previousPage()} disabled={!canPreviousPage}>
                                         Previous
                                     </button>{' '}
-                                    <button onClick={() => {console.log("hello I clicked");
+                                    <button onClick={() => {
+
+                                      // console.log("hello I clicked");
                                       nextPage()}} disabled={!canNextPage}>
                                         Next
                                     </button>{' '}
@@ -281,7 +321,7 @@ function LiveAuctionSection(props) {
                                             <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
                                             <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
                                                 setInd(row);
-                                                console.log(ind)
+                                                // console.log(ind)
                                                 setIsOpen(true);
                                               }}>detail</button>
                                               </div></td>

@@ -34,6 +34,21 @@ function BidHistSection(props) {
       setKeyWord(e.target.value)
     }, 500)
 
+    const statusConversion = (status, winning)=>{
+      if(status === "OPEN_LIVE"){
+        return "OPEN LIVE"
+      }
+      if(status === "OPEN_NOT_LIVE"){
+        return "OPEN NOT LIVE"
+      }
+      if(status === "WAITING_FOR_DRAW"){
+        return "WAITING FOR DRAW";
+      }
+      if(status === "NO_WINNER_WINNER_NOTIFIED"){
+        return "WINNING NUMBER POSTED"
+      }
+    }
+
     function d(){
       let computedArr = display.map((d,index)=>{
         return <li key={index} style={{marginBottom:"10px", 
@@ -168,19 +183,19 @@ function BidHistSection(props) {
                  detail !=='false' ? display.map((d, index) => {
                   console.log(d)
                  return (
-                  <div className={`border-2 border-inputColor flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 rounded-lg ${d.status==='COMPLETED'?"bg-green-100":""} ${d.status==='CANCELED' || d.status==="CLOSED" ?"bg-red-100":""}}`} key={index} >          
+                  <div className={`border-4 border-cardBorderColor flex flex-col items-start p-0
+                  isolate w-[300px] gap-4 rounded-lg  ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"  ?"bg-green-100":""} ${d.status==="NO_WINNER_WINNER_NOTIFIED" || d.status==="WAITING_FOR_DRAW" ?"bg-red-100":""}`} key={index} >          
                       <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>
                       </div>
 
                       <div className="max-w-[300px] max-h-[188px] overflow-hidden">
-                          <img className="object-center" src={require('../../assets/card-img.jpeg')} alt="" />
+                          <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
                       </div>
 
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-2 pr-2">
+                      overflow-scroll text-roboto pl-4 pr-4">
                         <p>{d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description}
@@ -215,12 +230,12 @@ function BidHistSection(props) {
                         <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winning_number}</p>     
                      </div>
 
-                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
+                     {/* <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
                         <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
-                     </div>
+                     </div> */}
 
                      <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
-                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{d.status}</p>     
+                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{statusConversion(d.status)}</p>     
                      </div>
 
 

@@ -19,7 +19,7 @@ const AddAuction = (props)=>{
     useEffect(()=>{
         if(!isAuthenticated()){
             navigate('/')
-        }
+        } 
     },[])
 
 

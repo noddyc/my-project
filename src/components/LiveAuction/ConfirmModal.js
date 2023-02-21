@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import {useState} from "react";
+import {useState, useRef, useEffect} from "react";
 import axios from 'axios';
 import qs from 'qs'
 import {useNavigate} from "react-router-dom"
@@ -39,20 +39,22 @@ export default function ConfirmModal(props) {
 
     const submitHandler = _.debounce(async (e)=>{
         try{
-            console.log(props.data)
+            // console.log(props.data)
             if(props.slot === ""){
                 throw new Error("No slot is selected");
             }
+
+
             let data = qs.stringify({
               'auctionId': props.data.id,
               'userId': auth().id,
-              'pick': props.slot,
-              'timezone' : 'America/New York'
+              'slot': props.slot,
+              'split': props.split
             });
     
             let config = {
                 method: 'post',
-                url: `${ip}/auction/joinAuction`,
+                url: `${ip}/auction/joinAuction1`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -61,17 +63,17 @@ export default function ConfirmModal(props) {
             axios(config).then((response) => {
                 console.log(JSON.stringify(response.data));
                 props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Joined auction successfully");
+                setSuccessMsg("Joined game successfully");
             }).catch((error) => {
                 console.log("error222")
-                setErrMsg("Failed to join auction");
+                setErrMsg("Failed to join game");
                 setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
               })
             setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }catch(err){
             console.log("here111");
             console.log(err);
-            setErrMsg("Failed to join auction");
+            setErrMsg(err.message);
         }
     }, 800)
 
@@ -79,25 +81,25 @@ export default function ConfirmModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-2 border-inputColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
                 <div className="flex flex-col items-start p-0
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
-                            <h1>Confirm Bid Detail: {'\u00A0'}{'\u00A0'}</h1>
-                            <p>Product Name <strong>{props.data.product_name}</strong></p>
-                            <p>Bid Price  <strong>${Math.round(props.data.product_price/10*100)/100}</strong></p>
-                            <p>Slot Picked <strong>{props.slot}</strong></p>
-                     </div>
+                            <h1>Confirm Bid Detail {'\u00A0'}{'\u00A0'}</h1>
+                            <p>Product Name: <strong>{props.data.product_name}</strong></p>
+                            <p>Bid Price:  <strong>${Math.round(props.data.product_price/10*100)/100}</strong></p>
+                            <p>Slot Picked: <strong>{props.slot}</strong></p>
+                            <p>Split option: <strong>{props.split}</strong></p>
+                    </div>
 
-                     <div className='w-full navbarSM:w-[180px]'> 
+                    <div className='w-full navbarSM:w-[180px]'> 
                         <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
                     </div>
 
                     <div className='w-full navbarSM:w-[180px]'> 
                         <p className={successMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
                     </div>
-
                     
                     <div className="flex flex-row justify-center items-center gap-20 w-[250px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
                         <button className="flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"

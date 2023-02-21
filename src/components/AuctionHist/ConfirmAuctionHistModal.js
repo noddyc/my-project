@@ -56,17 +56,17 @@ export default function ConfirmAuctionHistModal(props) {
             axios(config).then((response) => {
                 console.log(JSON.stringify(response.data));
                 props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Cancel auction successfully");
+                setSuccessMsg("Cancel game successfully");
             }).catch((error) => {
                 console.log("error222")
-                setErrMsg("Failed to cancel auction");
+                setErrMsg("Failed to cancel game");
                 setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
               })
             setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }catch(err){
             console.log("here111");
             console.log(err);
-            setErrMsg("Failed to cancel auction");
+            setErrMsg("Failed to cancel game");
         }
     }, 800)
 
@@ -74,12 +74,12 @@ export default function ConfirmAuctionHistModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-2 border-inputColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
                 <div className="flex flex-col items-start p-0
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
-                            <h1>Cancel auction Detail: {'\u00A0'}{'\u00A0'}</h1>
+                            <h1>Cancel game Detail: {'\u00A0'}{'\u00A0'}</h1>
                             <p>Product Name <strong>{props.data.product_name}</strong></p>
                             <p>Product Price  <strong>${props.data.product_price}</strong></p>
                             <p>Slot Filled <strong>{props.data.slotsOpen}</strong></p>

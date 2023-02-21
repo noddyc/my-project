@@ -29,8 +29,9 @@ const OVERLAY_STYLES = {
 let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6', 'slot_7','slot_8','slot_9']
 
 export default function BidModal(props) {
-    console.log(props)
+   //  console.log(props)
     let d = props.d.original
+    console.log(d)
 
     // const [slot, setSlot] = useState("");
     const slotRef = useRef();
@@ -40,12 +41,27 @@ export default function BidModal(props) {
     const navigate = useNavigate();
     const [openConfirm, setOpenConfirm] = useState(false)
 
+    const statusConversion = (status, winning)=>{
+      if(status === "OPEN_LIVE"){
+        return "OPEN LIVE"
+      }
+      if(status === "OPEN_NOT_LIVE"){
+        return "OPEN NOT LIVE"
+      }
+      if(status === "WAITING_FOR_DRAW"){
+        return "WAITING FOR DRAW";
+      }
+      if(status === "NO_WINNER_WINNER_NOTIFIED"){
+        return "WINNING NUMBER POSTED"
+      }
+    }
+
 
     if (!props.open) return null
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-2 border-inputColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
                 <div className="flex flex-col items-start p-0
                   isolate w-[300px] gap-4 navbarSM:w-[180px]">
                     <div className=" flex flex-col  w-[300px] h-8 items-center justify-center overflow-scroll navbarSM:w-[180px]">
@@ -53,7 +69,7 @@ export default function BidModal(props) {
                     </div>
 
                     <div className="max-w-[300px] max-h-[188px] overflow-hidden navbarSM:w-[180px]">
-                          <img className="object-center" src={require('../../assets/card-img.jpeg')} alt="" />
+                          <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
                     </div>
 
                     <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
@@ -82,12 +98,13 @@ export default function BidModal(props) {
                      <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
                         <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winning_number}</p>     
                      </div>
-                     <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
+                     
+                     {/* <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
                         <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
-                     </div>
+                     </div> */}
 
                      <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{d.status}</p>     
+                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{statusConversion(d.status)}</p>     
                      </div>
 
                      <div className="flex flex-row justify-center items-center gap-32 w-[300px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
