@@ -36,7 +36,7 @@ export default function Modal(props) {
     const slotFilled = () => {
         let count = 0;
         slotArr.forEach((i, index)=>{
-            if(d[slotArr[index]] === null || (d[slotArr[index]].player1 != null && d[slotArr[index]].player2 != null)){
+            if(d[slotArr[index]] === null || (d[slotArr[index]].player1 != null || d[slotArr[index]].player2 != null)){
                 count++;
             }
         })
@@ -158,7 +158,7 @@ export default function Modal(props) {
                         </select>
                     </div>
 
-                    <div className="flex flex-col  w-[300px] h-8  mb-16 navbarSM:w-[180px]">
+                    <div className={`flex flex-col  w-[300px] h-8  mb-16 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
                               <label htmlFor="splitOption">Split option: </label>
                               <select name="splitOption" id="splitOption" className='w-3/4 border-2 border-inputColor rounded' ref={splitRef}>
                                 {
