@@ -38,35 +38,69 @@ export default function ConfirmAuctionHistModal(props) {
     const navigate = useNavigate()
 
     const submitHandler = _.debounce(async (e)=>{
-        try{
-            let data = qs.stringify({
-              'auctionId': props.data.id,
-              'userId': auth().id,
-              'status': props.data.status,
-            });
-    
-            let config = {
-                method: 'post',
-                url: `${ip}/auction/cancelAuction`,
-                headers: { 
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data : data
-              };
-            axios(config).then((response) => {
-                console.log(JSON.stringify(response.data));
-                props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Cancel game successfully");
-            }).catch((error) => {
-                console.log("error222")
-                setErrMsg("Failed to cancel game");
-                setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
-              })
-            setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
-        }catch(err){
-            console.log("here111");
-            console.log(err);
-            setErrMsg("Failed to cancel game");
+          if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
+              try{
+                let data = qs.stringify({
+                  'auctionId': props.data.id,
+                });
+        
+                let config = {
+                    method: 'post',
+                    url: `${ip}/auction/rollOver`,
+                    headers: { 
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data : data
+                  };
+                axios(config).then((response) => {
+                    console.log(JSON.stringify(response.data));
+                    props.setDetectChange((prev)=>{return !prev})
+                    setSuccessMsg("Roll over successfully");
+                }).catch((error) => {
+                    console.log("error222")
+                    setErrMsg("Failed to roll over");
+                    setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
+                  })
+                setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
+            }catch(err){
+                console.log("here111");
+                console.log(err);
+                setErrMsg("Failed to roll over");
+                return ;
+            }
+          }
+
+          if(props.data.status === 'WAITING_FOR_DRAW'){
+            try{
+              let data = qs.stringify({
+                'auctionId': props.data.id,
+                'userId': auth().id,
+              });
+      
+              let config = {
+                  method: 'post',
+                  url: `${ip}/auction/addHost`,
+                  headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  data : data
+                };
+              axios(config).then((response) => {
+                  console.log(JSON.stringify(response.data));
+                  props.setDetectChange((prev)=>{return !prev})
+                  setSuccessMsg("Join game successfully");
+              }).catch((error) => {
+                  console.log("error222")
+                  setErrMsg("Failed to join game");
+                  setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
+                })
+              setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
+          }catch(err){
+              console.log("here111");
+              console.log(err);
+              setErrMsg("Failed to join game");
+              return;
+          }
         }
     }, 800)
 
@@ -79,7 +113,7 @@ export default function ConfirmAuctionHistModal(props) {
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
-                            <h1>Cancel game Detail: {'\u00A0'}{'\u00A0'}</h1>
+                            <h1>{(props.data.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':props.data.status==='WAITING_FOR_DRAW'?'Join':'') + ' Detail Confirmation'} {'\u00A0'}{'\u00A0'}</h1>
                             <p>Product Name <strong>{props.data.product_name}</strong></p>
                             <p>Product Price  <strong>${props.data.product_price}</strong></p>
                             <p>Slot Filled <strong>{props.data.slotsOpen}</strong></p>

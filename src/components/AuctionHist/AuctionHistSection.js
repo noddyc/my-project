@@ -179,7 +179,8 @@ function AuctionHistSection(props) {
                  return (
                   <div className={`border-4 border-cardBorderColor flex flex-col items-start p-0
                   isolate w-[300px] gap-4 rounded-lg 
-                  ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE" || d.status==="WAITING_FOR_DRAW"? "bg-green-100":""} 
+                  ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"? "bg-green-100":""} 
+                  ${d.status==="WAITING_FOR_DRAW"? "bg-yellow-100":""} 
                   ${d.status==="NO_WINNER_WINNER_NOTIFIED" ?"bg-red-100":""}`} key={index} >          
                       <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
                         <h3>{d.product_name}</h3>

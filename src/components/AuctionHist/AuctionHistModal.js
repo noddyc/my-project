@@ -113,12 +113,12 @@ export default function AuctionHistModal(props) {
                         }}>Close</button>
 
 
-                        <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80 ${d.status ==='IN_PROGRESS' ||
-                        d.status ==='CLOSED'?'':'invisible'}`}
+                    <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor 
+                        text-white rounded-lg navbarSM:w-80 ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' ?'':'invisible'}`}
                         onClick={()=>{
                                 setOpenConfirm(true)
                               }
-                            }>Cancel</button>
+                            }>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW'?'Join':''}</button>
                     </div>
                 </div>
                 <ConfirmAuctionHistModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 
