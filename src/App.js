@@ -1,4 +1,5 @@
 import Registration from "./components/Registration/Registration"
+import Notifications from "./components/Notifications/Notifications";
 import Login from "./components/Login/Login"
 import Home from "./components/Home/Home"
 import AuctionHist from "./components/AuctionHist/AuctionHist";
@@ -58,6 +59,7 @@ function App() {
           </Route>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/logout' element={<Logout/>}/>
+          <Route path='/notifications' element={<Notifications info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
           <Route path="*" element={<h1>Not found</h1>}/>
         </Routes>
       </div>
