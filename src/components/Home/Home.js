@@ -31,7 +31,7 @@ const Home = (props)=>{
 
 return(
     <div>
-        <Navbar socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
+        <Navbar notifications={props.notifications} setNotifications={props.setNotifications}  socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
        info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
         <div className="flex flex-row navbarSM:flex navbarSM:flex-col">
             <LeftSideBar></LeftSideBar>

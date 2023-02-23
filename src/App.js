@@ -28,21 +28,21 @@ function App() {
   useEffect(()=>{
     try{              
       // only display in progress auctions
-        let data = qs.stringify({
-            'statues': ['OPEN_LIVE','OPEN_NOT_LIVE'] 
-          }, {arrayFormat:`indices`});
+          let data = qs.stringify({
+            'userId': auth().id, 
+          });
           let config = {
             method: 'post',
-            url: `${ip}/auction/displayAuction`,
+            url: 'http://localhost:9001/notifications/displayNotifications',
             headers: { 
-              'Content-Type': 'application/x-www-form-urlencoded', 
+              'Content-Type': 'application/x-www-form-urlencoded'
             },
             data : data
           };
           axios(config)
           .then((response) => {
             let data = response.data;
-            setImgPos(new Array(arr.length).fill(1));
+            setNotifications(data);
           })
     }catch(err){
         console.log([err.message])
@@ -62,7 +62,8 @@ function App() {
 
   const [notifiCount, setNotificount] = useState(()=>{
     const storedCount = localStorage.getItem('count');
-    return storedCount !== null ? parseInt(storedCount) : 0;
+    // return storedCount !== null ? parseInt(storedCount) : notifications?.length;
+      return notifications.length !== null ?  notifications?.length : parseInt(storedCount) ;
   });
 
   useEffect(()=>{
@@ -91,25 +92,31 @@ function App() {
 
   }, [change])
 
+
   return (
       <div className="App">
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path=''>
-            <Route path="/main" element={<Home socket={socket} setSocket={setSocket} notifiCount={notifiCount} 
+            <Route path="/main" element={<Home socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications} notifiCount={notifiCount} 
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo} setChange={setChange} />}/>
-            <Route path="/liveauction" element={<LiveAuction socket={socket} setSocket={setSocket} notifiCount={notifiCount} 
+
+            <Route path="/liveauction" element={<LiveAuction socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications} 
+            notifiCount={notifiCount} setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+
+            <Route path="/auctionhist" element={<AuctionHist socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications} 
+            notifiCount={notifiCount}  setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+
+            <Route path="/bidhist" element={<BidHist socket={socket} setSocket={setSocket}  notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
-            <Route path="/auctionhist" element={<AuctionHist socket={socket} setSocket={setSocket} notifiCount={notifiCount}  
-            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
-            <Route path="/bidhist" element={<BidHist socket={socket} setSocket={setSocket}  notifiCount={notifiCount}  
-            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
-            <Route path="/addauction" element={<AddAuction socket={socket} setSocket={setSocket} notifiCount={notifiCount}  
+
+            <Route path="/addauction" element={<AddAuction socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
           </Route>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/logout' element={<Logout/>}/>
-          <Route path='/notifications' element={<Notifications socket={socket} setNotificount={setNotificount} setSocket={setSocket} notifiCount={notifiCount}  info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+          <Route path='/notifications' element={<Notifications socket={socket} notifications={notifications} setNotifications={setNotifications} 
+          setNotificount={setNotificount} setSocket={setSocket} notifiCount={notifiCount}  info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
           <Route path="*" element={<h1>Not found</h1>}/>
         </Routes>
       </div>

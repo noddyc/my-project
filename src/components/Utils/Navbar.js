@@ -4,21 +4,36 @@ import {useNavigate} from "react-router-dom"
 import {NavLink} from 'react-router-dom'
 
 const Navbar = (props) =>{
-    console.log(props)
     const navigate = useNavigate();
     // const [toggle, setToggle] = useState("hidden");
     const [toggle, setToggle] = useState("");
     const [toggleHeight, setToggleHeight] = useState('h-[80px]');
+    const [len, setLen] = useState(props.notifications.filter((e)=>!e.viewed).length)
 
+    console.log(props)
+
+    // useEffect(()=>{
+    //     props.setNotifications(
+    //         (prev)=>{
+    //             let arr = prev.map((e)=>{
+    //                 return {...e, viewed:true}
+    //         })
+    //             return arr; 
+    //         }
+    //     )
+    // }, [])
 
     useEffect(()=>{
         console.log("this is navbar")
-        props.socket.off("increaseNotifyCount").on("increaseNotifyCount", ()=>{
-            props.setNotificount((prev)=>prev+1)
+        props.socket.off("increaseNotifyCount").on("increaseNotifyCount", (e)=>{
+            props.setNotifications((prev)=>[...prev, e])
             // localStorage.setItem('count', props.notifiCount);
         })
     }, [props.socket]);
 
+    useEffect(()=>{
+        setLen(props.notifications.filter((e)=>!e.viewed).length)
+    }, [props.notifications])
 
     useEffect(()=>{
         localStorage.setItem('count', props.notifiCount);
@@ -64,7 +79,7 @@ const Navbar = (props) =>{
                     <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0"><span>{props.info.firstname} {props.info.lastname}</span><span className="w-[126.67px] h-4 not-italic font-medium text-xs leading-4 text-center tracking-[0.5px]">{props.info.identity}</span></div>
                     <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0 relative"><i className="material-icons hover:cursor-pointer" style={{fontSize: '36px'}}
                     onClick={bellClickHandler}>notifications</i>
-                    <div className="absolute top-5 right-10 bg-red-700 w-5 h-5 text-xs text-white flex justify-center items-center rounded-lg">{props.notifiCount}</div>
+                    <div className="absolute top-5 right-10 bg-red-700 w-5 h-5 text-xs text-white flex justify-center items-center rounded-lg">{len}</div>
                     </div>
                     <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0"><img onClick={imgClickHandler} src={require("../../assets/img1.jpeg")} 
                     className="flex flex-row justify-center items-center isolate w-8 h-8 p-0 rounded-2xl" style={{cursor:"pointer", height:"3rem", width:"3rem", borderRadius:"10rem"}}></img></div>
