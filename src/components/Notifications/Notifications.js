@@ -74,28 +74,34 @@ function Notifications(props) {
                         {item.message} (id: {item.id})
                         <div className="gap-4 flex">
                             <button className="border-2 border-black px-2 rounded-lg cursor-pointer" onClick = {async (e)=>{
-                                try{
-                                    console.log(item)
-                                    let data = qs.stringify({
-                                        'id': item.id,
-                                        'response': "ACCEPT"
-                                      });
-                                      let config = {
-                                        method: 'post',
-                                        url: 'http://localhost:9001/notifications/confirmNotifications',
-                                        headers: { 
-                                          'Content-Type': 'application/x-www-form-urlencoded'
-                                        },
-                                        data : data
-                                      };
+                                // try{
+                                //     console.log(item)
+                                //     let data = qs.stringify({
+                                //         'id': item.id,
+                                //         'response': "ACCEPT"
+                                //       });
+                                //       let config = {
+                                //         method: 'post',
+                                //         url: 'http://localhost:9001/notifications/confirmNotifications',
+                                //         headers: { 
+                                //           'Content-Type': 'application/x-www-form-urlencoded'
+                                //         },
+                                //         data : data
+                                //       };
                                       
-                                      axios(config)
-                                      .then((response) => {
-                                        console.log(JSON.stringify(response.data));
-                                      })
-                                }catch(err){
-                                    console.log(err.message)
-                                }
+                                //       axios(config)
+                                //       .then((response) => {
+                                //         console.log(JSON.stringify(response.data));
+                                //       })
+                                // }catch(err){
+                                //     console.log(err.message)
+                                // }
+                                props.socket.emit("increaseCount", 
+                                {
+                                    id: item.id,
+                                    receiverId: item.senderId,
+                                    response: "ACCEPT"
+                                });
                                 props.setNotifications((prev,)=>{
                                     return prev.filter((e,ind)=>{
                                         return ind != index
