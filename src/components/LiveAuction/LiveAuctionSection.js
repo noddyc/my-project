@@ -12,6 +12,7 @@ import { GlobalFilter } from '../Utils/GlobalFilter'
 import { ColumnFilter } from '../Utils/ColumnFilter'
 import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
+import {io} from 'socket.io-client'
 
 function LiveAuctionSection(props) {
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
@@ -39,6 +40,18 @@ function LiveAuctionSection(props) {
       }
     },[])
 
+    // useEffect(()=>{
+    //   console.log("line 27")
+    //   const socket = io('http://localhost:9001');
+    //   socket?.emit("newUser", auth().id)
+    //   props.setSocket(socket);
+    // }, []);
+
+
+    const clickHandler = () => {
+      console.log("hello")
+      props.socket.emit("increaseCount", {receiverId: auth().id});
+    };
   
     useEffect(()=>{
         try{              
@@ -129,7 +142,9 @@ function LiveAuctionSection(props) {
 
     return (
             <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Games</h1></div>
+                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Games</h1>
+                <button className="border-2 border-black cursor-pointer" onClick={clickHandler}>Click11</button></div>
+                
                 <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
                     <label htmlFor="cardbutton">Table Display:</label>
                     <input type="checkbox" id="cardbutton" 

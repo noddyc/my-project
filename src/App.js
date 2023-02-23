@@ -13,12 +13,30 @@ import axios from "axios";
 import qs from 'qs';
 import {ip} from './components/Utils/ip.js'
 import {useAuthUser} from 'react-auth-kit';
+import { io } from "socket.io-client";
 
 function App() {
+  const auth = useAuthUser();
   const [info, setInfo] = useState({})
   const [change, setChange] = useState(false)
   const [toggleInfo, setToggleInfo] = useState("translate-x-full")
-  const auth = useAuthUser();
+
+  const [socket, setSocket] = useState(() => {
+    const storedSocket = localStorage.getItem('socket');
+    return storedSocket !== null ? io.connect(storedSocket) : io('http://localhost:9001');
+  });
+
+  // Emit a newUser event with a user ID when the component mounts
+  useEffect(() => {
+    socket.emit('newUser', auth().id);
+  }, [socket]);
+
+
+
+  const [notifiCount, setNotificount] = useState(()=>{
+    const storedCount = localStorage.getItem('count');
+    return storedCount !== null ? parseInt(storedCount) : 0;
+  });
 
   useEffect(()=>{
     try{
@@ -51,15 +69,20 @@ function App() {
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path=''>
-            <Route path="/main" element={<Home info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo} setChange={setChange} />}/>
-            <Route path="/liveauction" element={<LiveAuction info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
-            <Route path="/auctionhist" element={<AuctionHist info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
-            <Route path="/bidhist" element={<BidHist info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
-            <Route path="/addauction" element={<AddAuction info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            <Route path="/main" element={<Home socket={socket} setSocket={setSocket} notifiCount={notifiCount} 
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo} setChange={setChange} />}/>
+            <Route path="/liveauction" element={<LiveAuction socket={socket} setSocket={setSocket} notifiCount={notifiCount} 
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            <Route path="/auctionhist" element={<AuctionHist socket={socket} setSocket={setSocket} notifiCount={notifiCount}  
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            <Route path="/bidhist" element={<BidHist socket={socket} setSocket={setSocket}  notifiCount={notifiCount}  
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            <Route path="/addauction" element={<AddAuction socket={socket} setSocket={setSocket} notifiCount={notifiCount}  
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
           </Route>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/logout' element={<Logout/>}/>
-          <Route path='/notifications' element={<Notifications info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+          <Route path='/notifications' element={<Notifications socket={socket} setNotificount={setNotificount} setSocket={setSocket} notifiCount={notifiCount}  info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
           <Route path="*" element={<h1>Not found</h1>}/>
         </Routes>
       </div>
