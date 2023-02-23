@@ -50,7 +50,7 @@ function LiveAuctionSection(props) {
 
     const clickHandler = () => {
       console.log("hello")
-      props.socket.emit("increaseCount", {receiverId: 5});
+      props.socket.emit("increaseCount", {receiverId: auth().id});
     };
   
     useEffect(()=>{

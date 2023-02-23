@@ -17,14 +17,39 @@ import { io } from "socket.io-client";
 
 function App() {
   const auth = useAuthUser();
+  const [notifications, setNotifications] = useState([]);
   const [info, setInfo] = useState({})
   const [change, setChange] = useState(false)
   const [toggleInfo, setToggleInfo] = useState("translate-x-full")
-
   const [socket, setSocket] = useState(() => {
     const storedSocket = localStorage.getItem('socket');
     return storedSocket !== null ? io.connect(storedSocket) : io('http://localhost:9001');
   });
+  useEffect(()=>{
+    try{              
+      // only display in progress auctions
+        let data = qs.stringify({
+            'statues': ['OPEN_LIVE','OPEN_NOT_LIVE'] 
+          }, {arrayFormat:`indices`});
+          let config = {
+            method: 'post',
+            url: `${ip}/auction/displayAuction`,
+            headers: { 
+              'Content-Type': 'application/x-www-form-urlencoded', 
+            },
+            data : data
+          };
+          axios(config)
+          .then((response) => {
+            let data = response.data;
+            setImgPos(new Array(arr.length).fill(1));
+          })
+    }catch(err){
+        console.log([err.message])
+    }
+}, [])
+
+
 
   // Emit a newUser event with a user ID when the component mounts
   useEffect(() => {
