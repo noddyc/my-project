@@ -28,8 +28,10 @@ function App() {
 
   // Emit a newUser event with a user ID when the component mounts
   useEffect(() => {
-    socket.emit('newUser', auth().id);
-  }, [socket]);
+    if(auth() != null){
+      socket.emit('newUser', auth().id);
+    }
+  }, [socket, auth]);
 
 
 
