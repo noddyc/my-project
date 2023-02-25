@@ -120,8 +120,8 @@ export default function BidModal(props) {
                             }}>Withdraw</button>
                     </div>
                 </div>
-                <ConfirmBidModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 
-                setUpperOnClose = {props.onClose}
+                <ConfirmBidModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} info={props.info}
+                setUpperOnClose = {props.onClose} socket = {props.socket}
                 setDetectChange={props.setDetectChange}></ConfirmBidModal>
         </div>
         </>,

@@ -346,7 +346,7 @@ function BidHistSection(props) {
                   )
                 }
                 </div>
-                <BidModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></BidModal>
+                <BidModal  open={isOpen} onClose={() => setIsOpen(false)} socket={props.socket} d={ind} setDetectChange={setDetectChange} info={props.info}></BidModal>
             </div>
     );
 }

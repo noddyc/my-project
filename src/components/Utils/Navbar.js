@@ -23,16 +23,19 @@ const Navbar = (props) =>{
     //     )
     // }, [])
 
+    // also retrive notifications from db
     useEffect(()=>{
         console.log("this is navbar")
         props.socket.off("increaseNotifyCount").on("increaseNotifyCount", (e)=>{
             props.setNotifications((prev)=>[...prev, e])
-            // localStorage.setItem('count', props.notifiCount);
+            console.log(props.notifications)
+            localStorage.setItem('count', props.notifiCount);
         })
     }, [props.socket]);
 
     useEffect(()=>{
         setLen(props.notifications.filter((e)=>!e.viewed).length)
+        console.log("len updated")
     }, [props.notifications])
 
     useEffect(()=>{

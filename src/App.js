@@ -25,6 +25,13 @@ function App() {
     const storedSocket = localStorage.getItem('socket');
     return storedSocket !== null ? io.connect(storedSocket) : io('http://localhost:9001');
   });
+  const [notifiCount, setNotificount] = useState(()=>{
+    const storedCount = localStorage.getItem('count');
+    // return storedCount !== null ? parseInt(storedCount) : notifications?.length;
+      return notifications.length !== null ?  notifications?.length : parseInt(storedCount) ;
+  });
+
+
   useEffect(()=>{
     try{              
       // only display in progress auctions
@@ -50,7 +57,6 @@ function App() {
 }, [])
 
 
-
   // Emit a newUser event with a user ID when the component mounts
   useEffect(() => {
     if(auth() != null){
@@ -58,13 +64,6 @@ function App() {
     }
   }, [socket, auth]);
 
-
-
-  const [notifiCount, setNotificount] = useState(()=>{
-    const storedCount = localStorage.getItem('count');
-    // return storedCount !== null ? parseInt(storedCount) : notifications?.length;
-      return notifications.length !== null ?  notifications?.length : parseInt(storedCount) ;
-  });
 
   useEffect(()=>{
     try{

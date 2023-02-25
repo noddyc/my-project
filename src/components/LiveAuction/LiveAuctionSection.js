@@ -143,7 +143,6 @@ function LiveAuctionSection(props) {
     return (
             <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
                 <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Games</h1>
-                {/* <button className="border-2 border-black cursor-pointer" onClick={clickHandler}>Click11</button> */}
                 </div>
                 
                 <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">

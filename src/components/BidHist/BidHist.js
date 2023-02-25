@@ -23,7 +23,7 @@ const BidHist = (props)=>{
        info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
       <div className="flex flex-row h-[calc(100%-80px)] navbarSM:flex navbarSM:flex-col">
             <LeftSideBar></LeftSideBar>
-            <BidHistSection info={props.info}></BidHistSection>
+            <BidHistSection socket={props.socket} info={props.info}></BidHistSection>
       </div>
       <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>

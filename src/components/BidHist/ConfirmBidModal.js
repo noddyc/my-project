@@ -31,7 +31,7 @@ let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6
 
 
 export default function ConfirmBidModal(props) {
-    console.log(props.data)
+    console.log(props)
     const auth = useAuthUser();
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("")
@@ -39,34 +39,50 @@ export default function ConfirmBidModal(props) {
 
     const submitHandler = _.debounce(async (e)=>{
         try{
-            let data = qs.stringify({
-              'auctionId': props.data.auctionId,
-              'userId': auth().id,
-              'slot': props.data.slot_number,
-            });
+          let auctionId = props.data.auctionId
+          let slot = props.data.slot_number
+          let receiverId = props.data.onwerId
+          let senderId = auth().id 
+          props.socket.emit("createNotification", 
+          {
+            name: props.info.firstname+" " + props.info.lastname,
+            auctionId: auctionId,
+            slot: slot,
+            receiverId: receiverId,
+            senderId: senderId
+          })
+          setSuccessMsg("Withdraw request sent successfully");
+          setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1000);
+          // props
+            // let data = qs.stringify({
+            //   'auctionId': props.data.auctionId,
+            //   'userId': auth().id,
+            //   'slot': props.data.slot_number,
+            // });
     
-            let config = {
-                method: 'post',
-                url: `${ip}/bid/withdrawBid1`,
-                headers: { 
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data : data
-              };
-            axios(config).then((response) => {
-                console.log(JSON.stringify(response.data));
-                props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Withdraw selection successfully");
-            }).catch((error) => {
-                console.log("error222")
-                setErrMsg("Failed to withdraw selection");
-                setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
-              })
-            setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
+            // let config = {
+            //     method: 'post',
+            //     url: `${ip}/bid/withdrawBid1`,
+            //     headers: { 
+            //       'Content-Type': 'application/x-www-form-urlencoded'
+            //     },
+            //     data : data
+            //   };
+            // axios(config).then((response) => {
+            //     console.log(JSON.stringify(response.data));
+            //     props.setDetectChange((prev)=>{return !prev})
+            //     setSuccessMsg("Withdraw selection successfully");
+            // }).catch((error) => {
+            //     console.log("error222")
+            //     setErrMsg("Failed to withdraw selection");
+            //     setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
+            //   })
+            // setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }catch(err){
             console.log("here111");
             console.log(err);
             setErrMsg("Failed to withdraw selection");
+            setTimeout(()=>{setErrMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }
     }, 800)
 

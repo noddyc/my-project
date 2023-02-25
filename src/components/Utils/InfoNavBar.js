@@ -10,7 +10,7 @@ const InfoNavBar = (props)=>{
 
     return (
         <div className={`flex flex-col items-center h-screen w-80
-        fixed right-0 top-0  ${props.toggleInfo}
+        fixed right-0 top-0   ${props.toggleInfo}
         border-l-2  border-inputColor text-2xl text-center transition-all duration-500 bg-white navbarSM:hidden`}>
                
             <div className="flex justify-end w-full"><i style={{cursor:"pointer", display:"block"}} onClick={buttonHandler} className="material-icons">close</i></div>

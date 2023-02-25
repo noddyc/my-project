@@ -19,7 +19,6 @@ function AuctionForm(props) {
     const navigate = useNavigate();
 
 
-
     let priceRegex = /^[1-9][0-9]*$/;
 
     const oneDayAhead = (endTime)=>{
@@ -154,6 +153,7 @@ function AuctionForm(props) {
                         <option value="night">Night: 21:22:00</option>
                     </select>
                 </div>
+                
 
                 <div className='w-full'> 
                     <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>

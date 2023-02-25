@@ -8,6 +8,9 @@ import axios from 'axios';
 import qs from 'qs';
 
 function Notifications(props) {
+    console.log(props)
+    let name = props.info.firstname+" " + props.info.lastname;
+    console.log(name);
     const [like, setLike] = useState(0);
     const auth = useAuthUser();
 
@@ -44,6 +47,8 @@ function Notifications(props) {
     //     }
     // }, [])
 
+
+    
     useEffect(()=>{
         return ()=>{
             props.setNotifications(
@@ -68,36 +73,46 @@ function Notifications(props) {
         <div className="flex flex-row h-[calc(100%-80px)] navbarSM:flex navbarSM:flex-col">
               <LeftSideBar></LeftSideBar>
               <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div>Notifications</div>
+                <div className="mb-2 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Notifications</h1></div>
+                <div className="flex flex-col gap-8 absolute top-20 left-8">
                 {
                     props.notifications.map((item, index)=>{
-                        return (<div key={index} className={`flex flex-col border-2 border-black p-2 rounded-lg gap-2 ${!item.viewed?'bg-red-200':''}`}>
-                        {item.message} (id: {item.id})
+                        console.log(item)
+                        return (<div key={index} className={`flex flex-col border-2 border-black p-2 rounded-lg gap-2 hover:shadow-xl
+                         ${!item.viewed?'bg-red-100':'bg-cardBGColor'}`}>
+                        {item.message}
                         <div className="gap-4 flex">
-
                             {item.type !== "RETRACTION_RECEIVE"? 
-                                 <><button className="border-2 border-black px-2 rounded-lg cursor-pointer" onClick = {async (e)=>{
+                                 <><button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor" onClick = {async (e)=>{
                                     props.socket.emit("increaseCount", 
                                     {
                                         id: item.id,
                                         receiverId: item.senderId,
                                         response: "ACCEPT"
                                     });
-                                    props.setNotifications((prev,)=>{
+                                    props.setNotifications((prev)=>{
                                         return prev.filter((e,ind)=>{
                                             return ind != index
                                         })
                                     })
-                                }}>Confirm</button><button className="border-2 border-black px-2 rounded-lg cursor-pointer">Decline</button></>:
-                                <button className="border-2 border-black px-2 rounded-lg cursor-pointer">dismiss</button>}
+                                }}>Confirm</button><button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor">Decline</button></>:
+
+                                <button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor"
+                                onClick={async ()=>{
+                                    props.setNotifications((prev)=>{
+                                        return prev.filter((e,ind)=>{
+                                            return ind != index
+                                        })
+                                    })
+                                }
+                                }
+                                >Dismiss</button>}
                             
                         </div>
                         </div> )
-                    }
-
-                    )
+                    })
                 }        
-              
+                </div>
               </div>
         </div>
         <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
