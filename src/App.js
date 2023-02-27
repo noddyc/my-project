@@ -32,29 +32,29 @@ function App() {
   });
 
 
-  useEffect(()=>{
-    try{              
-      // only display in progress auctions
-          let data = qs.stringify({
-            'userId': auth().id, 
-          });
-          let config = {
-            method: 'post',
-            url: 'http://localhost:9001/notifications/displayNotifications',
-            headers: { 
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data : data
-          };
-          axios(config)
-          .then((response) => {
-            let data = response.data;
-            setNotifications(data);
-          })
-    }catch(err){
-        console.log([err.message])
-    }
-}, [])
+//   useEffect(()=>{
+//     try{              
+//       // only display in progress auctions
+//           let data = qs.stringify({
+//             'userId': auth().id, 
+//           });
+//           let config = {
+//             method: 'post',
+//             url: 'http://localhost:9001/notifications/displayNotifications',
+//             headers: { 
+//               'Content-Type': 'application/x-www-form-urlencoded'
+//             },
+//             data : data
+//           };
+//           axios(config)
+//           .then((response) => {
+//             let data = response.data;
+//             setNotifications(data);
+//           })
+//     }catch(err){
+//         console.log([err.message])
+//     }
+// }, [])
 
 
   // Emit a newUser event with a user ID when the component mounts
@@ -65,31 +65,31 @@ function App() {
   }, [socket, auth]);
 
 
-  useEffect(()=>{
-    try{
-        console.log(ip)
-        let data = qs.stringify({
-            'id': auth().id 
-          }); 
-        let config = {
-            method: 'post',
-            url: `${ip}/user/getInfo`,
-            headers: { 
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data : data
-        };
-        axios(config).then(
-            (response)=>{
-                console.log(response.data.timezone)
-                setInfo(response.data)
-            }
-        )            
-    }catch(err){
-        console.log(err.message)
-    }
+  // useEffect(()=>{
+  //   try{
+  //       console.log(ip)
+  //       let data = qs.stringify({
+  //           'id': auth().id 
+  //         }); 
+  //       let config = {
+  //           method: 'post',
+  //           url: `${ip}/user/getInfo`,
+  //           headers: { 
+  //             'Content-Type': 'application/x-www-form-urlencoded'
+  //           },
+  //           data : data
+  //       };
+  //       axios(config).then(
+  //           (response)=>{
+  //               console.log(response.data.timezone)
+  //               setInfo(response.data)
+  //           }
+  //       )            
+  //   }catch(err){
+  //       console.log(err.message)
+  //   }
 
-  }, [change])
+  // }, [change])
 
 
   return (

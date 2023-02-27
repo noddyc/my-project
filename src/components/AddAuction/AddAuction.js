@@ -57,36 +57,14 @@ const AddAuction = (props)=>{
 
 return(
     <div className="flex-col">
-        <Navbar notifications={props.notifications} setNotifications={props.setNotifications} socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
-       info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
+        {props.info !== undefined && <Navbar notifications={props.notifications} setNotifications={props.setNotifications}  socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
+       info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>}
+       
         <div className=" flex flex-row navbarSM:flex navbarSM:flex-col ">
             <LeftSideBar></LeftSideBar>
             <AuctionForm info={props.info}></AuctionForm>
 
             {/* //////////////////// */}
-                        <div className='mb-16'>
-                    <form onSubmit={handleSubmitImg}>
-                        <label htmlFor="image-upload">Upload Images:</label>
-                        <input
-                        id="image-upload"
-                        type="file"
-                        multiple
-                        onChange={handleImageChange}
-                        />
-                        <br />
-                        <button type="submit">Submit</button>
-                    </form>
-                    {selectedFiles.length > 0 && (
-                        <div>
-                        {selectedFiles.map((file, index) => (
-                            <div key={index}>
-                            <img src={URL.createObjectURL(file)} alt="preview" />
-                            <button onClick={() => handleImageRemove(index)}>Remove</button>
-                            </div>
-                        ))}
-                        </div>
-                    )}
-                </div>
 
         {/* //////////////////// */}
         </div>

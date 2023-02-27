@@ -2,26 +2,70 @@ import {useState} from "react";
 import React,{useEffect} from 'react';
 import {useNavigate} from "react-router-dom"
 import {NavLink} from 'react-router-dom'
+import axios from "axios";
+import qs from 'qs';
+import {ip} from './ip.js'
+import {useAuthUser} from 'react-auth-kit';
 
 const Navbar = (props) =>{
     const navigate = useNavigate();
     // const [toggle, setToggle] = useState("hidden");
+    const auth = useAuthUser();
     const [toggle, setToggle] = useState("");
     const [toggleHeight, setToggleHeight] = useState('h-[80px]');
     const [len, setLen] = useState(props.notifications.filter((e)=>!e.viewed).length)
 
     console.log(props.info.firstname)
+    useEffect(()=>{
+        try{
+            console.log(ip)
+            let data = qs.stringify({
+                'id': auth().id 
+              }); 
+            let config = {
+                method: 'post',
+                url: `${ip}/user/getInfo`,
+                headers: { 
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data : data
+            };
+            axios(config).then(
+                (response)=>{
+                    console.log(response.data.timezone)
+                    props.setInfo(response.data)
+                }
+            )            
+        }catch(err){
+            console.log(err.message)
+        }
+    
+      }, [props.change])
 
-    // useEffect(()=>{
-    //     props.setNotifications(
-    //         (prev)=>{
-    //             let arr = prev.map((e)=>{
-    //                 return {...e, viewed:true}
-    //         })
-    //             return arr; 
-    //         }
-    //     )
-    // }, [])
+      useEffect(()=>{
+        try{              
+          // only display in progress auctions
+              let data = qs.stringify({
+                'userId': auth().id, 
+              });
+              let config = {
+                method: 'post',
+                url: 'http://localhost:9001/notifications/displayNotifications',
+                headers: { 
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data : data
+              };
+              axios(config)
+              .then((response) => {
+                let data = response.data;
+                props.setNotifications(data);
+              })
+        }catch(err){
+            console.log([err.message])
+        }
+    }, [])
+    
 
     // also retrive notifications from db
     useEffect(()=>{
