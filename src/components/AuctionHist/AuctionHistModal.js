@@ -60,12 +60,12 @@ export default function AuctionHistModal(props) {
                         <h3>{d.product_name}</h3>
                     </div>
 
-                    <div className="max-w-[300px] max-h-[188px] overflow-hidden navbarSM:w-[180px]">
+                    {/* <div className="max-w-[300px] max-h-[188px] overflow-hidden navbarSM:w-[180px]">
                           <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
-                    </div>
+                    </div> */}
 
                     <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-2 pr-2 navbarSM:w-[180px]">
+                      overflow-scroll text-roboto pl-2 pr-2 break-all navbarSM:w-[180px]">
                         <p>{d.product_description}</p>
                     </div>
 

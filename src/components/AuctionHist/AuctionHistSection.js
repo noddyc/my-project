@@ -24,7 +24,11 @@ function AuctionHistSection(props) {
     const [detail, setDetail] = useState("true");
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
-    
+
+    ////
+    const [imgPos, setImgPos] = useState([]);
+    const [img, setImg] = useState(null);
+    ////
 
     const [MOCK_DATA, setMOCK_DATA] = useState([])
 
@@ -76,7 +80,8 @@ function AuctionHistSection(props) {
 
   
     useEffect(()=>{
-        try{              
+        try{    
+            let auctionId = [];          
             let data = qs.stringify({
                 'statues': ["OPEN_NOT_LIVE", "OPEN_LIVE", "WAITING_FOR_DRAW", "NO_WINNER_WINNER_NOTIFIED"],
                 'ownerId': auth().id,
@@ -93,6 +98,12 @@ function AuctionHistSection(props) {
               axios(config)
               .then((response) => {
                 let data = response.data;
+
+                data.forEach((e)=>{
+                  auctionId.push(e.id);
+                })
+
+
                 let arr = [];
                 data.forEach((e, index)=>{
                     console.log(e)
@@ -101,6 +112,58 @@ function AuctionHistSection(props) {
                 // console.log(arr);
                 setDisplay(arr)
                 setMOCK_DATA(arr);
+                setImgPos(new Array(arr.length).fill(0));
+              })
+              .then((response)=>{
+                let data = qs.stringify({
+                  'auctionId': auctionId
+                }, {arrayFormat:`indices`});
+
+                let config = {
+                  method: 'post',
+                  url: 'http://localhost:9001/auction/getImage',
+                  headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  data : data
+                };
+                
+                axios(config)
+                .then((response) => {
+                  const myMap = new Map();
+                  response.data.forEach(
+                    (e)=>{
+                      console.log(e)
+                      let key = e.auctionId;
+                      if(!myMap.has(key)){
+                        let arr = [];
+
+                        const base64Image = btoa(
+                          new Uint8Array(e.imgData.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                          )
+                        );
+
+                        arr.push(base64Image)
+                        myMap.set(key, arr)
+                      }else{
+                        let arr = myMap.get(key);
+
+                        const base64Image = btoa(
+                          new Uint8Array(e.imgData.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                          )
+                        );
+              
+                        arr.push(base64Image)
+                      }
+                    }
+                  )
+                  setImg(myMap);
+                  console.log(myMap)
+                })
               })
         }catch(err){
             console.log([err.message])
@@ -187,8 +250,38 @@ function AuctionHistSection(props) {
                         <h3>{d.product_name}</h3>
                       </div>
 
-                      <div className="max-w-[300px] max-h-[188px] overflow-hidden">
-                          <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
+                      <div className="max-w-[300px] max-h-[188px] overflow-hidden relative">
+                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r opacity-70 hover:w-6"
+                          onClick={(e)=>{
+                            const updatedItems = [...imgPos];
+                            const newImgPos = updatedItems[index]-1;
+                            if(newImgPos < 0){
+                              updatedItems[index] = img.has(d.id)?img.get(d.id).length:3;
+                              setImgPos(updatedItems);
+                              return;
+                            }
+                            updatedItems[index] = newImgPos;
+                            setImgPos(updatedItems);
+                          }}>
+                              <i className="material-icons text-base">arrow_back_ios</i>
+                          </button>
+                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" 
+                          src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
+                          {d.id && img && !img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l opacity-70 hover:w-6"
+                          onClick={(e)=>{
+                            const updatedItems = [...imgPos];
+                            const newImgPos = updatedItems[index]+1;
+                            if(newImgPos > (img.has(d.id)?img.get(d.id).length-1:3)){
+                              updatedItems[index] = 0;
+                              setImgPos(updatedItems);
+                              return;
+                            }
+                            updatedItems[index] = newImgPos;
+                            setImgPos(updatedItems);
+                          }}>
+                              <i className="material-icons text-base">arrow_forward_ios</i>
+                          </button>
                       </div>
 
 

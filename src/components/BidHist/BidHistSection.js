@@ -23,6 +23,10 @@ function BidHistSection(props) {
     const [detail, setDetail] = useState("true");
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
+
+    const [imgPos, setImgPos] = useState([]);
+
+    const [img, setImg] = useState(null);
     
     
 
@@ -75,6 +79,7 @@ function BidHistSection(props) {
   
     useEffect(()=>{
         try{              
+            let auctionId = [];
             let data = qs.stringify({
                 'userId': auth().id });
               let config = {
@@ -88,9 +93,19 @@ function BidHistSection(props) {
               axios(config)
               .then((response) => {
                 let data = response.data;
+
+                data.forEach((e)=>{
+                  auctionId.push(e.auctionId);
+                })
+
+                auctionId = auctionId.filter((value, index, self)=>{
+                  return self.indexOf(value) === index;
+                })
+                console.log(auctionId)
+
                 let arr = [];
                 data.forEach((e, index)=>{
-                    console.log(e.Auction)
+                    // console.log(e.Auction)
                     arr.push({id: e.id, userId:e.userId, slot_number:e.slot_number,
                     auctionId: e.auctionId, end_time: e.Auction['end_time'],
                     product_description: e.Auction['product_description'],
@@ -104,6 +119,61 @@ function BidHistSection(props) {
                 // console.log(arr);
                 setDisplay(arr)
                 setMOCK_DATA(arr);
+                setImgPos(new Array(arr.length).fill(0));
+              })
+              .then((response)=>{
+                let data = qs.stringify({
+                  'auctionId': auctionId
+                }, {arrayFormat:`indices`});
+
+                let config = {
+                  method: 'post',
+                  url: 'http://localhost:9001/auction/getImage',
+                  headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  data : data
+                };
+                
+                axios(config)
+                .then((response) => {
+                  const myMap = new Map();
+                  response.data.forEach(
+                    (e)=>{
+                      console.log(e)
+                      let key = e.auctionId;
+                      if(!myMap.has(key)){
+                        let arr = [];
+
+                        const base64Image = btoa(
+                          new Uint8Array(e.imgData.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                          )
+                        );
+
+                        arr.push(base64Image)
+                        myMap.set(key, arr)
+                      }else{
+                        let arr = myMap.get(key);
+
+                        const base64Image = btoa(
+                          new Uint8Array(e.imgData.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                          )
+                        );
+              
+                        arr.push(base64Image)
+                      }
+                    }
+                  )
+                  setImg(myMap);
+                  // console.log(myMap)
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
               })
         }catch(err){
             console.log([err.message])
@@ -189,13 +259,43 @@ function BidHistSection(props) {
                         <h3>{d.product_name}</h3>
                       </div>
 
-                      <div className="max-w-[300px] max-h-[188px] overflow-hidden">
-                          <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
+                      <div className="max-w-[300px] max-h-[188px] overflow-hidden relative">
+                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r opacity-70 hover:w-6"
+                          onClick={(e)=>{
+                            const updatedItems = [...imgPos];
+                            const newImgPos = updatedItems[index]-1;
+                            if(newImgPos < 0){
+                              updatedItems[index] = img.has(d.auctionId)?img.get(d.auctionId).length:3;
+                              setImgPos(updatedItems);
+                              return;
+                            }
+                            updatedItems[index] = newImgPos;
+                            setImgPos(updatedItems);
+                          }}>
+                              <i className="material-icons text-base">arrow_back_ios</i>
+                          </button>
+                          {d.auctionId && img  &&  img.has(d.auctionId) && <img className=" min-w-[290px] min-h-[188px] object-center" 
+                          src={`data:image;base64,${img.get(d.auctionId)[imgPos[index]]}`} alt="image"></img> }
+                          {d.auctionId && img && !img.has(d.auctionId) && <img className=" min-w-[290px] min-h-[188px] object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l opacity-70 hover:w-6"
+                          onClick={(e)=>{
+                            const updatedItems = [...imgPos];
+                            const newImgPos = updatedItems[index]+1;
+                            if(newImgPos > (img.has(d.auctionId)?img.get(d.auctionId).length-1:3)){
+                              updatedItems[index] = 0;
+                              setImgPos(updatedItems);
+                              return;
+                            }
+                            updatedItems[index] = newImgPos;
+                            setImgPos(updatedItems);
+                          }}>
+                              <i className="material-icons text-base">arrow_forward_ios</i>
+                          </button>
                       </div>
 
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-8 pr-8">
+                      overflow-scroll text-roboto pl-8 pr-8 break-all">
                         <p>{d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description}
@@ -244,7 +344,7 @@ function BidHistSection(props) {
                   
                                 setInd({original: {...d}});
                                 setIsOpen(true);
-                                console.log(ind)
+                                // console.log(ind)
                             }}>Detail</button>
                     </div>
                   </div> )}) : (
@@ -333,7 +433,7 @@ function BidHistSection(props) {
                                             <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
                                             <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
                                                 setInd(row);
-                                                console.log(ind)
+                                                // console.log(ind)
                                                 setIsOpen(true);
                                               }}>detail</button>
                                               </div></td>
