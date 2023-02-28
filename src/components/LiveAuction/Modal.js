@@ -83,7 +83,7 @@ export default function Modal(props) {
                     </div>
 
                     <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto  pr-2 navbarSM:w-[180px]">
+                      overflow-scroll text-roboto  pr-4 break-all navbarSM:w-[180px] ">
                         <p>{d.product_description}</p>
                     </div>
 

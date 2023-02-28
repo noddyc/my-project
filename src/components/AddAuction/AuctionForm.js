@@ -129,6 +129,7 @@ function AuctionForm(props) {
                                 setPrice("")
                                 setEndTime("")
                                 setSuccessMsg("")
+                                setErrMsg("")
                                 setSelectedImages([])
                             },1000);
                         }
@@ -217,7 +218,7 @@ function AuctionForm(props) {
                         ref={imgRef}
                         type="file" multiple accept="image/*"
                         name="image"
-                        onChange={onSelectFile} className="w-[12rem] mb-4" 
+                        onChange={onSelectFile} className="w-[5.8rem] mb-4" 
                         />
                     </label>
                     <br />

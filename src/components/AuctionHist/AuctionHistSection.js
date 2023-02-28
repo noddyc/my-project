@@ -193,7 +193,7 @@ function AuctionHistSection(props) {
 
 
                       <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-8 pr-8">
+                      overflow-scroll text-roboto pl-8 pr-8 break-all">
                         <p>{d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description} 
                         {d.product_description} {d.product_description} {d.product_description}

@@ -15,6 +15,7 @@ import {debounce} from 'lodash'
 import {io} from 'socket.io-client'
 
 function LiveAuctionSection(props) {
+   
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
     const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
@@ -28,6 +29,8 @@ function LiveAuctionSection(props) {
     const [MOCK_DATA, setMOCK_DATA] = useState([]);
     const [keyword, setKeyWord] = useState("");
     const [imgPos, setImgPos] = useState([]);
+
+    const [img, setImg] = useState(null);
 
     const keywordHandler = debounce((e)=>{
       setKeyWord(e.target.value)
@@ -52,9 +55,10 @@ function LiveAuctionSection(props) {
       console.log("hello")
       props.socket.emit("increaseCount", {receiverId: auth().id});
     };
-  
+
     useEffect(()=>{
         try{              
+          let auctionId = [];
           // only display in progress auctions
             let data = qs.stringify({
                 'statues': ['OPEN_LIVE','OPEN_NOT_LIVE'] 
@@ -70,6 +74,13 @@ function LiveAuctionSection(props) {
               axios(config)
               .then((response) => {
                 let data = response.data;
+
+                data.forEach((e)=>{
+                  auctionId.push(e.id);
+                })
+
+                // console.log(data)
+
                 let arr = [];
                 data.filter((e)=>{
                   if(keyword === ""){
@@ -83,12 +94,64 @@ function LiveAuctionSection(props) {
                   return false;
 
                 }).forEach((e, index)=>{
-                    // console.log(e)
                     arr.push(e)
                 })
                 setDisplay(arr)
                 setMOCK_DATA(arr);
-                setImgPos(new Array(arr.length).fill(1));
+                setImgPos(new Array(arr.length).fill(0));
+              }).then((response)=>{
+                let data = qs.stringify({
+                  'auctionId': auctionId
+                }, {arrayFormat:`indices`});
+
+                let config = {
+                  method: 'post',
+                  url: 'http://localhost:9001/auction/getImage',
+                  headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  data : data
+                };
+                
+                axios(config)
+                .then((response) => {
+                  const myMap = new Map();
+                  response.data.forEach(
+                    (e)=>{
+                      console.log(e)
+                      let key = e.auctionId;
+                      if(!myMap.has(key)){
+                        let arr = [];
+
+                        const base64Image = btoa(
+                          new Uint8Array(e.imgData.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                          )
+                        );
+
+                        arr.push(base64Image)
+                        myMap.set(key, arr)
+                      }else{
+                        let arr = myMap.get(key);
+
+                        const base64Image = btoa(
+                          new Uint8Array(e.imgData.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                          )
+                        );
+              
+                        arr.push(base64Image)
+                      }
+                    }
+                  )
+                  setImg(myMap);
+                  console.log(myMap)
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
               })
         }catch(err){
             console.log([err.message])
@@ -140,6 +203,7 @@ function LiveAuctionSection(props) {
     const { globalFilter } = state
     const { pageIndex, pageSize } = state
 
+
     return (
             <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
                 <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Games</h1>
@@ -167,13 +231,21 @@ function LiveAuctionSection(props) {
 
                 {
                  detail !=='false' ? display.map((d, index) => {
-                //  console.log(d);
+                  console.log(d)
                  return (
                   <div className="border-4 border-cardBorderColor flex flex-col items-start p-0
                   isolate w-[300px] gap-4 rounded-lg bg-cardBGColor hover:bg-cardHoverColor" key={index} >  
+
                       <div className=" flex flex-col  w-[300px] h-8 pl-2 mt-2">
                             <p>Host:{'\u00A0'}{'\u00A0'}<strong>{d.User.firstname} {d.User.lastname}</strong></p>
                       </div>
+
+                      {/* <div> */}
+                        {/* {d.id !== null && img  &&  img.has(d.id) && <img src={`data:image/png;base64,${img.get(d.id)[0]}`} alt="image"></img> } */}
+                        {/* <img src={URL.createObjectURL(new Blob(img.get(d.id)[0]), { type: 'image/jpeg' })} alt="image"></img> */}
+                        {/* {d.id !== null && img  &&  img.has(d.id) && <p>{img.get(d.id)[0]}</p> } */}
+                        {/* {<p>{URL.createObjectURL(new Blob(img.get(d.id)[0]), { type: 'image/jpeg' })}</p>} */}
+                      {/* </div> */}
 
                       <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
                         <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>    
@@ -187,7 +259,7 @@ function LiveAuctionSection(props) {
                       </div>
 
                       <div className="w-[300px] h-16 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-4 pr-4">
+                      overflow-scroll text-roboto pl-4 pr-6 break-all">
                         <p>{d.product_description} 
                         </p>
                       </div>
@@ -197,8 +269,8 @@ function LiveAuctionSection(props) {
                           onClick={(e)=>{
                             const updatedItems = [...imgPos];
                             const newImgPos = updatedItems[index]-1;
-                            if(newImgPos < 1){
-                              updatedItems[index] = 3;
+                            if(newImgPos < 0){
+                              updatedItems[index] = img.has(d.id)?img.get(d.id).length:3;
                               setImgPos(updatedItems);
                               return;
                             }
@@ -207,13 +279,15 @@ function LiveAuctionSection(props) {
                           }}>
                               <i className="material-icons text-base">arrow_back_ios</i>
                           </button>
-                          <img className=" min-w-[290px] min-h-[188px] object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />
+                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" 
+                          src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
+                          {d.id && img && !img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
                           <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l opacity-70 hover:w-6"
                           onClick={(e)=>{
                             const updatedItems = [...imgPos];
                             const newImgPos = updatedItems[index]+1;
-                            if(newImgPos > 3){
-                              updatedItems[index] = 1;
+                            if(newImgPos > (img.has(d.id)?img.get(d.id).length-1:3)){
+                              updatedItems[index] = 0;
                               setImgPos(updatedItems);
                               return;
                             }
