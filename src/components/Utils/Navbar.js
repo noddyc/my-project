@@ -69,12 +69,12 @@ const Navbar = (props) =>{
     
 
     // also retrive notifications from db
+    // want to make instant changes on bid history
+
     useEffect(()=>{
         console.log("this is navbar")
         props.socket.off("increaseNotifyCount").on("increaseNotifyCount", (e)=>{
-            console.log(e)
             props.setNotifications((prev)=>[...prev, e])
-            // console.log(props.notifications)
             localStorage.setItem('count', props.notifiCount);
         })
     }, [props.socket]);
@@ -84,9 +84,6 @@ const Navbar = (props) =>{
         console.log("len updated")
     }, [props.notifications])
 
-    // useEffect(()=>{
-    //     localStorage.setItem('count', props.notifiCount);
-    // }, [props.notifiCount])
 
 
     const navLinkStyles = ({isActive})=>{

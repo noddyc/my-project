@@ -7,7 +7,15 @@ import {useAuthUser} from 'react-auth-kit';
 import axios from 'axios';
 import qs from 'qs';
 
+
+function getSlot(sentence){
+    const lastWord = sentence.split(" ").pop(); 
+    const lastNumber = parseInt(lastWord); 
+    return lastNumber
+}
+
 function Notifications(props) {
+
     console.log(props)
     let name = props.info.firstname+" " + props.info.lastname;
     console.log(name);
@@ -26,7 +34,7 @@ function Notifications(props) {
         props.setNotifications(
             (prev)=>{
                 let arr = prev.map((e)=>{
-                    
+                    console.log(e)
                     return {...e, viewed: true}
             })
                 return arr; 
@@ -34,7 +42,6 @@ function Notifications(props) {
         )
         // because set notifications is async so props.notifications is not updated yet
         // let mostRecentArr = props.notifications.map((e)=>{return e.id});
-        // console.log(mostRecentArr)
         try{
             let data = qs.stringify({
                 'list':auth().id
@@ -57,31 +64,6 @@ function Notifications(props) {
         }
     }, [])
 
-    // uncomment for update in db
-    // useEffect(()=>{
-    //     let mostRecentArr = props.notifications.filter((e)=>{return !e.viewed}).map((e)=>{return e.id});
-    //     try{
-    //         let data = qs.stringify({
-    //             'list':mostRecentArr
-    //           });
-    //         let config = {
-    //             method: 'post',
-    //             url: 'http://localhost:9001/notifications/updateNotifications',
-    //             headers: { 
-    //               'Content-Type': 'application/x-www-form-urlencoded'
-    //             },
-    //             data : data
-    //           };
-              
-    //         axios(config)
-    //           .then((response) => {
-    //             console.log(JSON.stringify(response.data));
-    //         })
-    //     }catch(err){
-    //         console.log(err.message)
-    //     }
-    // }, [])
-
 
     return (
         <div className="h-screen relative">
@@ -94,7 +76,8 @@ function Notifications(props) {
                 <div className="flex flex-col gap-8 absolute top-20 left-8">
                 {
                     props.notifications.map((item, index)=>{
-                        // console.log(item)
+                        console.log(item)
+                        let slot = getSlot(item.message)
                         return (<div key={index} className={`flex flex-col border-2 border-black p-2 rounded-lg gap-2 hover:shadow-xl
                          ${!item.viewed?'bg-red-100':'bg-cardBGColor'}`}>
                         {item.message}
@@ -103,6 +86,8 @@ function Notifications(props) {
                                  <><button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor" onClick = {async (e)=>{
                                     props.socket.emit("increaseCount", 
                                     {
+                                        auctionId: item.auctionId,
+                                        slot: slot,
                                         id: item.id,
                                         receiverId: item.senderId,
                                         response: "ACCEPT"
@@ -112,7 +97,9 @@ function Notifications(props) {
                                             return ind != index
                                         })
                                     })
-                                }}>Confirm</button><button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor">Decline</button></>:
+                                }}>Confirm</button>
+                                
+                                <button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor">Decline</button></>:
 
                                 <button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor"
                                 onClick={async ()=>{
