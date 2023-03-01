@@ -155,7 +155,7 @@ function AuctionForm(props) {
 
 
     return (
-        <div className='h-screen w-full flex-col items-center justify-center relative'>
+        <div className='h-screen w-full flex-col items-center justify-center relative font-inter font-light'>
             <div className='border-t-2 border-r-2 border-l-2 border-inputColor w-1/2 absolute left-1/4 top-16  bg-white
             navbarSM:w-3/4 navbarSM:left-[15%]'>
                 <h1 className='h-24 not-italic font-normal text-center text-[60px] leading-[94px] font-roboto text-gray-700

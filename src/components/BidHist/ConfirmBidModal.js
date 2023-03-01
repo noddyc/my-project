@@ -53,31 +53,6 @@ export default function ConfirmBidModal(props) {
           })
           setSuccessMsg("Withdraw request sent successfully");
           setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1000);
-          // props
-            // let data = qs.stringify({
-            //   'auctionId': props.data.auctionId,
-            //   'userId': auth().id,
-            //   'slot': props.data.slot_number,
-            // });
-    
-            // let config = {
-            //     method: 'post',
-            //     url: `${ip}/bid/withdrawBid1`,
-            //     headers: { 
-            //       'Content-Type': 'application/x-www-form-urlencoded'
-            //     },
-            //     data : data
-            //   };
-            // axios(config).then((response) => {
-            //     console.log(JSON.stringify(response.data));
-            //     props.setDetectChange((prev)=>{return !prev})
-            //     setSuccessMsg("Withdraw selection successfully");
-            // }).catch((error) => {
-            //     console.log("error222")
-            //     setErrMsg("Failed to withdraw selection");
-            //     setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
-            //   })
-            // setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }catch(err){
             console.log("here111");
             console.log(err);
@@ -90,7 +65,7 @@ export default function ConfirmBidModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
                 <div className="flex flex-col items-start p-0
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     

@@ -231,31 +231,12 @@ function LiveAuctionSection(props) {
                  detail !=='false' ? display.map((d, index) => {
                   console.log(d)
                  return (
-                  <div className="border-4 border-cardBorderColor flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 rounded-lg bg-cardBGColor hover:bg-cardHoverColor" key={index} >  
+                  <div className="border-1 border-cardBorderColor flex flex-col items-start
+                  isolate w-[325px] rounded-2xl bg-green-200
+                  hover:bg-cardHoverColor" key={index} >  
 
-                      <div className=" flex flex-col w-[300px] h-8 pl-2 mt-2  ">
-                            <p>Host:{'\u00A0'}{'\u00A0'}
-                            <strong>{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</strong></p>
-                      </div>
-
-                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4  ">
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>    
-                        <p><span>Option: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')}</strong></p> 
-                      </div>
-
-                      <div className=" flex flex-col  w-[300px] h-8  pl-2 justify-center overflow-scroll  ">
-                        <h3>{d.product_name}</h3>
-                      </div>
-
-                      <div className="w-[300px] h-16 not-italic   text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-4 pr-6 break-all ">
-                        <p>{d.product_description} 
-                        </p>
-                      </div>
-                      
-                      <div className="max-w-[300px] max-h-[188px] overflow-hidden relative  ">
-                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r opacity-70 hover:w-6"
+                      <div className="max-w-[325px] max-h-[212px] overflow-hidden relative rounded ">
+                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r-2xl opacity-70 hover:w-6"
                           onClick={(e)=>{
                             const updatedItems = [...imgPos];
                             const newImgPos = updatedItems[index]-1;
@@ -267,12 +248,13 @@ function LiveAuctionSection(props) {
                             updatedItems[index] = newImgPos;
                             setImgPos(updatedItems);
                           }}>
-                              <i className="material-icons text-base">arrow_back_ios</i>
+                              <i className="material-icons text-sm pl-1">arrow_back_ios</i>
                           </button>
-                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" 
+                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[325px] min-h-[212px] object-center rounded-tl-2xl rounded-tr-2xl" 
                           src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
-                          {d.id && img && !img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
-                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l opacity-70 hover:w-6"
+                          {d.id && img && !img.has(d.id) && <img className=" min-w-[325px] min-h-[212px] rounded-tl-2xl rounded-tr-2xl object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+
+                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l-2xl opacity-70 hover:w-6"
                           onClick={(e)=>{
                             const updatedItems = [...imgPos];
                             const newImgPos = updatedItems[index]+1;
@@ -284,20 +266,47 @@ function LiveAuctionSection(props) {
                             updatedItems[index] = newImgPos;
                             setImgPos(updatedItems);
                           }}>
-                              <i className="material-icons text-base">arrow_forward_ios</i>
+                            <i className="material-icons text-sm">arrow_forward_ios</i>
                           </button>
                       </div>
 
-                      
-                      <div className=" flex flex-col w-[300px] h-8 pl-2 mb-6">
-                            <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
-                            {/* <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${d.product_price}</strong></p> */}
-                            <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${
-                              Math.round(
-                              slotArr.reduce((accumulator, currentValue)=>{
-                              // console.log(d.currentValue)
-                              return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
-                            }, 0)*0.9)}</strong></p>
+
+                      <div className="w-full p-5">
+          
+                          <p>{d.product_name} {d.product_name} {d.product_name} {d.product_name} - {d.product_name} {d.product_name} {d.product_name}</p>
+                        
+                        {/* <div className=" flex flex-col  w-[300px] h-12  justify-center overflow-scroll  ">
+                          <h3>{d.product_name} {d.product_name} {d.product_name} {d.product_name} - {d.product_name} {d.product_name} {d.product_name}</h3>
+                        </div> */}
+
+                        <div className=" flex flex-col w-[300px] h-8 pl-2 mt-2  ">
+                              <p>Host:{'\u00A0'}{'\u00A0'}
+                              <strong>{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</strong></p>
+                        </div>
+
+                        <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4  ">
+                          <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>    
+                          <p><span>Option: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')}</strong></p> 
+                        </div>
+
+                        <div className="w-[300px] h-16 not-italic   text-sm leading-5 tracking-[0.25px] 
+                        overflow-scroll text-roboto pl-4 pr-6 break-all ">
+                          <p>{d.product_description} 
+                          </p>
+                        </div>
+                        
+                        
+                        <div className=" flex flex-col w-[300px] h-8 pl-2 mb-6">
+                              <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
+                              {/* <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${d.product_price}</strong></p> */}
+                              <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${
+                                Math.round(
+                                slotArr.reduce((accumulator, currentValue)=>{
+                                // console.log(d.currentValue)
+                                return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
+                              }, 0)*0.9)}</strong></p>
+                        </div>
+
                       </div>
 
 

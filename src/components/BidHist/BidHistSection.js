@@ -226,7 +226,7 @@ function BidHistSection(props) {
     const { pageIndex, pageSize } = state
 
     return (
-            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative font-inter font-light  
+            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative font-inter font-light
             navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
                 <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Selection History</h1></div>
                 <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
