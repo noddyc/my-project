@@ -81,34 +81,56 @@ export default function ConfirmModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light">
                 <div className="flex flex-col items-start p-0
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     
-                    <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
-                            <h1>Confirm Slot Detail {'\u00A0'}{'\u00A0'}</h1>
-                            <p>Product Name: <strong>{props.data.product_name}</strong></p>
-                            <p>Slot Price:  <strong>${Math.round(props.data.product_price/10*100)/100}</strong></p>
-                            <p>Slot Picked: <strong>{props.slot}</strong></p>
-                            <p>Split option: <strong>{props.split}</strong></p>
+                    <div className="flex flex-col w-full mb-4 navbarSM:w-[180px]">
+                      
+                      <div className='font-inter font-bold mb-2'>
+                          <h1>Confirm Slot Detail:{'\u00A0'}{'\u00A0'}</h1>
+                      </div>
+                      
+                                
+                      <div className="h-10 overflow-scroll mb-2">
+                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name) + " I am from USA "} {'\u00A0'}</p>
+                      </div>
+
+
+                      <div className="font-inter mb-2">
+                          <span className="font-inter font-medium">Total Price:</span>
+                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(props.data.product_price/10)}.00</p>    
+                      </div>
+
+                      <div className="font-inter mb-2">
+                          <span className="font-inter font-medium">Slot Picked:</span>
+                          <p>{'\u00A0'}{'\u00A0'}{props.slot}</p>    
+                      </div>
+
+                      <div className="font-inter mb-2">
+                          <span className="font-inter font-medium">Slot Option:</span>
+                          <p>{'\u00A0'}{'\u00A0'}{_.startCase(props.split)}</p>    
+                      </div>
                     </div>
 
                     <div className='w-full navbarSM:w-[180px]'> 
-                        <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
+                        <p className={errMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
                     </div>
 
                     <div className='w-full navbarSM:w-[180px]'> 
-                        <p className={successMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
+                        <p className={successMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
                     </div>
                     
                     <div className="flex flex-row justify-center items-center gap-20 w-[250px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
-                        <button className="flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
+                        <button className="flex flex-row justify-center items-center w-[110px] p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
+                        rounded-full hover:opacity-75 navbarSM:w-80"
                         onClick={()=>{
                             props.onClose()
-                        }}>Close</button>
+                        }}><i className="material-icons inline">cancel</i>Close</button>
 
-                        <button className={`flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80`}
-                        onClick={submitHandler}>Confirm</button>
+                        <button className={`flex flex-row justify-center items-center w-[110px] p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
+                        rounded-full hover:opacity-75 navbarSM:w-80`}
+                        onClick={submitHandler}><i className="material-icons inline">check_circle</i>Confirm</button>
                     </div>
                 </div>
         </div>

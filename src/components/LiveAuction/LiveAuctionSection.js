@@ -13,6 +13,7 @@ import { ColumnFilter } from '../Utils/ColumnFilter'
 import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 import {io} from 'socket.io-client'
+import _ from 'lodash'
 
 
 function upperFirstLetter(text){
@@ -202,7 +203,7 @@ function LiveAuctionSection(props) {
 
 
     return (
-            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative font-inter font-light
+            <div className='overflow-scroll bg-lightBg h-full mb-20  w-full gap-2 flex flex-col justify-center items-start ml-[150px]  relative font-inter font-light
             navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
                 <div className="mb-8 mt-2 ml-2 absolute top-0 font-bold"><h1 className="text-5xl">Live Games</h1>
                 </div>
@@ -215,7 +216,6 @@ function LiveAuctionSection(props) {
                         setDetail('false');
                         }else{
                         setDetail('true');
-
                         }
                     }} value={detail}/>
                 </div>
@@ -225,14 +225,14 @@ function LiveAuctionSection(props) {
                   <input className="border-2 border-inputColor" placeholder="Enter keyword" onChange={keywordHandler}></input>
                 </div>
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16 absolute top-24">
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 pr-16 mt-16 absolute top-24">
 
                 {
                  detail !=='false' ? display.map((d, index) => {
                   console.log(d)
                  return (
-                  <div className="border-1 border-cardBorderColor flex flex-col items-start
-                  isolate w-[325px] rounded-2xl bg-green-200
+                  <div className="border-1 border-black flex flex-col items-start
+                  isolate w-[325px] rounded-2xl bg-cardBg 
                   hover:bg-cardHoverColor" key={index} >  
 
                       <div className="max-w-[325px] max-h-[212px] overflow-hidden relative rounded ">
@@ -271,57 +271,60 @@ function LiveAuctionSection(props) {
                       </div>
 
 
-                      <div className="w-full p-5">
-          
-                          <p>{d.product_name} {d.product_name} {d.product_name} {d.product_name} - {d.product_name} {d.product_name} {d.product_name}</p>
-                        
-                        {/* <div className=" flex flex-col  w-[300px] h-12  justify-center overflow-scroll  ">
-                          <h3>{d.product_name} {d.product_name} {d.product_name} {d.product_name} - {d.product_name} {d.product_name} {d.product_name}</h3>
-                        </div> */}
-
-                        <div className=" flex flex-col w-[300px] h-8 pl-2 mt-2  ">
-                              <p>Host:{'\u00A0'}{'\u00A0'}
-                              <strong>{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</strong></p>
-                        </div>
-
-                        <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4  ">
-                          <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>    
-                          <p><span>Option: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')}</strong></p> 
-                        </div>
-
-                        <div className="w-[300px] h-16 not-italic   text-sm leading-5 tracking-[0.25px] 
-                        overflow-scroll text-roboto pl-4 pr-6 break-all ">
-                          <p>{d.product_description} 
+                      <div className="w-full p-5">              
+                        <div className="h-14 overflow-scroll mb-2">
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name) + " I am from USA "} {'\u00A0'}
                           </p>
                         </div>
-                        
-                        
-                        <div className=" flex flex-col w-[300px] h-8 pl-2 mb-6">
-                              <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
-                              {/* <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${d.product_price}</strong></p> */}
-                              <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${
+
+                        <div className="h-30 mb-2">
+                          <span className="font-inter font-medium">Description:</span>
+                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
+                             " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
+                        </div>
+
+                        <div className="font-inter mb-2">
+                              <span className="font-inter font-medium">Host:</span>
+                              <p>{'\u00A0'}{'\u00A0'}{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</p>
+                        </div>
+
+                        <div className="font-inter mb-2">
+                          <span className="font-inter font-medium">End Time:</span>
+                          <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}
+                          {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                        </div>
+
+
+
+                        <div className="font-inter mb-2">
+                          <span className="font-inter font-medium">Total Price:</span>
+                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
+                        </div>
+
+                        <div className="font-inter mb-2">
+                          <span className="font-inter font-medium">Buyback Price:</span>
+                          <p>{'\u00A0'}{'\u00A0'}$ {
                                 Math.round(
                                 slotArr.reduce((accumulator, currentValue)=>{
                                 // console.log(d.currentValue)
                                 return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
-                              }, 0)*0.9)}</strong></p>
+                              }, 0)*0.9)}.00</p>
                         </div>
-
                       </div>
 
-
-                     <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
-                        <button className={`flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg ${d.ownerId === auth().id ? "invisible":"" }`}
+                     {/* to make justify-center items-center work, need to include width */}
+                     <div className="flex justify-start items-center w-full mb-6 pl-4">
+                        <button className={`flex flex-row justify-center items-center w-[90px] p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
+                        rounded-full ${d.ownerId === auth().id ? "invisible":"" } hover:opacity-60`}
                         onClick={() => {  
-                                // console.log(display[index])
-                                // setInd({original:{...display[index], auction_id: display[index].id, price: display[index].product_price, closing_time:display[index].end_time,
-                                //   name: display[index].product_name, description: display[index].product_description, auction_id: display[index].id}});
                                 setInd({original:{...display[index]}});
                                 setIsOpen(true);
-                                // console.log(ind)
-                            }}>Join Now</button>
+                          
+                            }}><i className="material-icons inline">add_circle</i><span>Join</span></button>
                     </div>
-                  </div> )}) : (
+                  </div> )}
+                  
+                  ) : (
                             <div className="self-center flex flex-col justify-center items-center mt-24 mb-32">
                                  <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
                                   <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>

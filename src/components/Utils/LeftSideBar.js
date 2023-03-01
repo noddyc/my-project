@@ -5,17 +5,16 @@ function LeftSideBar(props) {
 
     const navLinkStyles = ({isActive})=>{
         return{
-            borderLeftColor: isActive?"black":'rgb(203 213 225)',
+            borderLeftColor: isActive?"white":'#334155',
         }
     }
     
     return (
-        <div className='flex flex-col w-24 justify-start bg-slate-300 h-screen pt-10 fixed top-0 bottom-0 z-50
+        <div className='flex flex-col w-[150px] justify-start bg-darkBg text-white h-screen pt-10 fixed top-0 bottom-0 z-50 
         navbarSM:hidden'>
         {/* // <div className='border-4 border-red-900 w-24 justify-start bg-slate-300 h-screen pt-10 fixed top-0 bottom-0 flex flex-col items-center navbarSM:hidden'> */}
             <div className=''>
-                <div className='flex flex-col justify-center items-center h-20 mb-10 border-l-4 border-l-slate-300'>
-                    {/* <i className="material-icons">home</i> */}
+                <div className='flex flex-col justify-center items-center h-20 mb-10 border-l-4 border-l-darkBg'>
                     <div className='flex-col justify-center items-center'><span className='text-center table'>Game Website</span><br/></div>
                 </div>
 
@@ -23,9 +22,10 @@ function LeftSideBar(props) {
                     <i className="material-icons">home</i>
                     <div className='flex-col justify-center items-center'><span className='text-center table'>HOME</span><br/></div>
                 </NavLink>
+                
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/liveauction'>
                     <i className="material-icons">star</i>
-                    <div className='flex-col justify-center items-center'><span className='text-center table'>LIVE</span><span className='text-center table'>GAMES</span></div>
+                    <div className='flex-col justify-center items-center'><span className='text-center table'>LIVE GAMES</span><span className='text-center table'>GAMES</span></div>
                 </NavLink>
 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/auctionhist'>
