@@ -5,8 +5,6 @@ function LeftSideBar(props) {
 
     const navLinkStyles = ({isActive})=>{
         return{
-            // borderLeft: isActive?'solid 4px transparent':'none',
-            // borderRadius: isActive?'1px':'none',
             borderLeftColor: isActive?"black":'rgb(203 213 225)',
         }
     }

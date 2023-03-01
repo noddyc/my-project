@@ -67,9 +67,9 @@ export default function Modal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 navbarSM:w-[180px]">
+                  isolate w-[300px] gap-4 navbarSM:w-[180px] ">
                     <div className=" flex flex-col  w-[300px] h-8 justify-center overflow-scroll navbarSM:w-[180px]">
                         <p>Host:{'\u00A0'}{'\u00A0'}<strong>{d.User.firstname} {d.User.lastname}</strong></p>
                     </div>

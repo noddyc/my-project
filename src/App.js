@@ -31,30 +31,8 @@ function App() {
       return notifications.length !== null ?  notifications?.length : parseInt(storedCount) ;
   });
 
+  const [detectChange, setDetectChange] = useState(false);
 
-//   useEffect(()=>{
-//     try{              
-//       // only display in progress auctions
-//           let data = qs.stringify({
-//             'userId': auth().id, 
-//           });
-//           let config = {
-//             method: 'post',
-//             url: 'http://localhost:9001/notifications/displayNotifications',
-//             headers: { 
-//               'Content-Type': 'application/x-www-form-urlencoded'
-//             },
-//             data : data
-//           };
-//           axios(config)
-//           .then((response) => {
-//             let data = response.data;
-//             setNotifications(data);
-//           })
-//     }catch(err){
-//         console.log([err.message])
-//     }
-// }, [])
 
 
   // Emit a newUser event with a user ID when the component mounts
@@ -65,31 +43,7 @@ function App() {
   }, [socket, auth]);
 
 
-  // useEffect(()=>{
-  //   try{
-  //       console.log(ip)
-  //       let data = qs.stringify({
-  //           'id': auth().id 
-  //         }); 
-  //       let config = {
-  //           method: 'post',
-  //           url: `${ip}/user/getInfo`,
-  //           headers: { 
-  //             'Content-Type': 'application/x-www-form-urlencoded'
-  //           },
-  //           data : data
-  //       };
-  //       axios(config).then(
-  //           (response)=>{
-  //               console.log(response.data.timezone)
-  //               setInfo(response.data)
-  //           }
-  //       )            
-  //   }catch(err){
-  //       console.log(err.message)
-  //   }
 
-  // }, [change])
 
 
   return (
@@ -98,24 +52,30 @@ function App() {
           <Route path='/' element={<Login/>}/>
           <Route path=''>
             <Route path="/main" element={<Home socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications} notifiCount={notifiCount} 
-            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo} setChange={setChange} />}/>
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo} setChange={setChange} 
+            detectChange={detectChange} setDetectChange={setDetectChange} />}/>
 
             <Route path="/liveauction" element={<LiveAuction socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications} 
-            notifiCount={notifiCount} setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            notifiCount={notifiCount} setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
+            detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 
             <Route path="/auctionhist" element={<AuctionHist socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications} 
-            notifiCount={notifiCount}  setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            notifiCount={notifiCount}  setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
+            detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 
             <Route path="/bidhist" element={<BidHist socket={socket} setSocket={setSocket}  notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
-            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
+            detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 
             <Route path="/addauction" element={<AddAuction socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
-            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
+            detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
           </Route>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/logout' element={<Logout/>}/>
           <Route path='/notifications' element={<Notifications socket={socket} notifications={notifications} setNotifications={setNotifications} 
-          setNotificount={setNotificount} setSocket={setSocket} notifiCount={notifiCount}  info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}/>}/>
+          setNotificount={setNotificount} setSocket={setSocket} notifiCount={notifiCount}  info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
+          detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
           <Route path="*" element={<h1>Not found</h1>}/>
         </Routes>
       </div>

@@ -61,7 +61,7 @@ export default function BidModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
                 <div className="flex flex-col items-start p-0
                   isolate w-[300px] gap-4 navbarSM:w-[180px]">
                     <div className=" flex flex-col  w-[300px] h-8 items-center justify-center overflow-scroll navbarSM:w-[180px]">

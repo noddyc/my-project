@@ -16,7 +16,7 @@ function getSlot(sentence){
 
 function Notifications(props) {
 
-    console.log(props)
+    console.log(props.info)
     let name = props.info.firstname+" " + props.info.lastname;
     console.log(name);
     const [like, setLike] = useState(0);
@@ -99,7 +99,24 @@ function Notifications(props) {
                                     })
                                 }}>Confirm</button>
                                 
-                                <button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor">Decline</button></>:
+                                <button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor"
+                                onClick = {async (e)=>{
+                                    // console.log(props.info.firstname+" "+props.info.lastname)
+                                    props.socket.emit("increaseCount", 
+                                    {
+                                        // name: props.info.firstname+" "+props.info.lastname,
+                                        auctionId: item.auctionId,
+                                        slot: slot,
+                                        id: item.id,
+                                        receiverId: item.senderId,
+                                        response: "DECLINE"
+                                    });
+                                    props.setNotifications((prev)=>{
+                                        return prev.filter((e,ind)=>{
+                                            return ind != index
+                                        })
+                                    })
+                                }}>Decline</button></>:
 
                                 <button className="border-2 border-black px-2 rounded-lg cursor-pointer hover:bg-cardHoverColor"
                                 onClick={async ()=>{

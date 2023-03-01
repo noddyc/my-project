@@ -81,7 +81,7 @@ export default function ConfirmModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
                 <div className="flex flex-col items-start p-0
                   isolate w-[250px] gap-4 navbarSM:w-[180px]">
                     

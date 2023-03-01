@@ -12,9 +12,7 @@ module.exports = {
     },
     extend: {
       fontFamily:{
-          play: ["Play", "sans-serif"],
-          roboto: ['Roboto', 'sans-serif'],
-
+        inter:['Inter', 'sans-serif']
       },
       colors:{
         fontColor: '#666666',

@@ -14,6 +14,11 @@ import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 import {io} from 'socket.io-client'
 
+
+function upperFirstLetter(text){
+  return text.charAt(0).toUpperCase()+text.slice(1);
+}
+
 function LiveAuctionSection(props) {
    
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
@@ -42,14 +47,6 @@ function LiveAuctionSection(props) {
           navigate('/')
       }
     },[])
-
-    // useEffect(()=>{
-    //   console.log("line 27")
-    //   const socket = io('http://localhost:9001');
-    //   socket?.emit("newUser", auth().id)
-    //   props.setSocket(socket);
-    // }, []);
-
 
     const clickHandler = () => {
       console.log("hello")
@@ -205,8 +202,9 @@ function LiveAuctionSection(props) {
 
 
     return (
-            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Live Games</h1>
+            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative font-inter font-light
+            navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
+                <div className="mb-8 mt-2 ml-2 absolute top-0 font-bold"><h1 className="text-5xl">Live Games</h1>
                 </div>
                 
                 <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
@@ -236,35 +234,27 @@ function LiveAuctionSection(props) {
                   <div className="border-4 border-cardBorderColor flex flex-col items-start p-0
                   isolate w-[300px] gap-4 rounded-lg bg-cardBGColor hover:bg-cardHoverColor" key={index} >  
 
-                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mt-2">
-                            <p>Host:{'\u00A0'}{'\u00A0'}<strong>{d.User.firstname} {d.User.lastname}</strong></p>
+                      <div className=" flex flex-col w-[300px] h-8 pl-2 mt-2  ">
+                            <p>Host:{'\u00A0'}{'\u00A0'}
+                            <strong>{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</strong></p>
                       </div>
 
-                      {/* <div> */}
-                        {/* {d.id !== null && img  &&  img.has(d.id) && <img src={`data:image/png;base64,${img.get(d.id)[0]}`} alt="image"></img> } */}
-                        {/* <img src={URL.createObjectURL(new Blob(img.get(d.id)[0]), { type: 'image/jpeg' })} alt="image"></img> */}
-                        {/* {d.id !== null && img  &&  img.has(d.id) && <p>{img.get(d.id)[0]}</p> } */}
-                        {/* {<p>{URL.createObjectURL(new Blob(img.get(d.id)[0]), { type: 'image/jpeg' })}</p>} */}
-                      {/* </div> */}
-
-                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4">
+                      <div className=" flex flex-col  w-[300px] h-8 pl-2 mb-4  ">
                         <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>    
                         <p><span>Option: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')}</strong></p> 
                       </div>
 
-                      
-
-                      <div className=" flex flex-col  w-[300px] h-8  pl-2 justify-center overflow-scroll">
+                      <div className=" flex flex-col  w-[300px] h-8  pl-2 justify-center overflow-scroll  ">
                         <h3>{d.product_name}</h3>
                       </div>
 
-                      <div className="w-[300px] h-16 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-4 pr-6 break-all">
+                      <div className="w-[300px] h-16 not-italic   text-sm leading-5 tracking-[0.25px] 
+                      overflow-scroll text-roboto pl-4 pr-6 break-all ">
                         <p>{d.product_description} 
                         </p>
                       </div>
                       
-                      <div className="max-w-[300px] max-h-[188px] overflow-hidden relative">
+                      <div className="max-w-[300px] max-h-[188px] overflow-hidden relative  ">
                           <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r opacity-70 hover:w-6"
                           onClick={(e)=>{
                             const updatedItems = [...imgPos];
