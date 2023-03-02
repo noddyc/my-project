@@ -113,7 +113,7 @@ const Navbar = (props) =>{
     }
     
     return(
-        <nav className={`flex items-center justify-around relative text-white bg-black navbarSM:flex-col ${toggleHeight} navbarSM:items-start`}>
+        <nav className={`flex items-center justify-around relative text-black bg-slate-300 navbarSM:flex-col ${toggleHeight} navbarSM:items-start`}>
             <div className="flex-grow text-2xl my-2 mr-2 ml-4"></div>
             <a href="#/" onClick={barmenuHandler} className={`hidden flex-col justify-between h-5 absolute top-3 right-4 w-8 navbarSM:flex`}>
                 <span className="bg-white h-1 w-full rounded-2xl"></span>

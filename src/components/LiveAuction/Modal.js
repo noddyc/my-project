@@ -110,11 +110,11 @@ export default function Modal(props) {
                      <div className="font-inter mb-2">
                           <span className="font-inter font-medium">Selection Price:</span>
                           <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price/10)}.00</p>    
-                        </div>
+                    </div>
 
 
-                    <div className= {`flex flex-col w-[300px] h-8  mb-8 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
-                        <label htmlFor="slots" >Choose an open slot: </label>
+                    <div className= {`flex flex-col w-[300px] h-8 mb-8  gap-2 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
+                        <label htmlFor="slots" className='font-medium'>Choose an Open Slot: </label>
                         <select name="slots" id="slots" className= {`w-3/4 border-2 border-inputColor rounded-full`} ref={slotRef} onChange={handleSelectChange}>
                             <option value=''>{'\u00A0'}-</option>
                             {
@@ -144,8 +144,8 @@ export default function Modal(props) {
                         </select>
                     </div>
 
-                    <div className={`flex flex-col  w-[300px] h-8  mb-16 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
-                              <label htmlFor="splitOption">Split option: </label>
+                    <div className={`flex flex-col  w-[300px] h-8 mb-16 gap-2 navbarSM:w-[180px] ${slotFilled()?'hidden':''}`}>
+                              <label htmlFor="splitOption" className='font-medium'>Split Option: </label>
                               <select name="splitOption" id="splitOption" className='w-3/4 border-2 border-inputColor rounded-full' ref={splitRef}>
                                 {
                                     selectedSlot === ''?<option value=''>{'\u00A0'}-</option>: 
