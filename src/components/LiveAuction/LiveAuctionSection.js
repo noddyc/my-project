@@ -315,7 +315,7 @@ function LiveAuctionSection(props) {
                      {/* to make justify-center items-center work, need to include width */}
                      <div className="flex justify-start items-center w-full mb-6 pl-4">
                         <button className={`flex flex-row justify-center items-center w-[90px] p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
-                        rounded-full ${d.ownerId === auth().id ? "invisible":"" } hover:opacity-60`}
+                        rounded-full hover:opacity-60 ${d.ownerId === auth().id ? "invisible":"" }`}
                         onClick={() => {  
                                 setInd({original:{...display[index]}});
                                 setIsOpen(true);

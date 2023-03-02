@@ -16,7 +16,7 @@ module.exports = {
       },
       colors:{
         fontColor: '#666666',
-        inputColor: '#CCCCCC',
+        inputColor: '#e2e8f0',
         buttonColor: '#7A5CFA',
         formColor: 'rgba(103, 80, 164, 0.14)',
         cardBg: '#fff',
@@ -24,7 +24,8 @@ module.exports = {
         cardHoverColor: '#E6F2FB',
         bgColor: '#A8A8A8',
         lightBg: '#f8fafc',
-        darkBg: '#334155'
+        darkBg: '#334155',
+        warningBg: 'rgb(214 211 209)',
       },
     },
   },

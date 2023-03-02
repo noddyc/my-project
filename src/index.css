@@ -8,3 +8,19 @@
 @tailwind utilities;
 
 
+@layer components{
+    .label{
+        @apply block text-2xl font-inter font-medium;
+    }
+    .input{
+        @apply mt-1 px-2 py-1 block w-full rounded-md border-2 border-inputColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+    }
+    .warning{
+        @apply font-medium p-2 mb-2 bg-warningBg rounded-md;
+    }
+    .button{
+        @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
+        rounded-full hover:opacity-60 ;
+    }
+}
+

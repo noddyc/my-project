@@ -27,29 +27,13 @@ function AuctionForm(props) {
     const onSelectFile = (event) => {
     
       const selectedFiles = event.target.files;
-      const selectedFilesArray = Array.from(selectedFiles);
-  
-    //   const imagesArray = selectedFilesArray.map((file) => {
-    //     return URL.createObjectURL(file);
-    //   });
-  
-    //   console.log(selectedFilesArray)
-    
+      const selectedFilesArray = Array.from(selectedFiles);  
       // setstate is async
       setSelectedImages((prev)=> {return [...prev, ...selectedFilesArray]});
-      // FOR BUG IN CHROME
-    //   event.target.value = "";
     };
   
     function deleteHandler(image) {
         setSelectedImages((prev) => {return selectedImages.filter((e) => e !== image)});
-        // let f = imgRef.current.files;
-        // let curFiles = [];
-        // Array.prototype.push.apply(curFiles, f);
-        // curFiles = curFiles.filter(function(file) {
-        //     return file!== image;
-        // });
-        // console.log(curFiles)
 
     }
   
@@ -155,138 +139,140 @@ function AuctionForm(props) {
 
 
     return (
-        <div className='h-screen w-full flex-col items-center justify-center relative font-inter font-light'>
-            <div className='border-t-2 border-r-2 border-l-2 border-inputColor w-1/2 absolute left-1/4 top-16  bg-white
-            navbarSM:w-3/4 navbarSM:left-[15%]'>
-                <h1 className='h-24 not-italic font-normal text-center text-[60px] leading-[94px] font-roboto text-gray-700
-                navbarSM:text-[30px] navbarSM:leading-[94px]'>Create Game</h1></div>
-            <div className='border-b-2 border-r-2 border-l-2 border-inputColor  flex flex-col justify-center items-center p-4 gap-8 w-1/2
-            absolute left-1/4 top-40 bg-white navbarSM:w-3/4 navbarSM:left-[15%]'>
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label htmlFor='name' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>Name</label>
-                    <input id='name' type='text' maxLength="20" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 
-                    border-2 border-inputColor' value={name} onChange={(e)=>{setErrMsg("");
-                    setSuccessMsg("");
-                    setName(e.target.value)}} placeholder="Enter Game Name"/>
-                </div>
-
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label htmlFor='description' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>Description: </label>
-                    <input id='description' type='text' maxLength="200" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 
-                    border-2 border-inputColor' value={description} onChange={(e)=>{setErrMsg("");
-                    setSuccessMsg("");
-                    setDescription(e.target.value)}} placeholder="Enter Description"/>
-                </div>
-
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label htmlFor='price' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>Price: </label>
-                    <input id='price' type="numeric" min="1" step="1" className='w-full flex flex-col items-start p-4 h-12 bg-white rounded-lg gap-2 border-2 border-inputColor'
-                    value={price} onChange={(e)=>{setErrMsg("");
-                    
-                    setSuccessMsg("");
-                    setPrice(e.target.value)}} placeholder="0"/>
-                </div>
-
-                <div className='flex flex-col items-start p-0 h-28 gap-2 w-full'>
-                    <label htmlFor='date' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>End Date: </label>
-                    <input id='date' name='date' type="date" className='w-full 
-                    border-2 border-inputColor p-4 h-12 bg-white rounded-lg gap-2' value={endTime}
-                    onChange={(e)=>{
-                    console.log(e.target.value)
-                    setErrMsg("");
-                    setSuccessMsg("");
-                    setEndTime(e.target.value)}}/>
-                    <h5 className='text-center'><i className="material-icons" style={{display:"inline", fontSize:"1rem"}}>info</i> End Date must be 24 hours from current time.</h5>
-                </div>
-
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label htmlFor='day-night' className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>Time Option:</label>
-                    <select id='day-night' name='day-night' value={dayNight} onChange={handleDayNightChange} className='w-full 
-                    border-2 border-inputColor h-12 pl-2 bg-white rounded-lg gap-2'>
-                        <option value="day">Day: 12:40:00</option>
-                        <option value="night">Night: 21:22:00</option>
-                    </select>
-                </div>
- {/* //////////////// */} 
-
-                <div className='flex flex-col items-start p-0 h-28 gap-2 w-full mb-24'>
-                    <form>
-                    <label htmlFor="image" className='w-full h-4 not-italic font-semibold text-xs leading-4 text-gray-700'>
-                        Upload Images (Up to 4 images)
-                        <br />
-                    <input
-                        ref={imgRef}
-                        type="file" multiple accept="image/*"
-                        name="image"
-                        onChange={onSelectFile} className="w-[5.8rem] mb-4" 
-                        />
-                    </label>
-                    <br />
-
-                    <div className="h-28 overflow-scroll flex flex-col gap-2 w-[24rem]">
-                        {selectedImages &&
-                        selectedImages.map((image, index) => {
-                            return (
-                            <div key={index} className="w-3/4 border-2 border-inputColor rounded-lg p-2 relative">
-                                <p>{image.name}</p>
-                                <button 
-                                className='absolute top-1/4 right-0'
-                                onClick={(e) => {e.preventDefault(); deleteHandler(image); setErrMsg("")}}>
-                                <i className="material-icons">close</i>
-                                </button>
-                            </div>
-                            );
-                        })}
+        <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl'>
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-4xl font-inter font-bold leading-6">Create New Game</h3>
                     </div>
-                    {selectedImages.length > 0 &&
-                        selectedImages.length > 4 ? (
-                        <p className="error">
-                            You can't upload more than 4 images! <br />
-                            <span>
-                            please delete <b> {selectedImages.length - 4} </b> of them{" "}
-                            </span>
-                        </p>
-                        ): <p></p>}
-                    </form>
                 </div>
 
+                <div class="mt-5 md:col-span-2 md:mt-0">
+                    <div>
+                        <div class="overflow-hidden shadow sm:rounded-md">
+                            <div class="bg-white px-4 py-5 sm:p-6">
+                                <div class="grid grid-cols-6 gap-6">
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label htmlFor="name" className="label">Name</label>
+                                        <input id='name' type='text' maxLength="20" 
+                                            value={name} onChange={(e)=>{setErrMsg("");
+                                            setSuccessMsg("");
+                                            setName(e.target.value)}} placeholder="Enter Game Name" className="input"/>
+                                    </div>         
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label htmlFor='description' className="label">Description</label>
+                                         <textarea id='description' type='text' maxLength="200" rows="3"
+                                         value={description} onChange={(e)=>{setErrMsg("");
+                                         setSuccessMsg("");
+                                         setDescription(e.target.value)}} placeholder="Enter Description"
+                                         className="input"/>
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label htmlFor='price' className='label'>Price</label>
+                                        <input id='price' type="numeric" min="1" step="1" className='input'
+                                            value={price} onChange={(e)=>{setErrMsg("");
+                                            setSuccessMsg("");
+                                            setPrice(e.target.value)}} placeholder="0"/>
+                                    </div>
 
 
-{/* /////////// */}
-                
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label htmlFor='date' className='label'>End Date</label>
 
-                <div className='w-full'> 
-                    <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
+                                        <input id='date' name='date' type="date" className='input' value={endTime}
+                                            onChange={(e)=>{
+                                            setErrMsg("");
+                                            setSuccessMsg("");
+                                            setEndTime(e.target.value)}}/>
+
+                                        <p class="mt-2 text-sm text-gray-500">End Date must be 24 hours from current time.</p>
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label htmlFor='day-night' className='label'>Time Option</label>
+                                        <select id='day-night' name='day-night' value={dayNight} onChange={handleDayNightChange} className='input'>
+                                            <option value="day">Day: 12:40:00</option>
+                                            <option value="night">Night: 21:22:00</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <form>
+                                            <label htmlFor="image" className='label'>
+                                                Images
+                                                <br />
+                                            <input
+                                                ref={imgRef}
+                                                type="file" multiple accept="image/*"
+            
+                                                name="image"
+                                                onChange={onSelectFile} className="mt-1 py-1 block w-[105px] rounded-md text-sm" 
+                                                />
+                                            </label>
+                                            <br />
+
+                                            <div className="col-span-6 sm:col-span-3 overflow-scroll h-28 border-2 rounded-md border-inputColor p-2">
+                                                {selectedImages &&
+                                                selectedImages.map((image, index) => {
+                                                    return (
+                                                    <div key={index} className="w-full border-2 border-inputColor rounded-lg px-1 mb-1 flex
+                                                    items-center">
+                                                        <p className='flex-grow'>{image.name}</p>
+                                                        <button 
+                                                        onClick={(e) => {e.preventDefault(); deleteHandler(image); setErrMsg("")}}>
+                                                        <i className="material-icons block text-base items-end">close</i>
+                                                        </button>
+                                                    </div>
+                                                    );
+                                                })}
+                                            </div>
+                                            {selectedImages.length > 0 &&
+                                                selectedImages.length > 4 ? (
+                                                <p>
+                                                    You can't upload more than 4 images! <br />
+                                                    <span>
+                                                    please delete {selectedImages.length - 4} of them{" "}
+                                                    </span>
+                                                </p>
+                                                ): <p></p>}
+                                        </form>
+                                    </div>
+
+                                    <div className='col-span-6 sm:col-span-3 mb-1'> 
+                                        <p className={errMsg ? "warning" : "invisible"} aria-live="assertive">{errMsg}</p>
+                                    </div>
+
+                                    <div className='col-span-6 sm:col-span-3 mb-1'> 
+                                        <p className={successMsg ? "warning" : "invisible"} aria-live="assertive">{successMsg}</p>
+                                    </div>
+
+
+                                    <div className='col-span-6'>
+                                        <div className='flex justify-between'>
+                                            <button className='button'
+                                            onClick={(e)=>{
+                                                e.preventDefault();
+                                                setName("");
+                                                setDescription("");
+                                                setPrice("");
+                                                setEndTime("");
+                                                setSelectedImages([]);
+                                                setSuccessMsg("")
+                                            }}><i className="material-icons inline">cancel</i><span>Cancel</span></button>
+                                            <button className='button'
+                                            onClick={handleSubmit}><i className="material-icons inline">add_circle</i><span>Submit</span></button>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className='w-full'> 
-                    <p className={successMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
-                </div>
-                <div className='w-full flex flex-row justify-between items-start p-0 h-12'>
-                    <button className='flex flex-col justify-center items-center p-4 w-40 h-12 bg-white rounded-lg text-buttonColor border-2 border-buttonColor
-                     navbarSM:w-20'
-                    onClick={(e)=>{
-                        e.preventDefault();
-                        setName("");
-                        setDescription("");
-                        setPrice("");
-                        setEndTime("");
-                        setSelectedImages([]);
-                        setSuccessMsg("")
-                    }}>Cancel</button>
-                    <button className='flex flex-col justify-center items-center p-4 w-40 h-12 bg-buttonColor text-white rounded-lg
-                     navbarSM:w-20'
-                    onClick={handleSubmit}>Submit</button>
-                </div>
-
-
-                <div>
-
-                </div>
-
             </div>
-
-
-        </div>
+        </div> 
     );
 }
 
