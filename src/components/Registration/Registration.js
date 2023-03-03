@@ -144,10 +144,7 @@ const Registration = () =>{
                   };
                   
                 let emailResp = await axios(emailConfig).then(function (response) {
-                    // console.log(JSON.stringify(response.data));
                     if(JSON.stringify(response.data) === "false"){
-                        // console.log("this way")
-                        // setErrMsg("Email Taken");
                         setValidEmail(false);
                         emailRef.current.focus();
                         const error = new Error("Email Taken");
@@ -198,11 +195,7 @@ const Registration = () =>{
     
                 let resp = await axios(config).then(function (response) {
                     console.log(JSON.stringify(response.data))
-                    // if(JSON.stringify(response.data.name) === "SequelizeValidationError"){
-                    //     console.log("this way lol")
-                    //     const error = new Error("Failed to register");
-                    //     throw error
-                    // }
+
                 })
     
                 // // success and show message success
@@ -228,175 +221,181 @@ const Registration = () =>{
                 else{
                     setErrMsg(err.message);
                 }
-                // if (!err?.response) {
-                //     console.log(err)
-                //     setErrMsg('No Server Response');
-                // } else if (err.response?.status === 409 && err.response?.message == "Email Taken") {
-                //     setErrMsg('Email Taken');
-                // } else {
-                //     setErrMsg('Registration Failed')
-                // }
-                // errRef.current.focus();
             }
         }
 
     return(
+        <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl'>
+              <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <div class="px-4 sm:px-0">
+                            <h3 class="text-4xl font-inter font-bold">Registration</h3>
+                        </div>
+                    </div>
+              </div>
 
-        <div className="m-0 h-full min-h-screen pr-2 pb-0 pl-2 pt-40 border-2 tablet:px-2 tablet:pb-0 tablet:pt-40 desktop:pl-10 desktop:pt-20">
-            <div className="w-6/12 relative rounded flex flex-col pl-10 pt-10 
-            pb-20 border-2 box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) tablet:w-full tablet:px-2 desktop:w-4/12" >
-                <img src="" alt=""></img>
-                <h1 className = "text-center mb-2">Register Now</h1>
+              <div class="mt-5 md:col-span-2 md:mt-0">
+                <div>
+                    <div class="overflow-hidden sm:rounded-md">
+                        <div class="bg-white px-4 py-5 sm:p-6">
+                            <div class="grid grid-cols-6 gap-6">
 
-                <p className= {success? "font-bold p-2 mb-2 text-black bg-stone-300":"invisible"}>Successful Registration</p>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label htmlFor="email" className="label">Email <span className="text-red-700">*</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className= {`${validEmail || !email ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
+                                    fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 
-                <form className="h-90 w-4/5 overflow-y-scroll 
-                pr-0 pb-4 pt-2 pl-2 border-2 mb-8 tablet:w-full">
-                    <label htmlFor="email" className="block w-3/5 mb-2">Email <span className="text-red-700">*</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className= {`${validEmail || !email ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
-                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className={`${validEmail? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                    </label>
 
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className={`${validEmail? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </label>
-                    <input id="email" ref={emailRef}  autoComplete="off" onChange={(e) => setEmail(e.target.value)} value={email} required
-                     aria-invalid={validEmail ? "false" : "true"} aria-describedby="emailnote" onFocus={() => setEmailFocus(true)}
-                     onBlur={() => setEmailFocus(false)}
-                    type="text" placeholder="Enter Email" className="block w-3/5 mb-2 border-black border-2 tablet:w-11/12"></input>
+                                    <input id="email" ref={emailRef}  autoComplete="off" onChange={(e) => setEmail(e.target.value)} value={email} required
+                                    aria-invalid={validEmail ? "false" : "true"} aria-describedby="emailnote" onFocus={() => setEmailFocus(true)}
+                                    onBlur={() => setEmailFocus(false)}
+                                    type="text" placeholder="Enter Email" className="input"></input>
 
-                    <p id="emailnote" className={`${emailFocus && email && !validEmail ? "text-xs rounded-lg text-black p-1 relative bg-stone-300 w-6/12":"hidden" } mb-2`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 pb-1 inline">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Please enter a valid email address
-                    </p>
+                                    <p id="emailnote" className={`${emailFocus && email && !validEmail ? "warning":"hidden" } mt-5`}>
+                                        <i className="material-icons inline text-lg">error</i>
+                                        {'\u00A0'}Please enter a valid email address
+                                    </p>
+                                </div>
 
-                    <label htmlFor="username" className="block w-3/5 mb-2">Username <span className="text-red-700">*</span>
-                         <svg xmlns="http://www.w3.org/2000/svg" 
-                        className= {`${validName || !user ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
-                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label htmlFor="username" className="label">Username <span className="text-red-700">*</span>
 
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className={`${validName? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </label>
-                    <input type="text" 
-                        id="username" placeholder="Enter Username" ref={userRef} autoComplete="off" onChange={(e) => setUser(e.target.value)}value={user}
-                        required aria-invalid={validName ? "false" : "true"} aria-describedby="usernamenote" onFocus={() => setUserFocus(true)}
-                        onBlur={() => setUserFocus(false)} className="block w-3/5 mb-2 border-black border-2 tablet:w-11/12"></input>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className= {`${validName || !user ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
+                                    fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 
-                    <p id="usernamenote" className={`${userFocus && user && !validName? "text-xs rounded-lg text-black p-1 relative bg-stone-300 w-6/12":"hidden" } mb-2`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 pb-1 inline">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                        Username must be 4 to 24 characters.<br />
-                        Must begin with a letter.<br />
-                        Letters, numbers, underscores, hyphens allowed.
-                    </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className={`${validName? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                    </label>
 
-                    <label htmlFor="firstname" className="block w-3/5 mb-2">Firstname <span className="text-red-700">*</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className= {`${validFirstName || !firstname ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
-                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                    <input type="text" 
+                                        id="username" placeholder="Enter Username" ref={userRef} autoComplete="off" onChange={(e) => setUser(e.target.value)}value={user}
+                                        required aria-invalid={validName ? "false" : "true"} aria-describedby="usernamenote" onFocus={() => setUserFocus(true)}
+                                        onBlur={() => setUserFocus(false)} className="input"></input>
 
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className={`${validFirstName? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </label>
-                    <input type="text" id="firstname" ref={firstnameRef} autoComplete="off" onChange={(e) => setFirstName(e.target.value)} value={firstname} placeholder="Enter Firstname"
-                            required aria-invalid={validFirstName ? "false" : "true"} aria-describedby="firstnamenote"
-                            onFocus={() => setFirstNameFocus(true)}
-                            onBlur={() => setFirstNameFocus(false)} className="block w-3/5 mb-2 border-black border-2 tablet:w-11/12"></input>
-                    <p id="firstnamenote" className={`${firstnameFocus && firstname && !validFirstName ? "text-xs rounded-lg text-black p-1 relative bg-stone-300 w-6/12":"hidden" } mb-2`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 pb-1 inline">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                        First name must contain with letters only<br />
-                    </p>
+                                    <p id="usernamenote" className={`${userFocus && user && !validName? "warning":"hidden" } mt-5`}>
+                                    <i className="material-icons inline text-lg">error</i>
+                                    {'\u00A0'}
+                                        Username must be 4 to 24 characters.<br />
+                                        Must begin with a letter.<br />
+                                        Letters, numbers, underscores, hyphens allowed.
+                                    </p>
+                                </div>
 
-                    <label htmlFor="lastname" className="block w-3/5 mb-2">Lastname <span className="text-red-700">*</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className= {`${validLastName || !lastname ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
-                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label htmlFor="firstname" className="label">Firstname <span className="text-red-700">*</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className= {`${validFirstName || !firstname ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
+                                    fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className={`${validLastName? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </label>
-                    <input type="text" id="lastname" ref={lastnameRef} autoComplete="off" onChange={(e) => setLastName(e.target.value)}
-                            value={lastname} required aria-invalid={validLastName ? "false" : "true"} aria-describedby="lastnamenote" onFocus={() => setLastNameFocus(true)} placeholder="Enter Lastname"
-                            onBlur={() => setLastNameFocus(false)} className="block w-3/5 mb-2 border-black border-2 tablet:w-11/12"></input>
-                    <p id="lastnamenote" className={`${lastnameFocus && lastname && !validLastName ? "text-xs rounded-lg text-black p-1 relative bg-stone-300 w-6/12":"hidden" } mb-2`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 pb-1 inline">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                        Last name must contain with letters only<br />
-                    </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className={`${validFirstName? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                    </label>
+                                    <input type="text" id="firstname" ref={firstnameRef} autoComplete="off" onChange={(e) => setFirstName(e.target.value)} value={firstname} placeholder="Enter Firstname"
+                                            required aria-invalid={validFirstName ? "false" : "true"} aria-describedby="firstnamenote"
+                                            onFocus={() => setFirstNameFocus(true)}
+                                            onBlur={() => setFirstNameFocus(false)} className="input"></input>
+                                    <p id="firstnamenote" className={`${firstnameFocus && firstname && !validFirstName ? "warning":"hidden" } mt-5`}>
+                                        <i className="material-icons inline text-lg">error</i>
+                                        {'\u00A0'}First name must contain with letters only<br />
+                                    </p>
+                                </div>
 
-                    <label htmlFor="password" className="block w-3/5 mb-2">Password<span className="text-red-700">*</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className= {`${validPwd || !pwd ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
-                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                <div class="col-span-6 sm:col-span-3">
 
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className={`${validPwd? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </label>
-                    <input type="password" id="password" onChange={(e) => setPwd(e.target.value)} value={pwd} required placeholder="Enter password"
-                            aria-invalid={validPwd ? "false" : "true"} aria-describedby="passwordnote" onFocus={() => setPwdFocus(true)} onBlur={() => setPwdFocus(false)} 
-                            className="block w-3/5 mb-2 border-black border-2 tablet:w-11/12"></input>
+                                    <label htmlFor="lastname" className="label">Lastname <span className="text-red-700">*</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" 
+                                        className= {`${validLastName || !lastname ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
+                                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 
-                    <p id="passwordnote" className={`${pwdFocus && !validPwd? "text-xs rounded-lg text-black p-1 relative bg-stone-300 w-6/12":"hidden" } mb-2`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 pb-1 inline">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                        Password must be 8 to 24 characters.<br />
-                        Must include uppercase and lowercase letters, a number and a special character.
-                    </p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" 
+                                        className={`${validLastName? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                        </svg>
+                                    </label>
+                                    <input type="text" id="lastname" ref={lastnameRef} autoComplete="off" onChange={(e) => setLastName(e.target.value)}
+                                            value={lastname} required aria-invalid={validLastName ? "false" : "true"} aria-describedby="lastnamenote" onFocus={() => setLastNameFocus(true)} placeholder="Enter Lastname"
+                                            onBlur={() => setLastNameFocus(false)} className="input"></input>
+                                    <p id="lastnamenote" className={`${lastnameFocus && lastname && !validLastName ? "warning":"hidden" } mt-5`}>
+                                    <i className="material-icons inline text-lg">error</i>
+                                    {'\u00A0'}Last name must contain with letters only<br />
+                                    </p>
+                                </div>
 
-                    <label htmlFor="confirmpassword" className="block w-3/5 mb-2">Confirm Password<span className="text-red-700">*</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className= {`${validMatch || !matchPwd ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
-                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label htmlFor="password" className="label">Password<span className="text-red-700">*</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className= {`${validPwd || !pwd ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
+                                    fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                        className={`${validMatch && matchPwd? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </label>
-                    <input type="password" id="confirm_pwd" onChange={(e) => setMatchPwd(e.target.value)} value={matchPwd} required aria-invalid={validMatch ? "false" : "true"}
-                            aria-describedby="confirmnote" onFocus={() => setMatchFocus(true)} onBlur={() => setMatchFocus(false)} placeholder="Confirm Password" className="block w-3/5 mb-2 border-black border-2 tablet:w-11/12"></input>
-                    <p id="confirmnote" className={`${matchFocus && !validMatch? "text-xs rounded-lg text-black p-1 relative bg-stone-300 w-6/12":"hidden" } mb-2`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 pb-1 inline">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                            Password must match.
-                    </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className={`${validPwd? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                    </label>
+                                    <input type="password" id="password" onChange={(e) => setPwd(e.target.value)} value={pwd} required placeholder="Enter password"
+                                            aria-invalid={validPwd ? "false" : "true"} aria-describedby="passwordnote" onFocus={() => setPwdFocus(true)} onBlur={() => setPwdFocus(false)} 
+                                            className="input"></input>
 
-                </form>
+                                    <p id="passwordnote" className={`${pwdFocus && !validPwd? "warning":"hidden" } mt-5`}>
+                                    <i className="material-icons inline text-lg">error</i>
+                                    {'\u00A0'}Password must be 8 to 24 characters.<br />
+                                        Must include uppercase and lowercase letters, a number and a special character.
+                                    </p>
+                                </div>
 
-                <p ref={errRef} className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">Failed to Register: {errMsg}</p>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label htmlFor="confirmpassword" className="label">Confirm Password<span className="text-red-700">*</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className= {`${validMatch || !matchPwd ? "hidden":"ml-1"} w-4 h-4 text-red-700 inline`}
+                                    fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 
-                <div  className="border-solid border mt-8 mb-8 px-8 py-0 tablet:py-0 tablet:px-32 desktop:px-0">
-                    <button onClick={handleSubmit} 
-                    className="w-11/12 border-solid border desktop:w-full">REGISTER</button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    className={`${validMatch && matchPwd? "ml-1":"hidden"} w-4 h-4 text-green-700 inline`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                    </svg>
+                                </label>
+                                <input type="password" id="confirm_pwd" onChange={(e) => setMatchPwd(e.target.value)} value={matchPwd} required aria-invalid={validMatch ? "false" : "true"}
+                                        aria-describedby="confirmnote" onFocus={() => setMatchFocus(true)} onBlur={() => setMatchFocus(false)} placeholder="Confirm Password" className="input"></input>
+                                    <p id="confirmnote" className={`${matchFocus && !validMatch? "warning":"hidden" } mt-5`}>
+                                    <i className="material-icons inline text-lg">error</i>
+                                    {'\u00A0'}Password must match.
+                                     </p>
+                                </div>
+                                
+                                <div class="col-span-6 sm:col-span-3">
+                                    <p ref={errRef} className={errMsg ? "warning" :"warning invisible"} aria-live="assertive">Failed to Register: {errMsg}</p>
+                                 
+                                    <div  className="flex justify-center mt-5">
+                                        <button onClick={handleSubmit} 
+                                        className="button">Register</button>
+                                    </div>
+
+                                    <div className="flex-col mt-5 font-medium">
+                                        <p>Already Have an Account?</p>
+                                        <h4><button onClick={()=>{
+                                            console.log("hello");
+                                            navigate('/', {replace:true});
+                                        }} >Login</button></h4>
+                                    </div>
+                                </div>
+
+                            </div>    
+                        </div>
+                    </div>    
                 </div>
+              </div>
 
-                <div className="textLogIn">
-                    <p>Already Have An account?</p>
-                    <h4><button onClick={()=>{
-                        console.log("hello");
-                        navigate('/', {replace:true});
-                    }} >Log In</button></h4>
-                </div>
-            </div>
         </div>
     );
 }

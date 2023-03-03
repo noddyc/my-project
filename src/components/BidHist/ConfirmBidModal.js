@@ -65,18 +65,34 @@ export default function ConfirmBidModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light text-xl">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[250px] gap-4 navbarSM:w-[180px]">
-                    
-                    <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
-                            <h1>Withdraw Slot Detail: {'\u00A0'}{'\u00A0'}</h1>
-                            <p>Product Name: <strong>{props.data.product_name}</strong></p>
-                            <p>Slot Price:  <strong>${Math.round(props.data.product_price/10)}</strong></p>
-                            <p>Slot Picked: <strong>{props.data.slot_number}</strong></p>
-                     </div>
+                  isolate w-[375px] gap-4 navbarSM:w-[180px]">
 
-                     <div className='w-full navbarSM:w-[180px]'> 
+                    <div className="flex flex-col w-full mb-4 navbarSM:w-[180px]">
+                        <div className='font-inter font-bold mb-2'>
+                              <h1>Confirm Withdraw Slot Detail{'\u00A0'}{'\u00A0'}</h1>
+                        </div>
+                    </div>
+
+                    <div className="h-10 overflow-scroll mb-2">
+                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name) + " I am from USA "} {'\u00A0'}</p>
+                    </div>
+
+                    <div className='flex gap-4 mb-5'>
+                          <div className="font-inter">
+                              <span className="font-inter font-medium">Slot Price</span>
+                              <p>{'\u00A0'}{'\u00A0'}$ {Math.round(props.data.product_price/10)}.00</p>    
+                          </div>
+
+                          <div className="font-inter">
+                              <span className="font-inter font-medium">Slot Picked</span>
+                              <p>{props.data.slot_number}</p>    
+                          </div>
+                    </div>
+
+
+                    <div className='w-full navbarSM:w-[180px]'> 
                         <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
                     </div>
 
@@ -85,14 +101,15 @@ export default function ConfirmBidModal(props) {
                     </div>
 
                     
-                    <div className="flex flex-row justify-center items-center gap-20 w-[250px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
-                        <button className="flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
+          
+                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
+                        <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose()
-                        }}>Close</button>
+                        }}><i className="material-icons inline">cancel</i>Decline</button>
 
-                        <button className={`flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80`}
-                        onClick={submitHandler}>Confirm</button>
+                        <button className={`button navbarSM:w-80`}
+                        onClick={submitHandler}><i className="material-icons inline">check_circle</i>Accept</button>
                     </div>
                 </div>
         </div>

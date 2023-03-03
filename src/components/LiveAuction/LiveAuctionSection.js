@@ -203,9 +203,8 @@ function LiveAuctionSection(props) {
 
 
     return (
-            <div className='overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
+            <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
             navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-
               <div class="px-4 sm:px-0">
                 <h3 class="text-4xl font-inter font-bold">Live Games</h3>
               </div>
@@ -225,6 +224,10 @@ function LiveAuctionSection(props) {
               <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
                   <label className="label">Search:{'\u00A0'}</label>
                   <input className="input" placeholder="Enter keyword" onChange={keywordHandler}></input>
+              </div>
+
+              <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='false'?'flex':'hidden'} navbarSM:${detail==='false'?'flex':'hidden'}`}>
+                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
               </div>
 
               <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 ">
@@ -280,23 +283,23 @@ function LiveAuctionSection(props) {
 
                             <div className="flex flex-col flex-grow">
                                 <div className="font-inter mb-2">
-                                      <span className="font-inter font-medium">Host:</span>
+                                      <span className="font-inter font-medium">Host</span>
                                       <p>{'\u00A0'}{'\u00A0'}{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</p>
                                 </div>
 
                                 <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">End Time:</span>
+                                  <span className="font-inter font-medium">End Time</span>
                                   <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
                                   {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
                                 </div>
 
                                 <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">Total Price:</span>
+                                  <span className="font-inter font-medium">Total Price</span>
                                   <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
                                 </div>
 
                                 <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">Buyback Price:</span>
+                                  <span className="font-inter font-medium">Buyback Price</span>
                                   <p>{'\u00A0'}{'\u00A0'}$ {
                                         Math.round(
                                         slotArr.reduce((accumulator, currentValue)=>{
@@ -306,7 +309,7 @@ function LiveAuctionSection(props) {
                                 </div>
                               </div>
                               <div className="h-30 w-1/2">
-                                <span className="font-inter font-medium">Description:</span>
+                                <span className="font-inter font-medium">Description</span>
                                 <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                                   " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
                               </div>
@@ -325,13 +328,9 @@ function LiveAuctionSection(props) {
                 </div> )}
                 
                 ) : (
-                  
-            <div className="self-center flex flex-col justify-center items-center mt-24 mb-32">
-                 <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
-                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-                </div>
 
-                <div id="buttonNot" className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
+            <div className="flex flex-col font-inter font-light text-xl">
+                <div id="buttonNot" className="flex-row justify-center items-center self-center" style={{display : detail !=='false'?"none":""}}>
                     <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                         {'<<'}
                     </button>{' '}
@@ -421,7 +420,7 @@ function LiveAuctionSection(props) {
                                         })}
                                       </tbody>
                                     </table>
-                                </div>
+                        </div>
                       )
                     }
                     </div>

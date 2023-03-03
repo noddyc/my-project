@@ -12,6 +12,7 @@ import { GlobalFilter } from '../Utils/GlobalFilter'
 import { ColumnFilter } from '../Utils/ColumnFilter'
 import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
+import _ from 'lodash'
 
 function AuctionHistSection(props) {
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
@@ -216,11 +217,15 @@ function AuctionHistSection(props) {
     const { pageIndex, pageSize } = state
 
     return (
-            <div className=' w-full h-[90%] bg-white gap-2 flex flex-col justify-center items-start ml-40 mt-10 mb-10 relative font-inter font-light
-             navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0"><h1 className="font-bold text-5xl">Game History</h1></div>
-                <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
-                    <label htmlFor="cardbutton">Table Display: </label>
+            <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
+            navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
+
+                <div class="px-4 sm:px-0">
+                  <h3 class="text-4xl font-inter font-bold">Game History</h3>
+                </div>
+
+                <div className="mt-5 px-4 text-2xl font-inter font-medium">
+                    <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
                         if(detail ==='true'){
@@ -229,118 +234,122 @@ function AuctionHistSection(props) {
                         setDetail('true');
                         }
                     }} value={detail}/>
-                </div>
+              </div>
 
+          
+              <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
+                  <label className="label">Search:{'\u00A0'}</label>
+                  <input className="input" placeholder="Enter keyword" onChange={keywordHandler}></input>
+              </div>
 
-                <div className={`mt-2 ml-2 absolute top-24 gap-2 ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
-                  <label>Search: </label>
-                  <input className="border-2 border-inputColor" placeholder="Enter keyword" onChange={keywordHandler}></input>
-                </div>
+              <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='false'?'flex':'hidden'} navbarSM:${detail==='false'?'flex':'hidden'}`}>
+                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+              </div>
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 mt-16 pr-16  absolute top-24">
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 ">
                 {
                  detail !=='false' ? display.map((d, index) => {
                  return (
-                  <div className={`border-4 border-cardBorderColor flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 rounded-lg 
-                  ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"? "bg-green-100":""} 
-                  ${d.status==="WAITING_FOR_DRAW"? "bg-yellow-100":""} 
-                  ${d.status==="NO_WINNER_WINNER_NOTIFIED" ?"bg-red-100":""}`} key={index} >          
-                      <div className=" flex flex-col  w-[300px] h-8  pl-2 items-center justify-center overflow-scroll">
-                        <h3>{d.product_name}</h3>
-                      </div>
+                  <div className={ `border-1 border-black flex flex-col items-start isolate w-[450px] rounded-2xl bg-cardBg
+                  hover:bg-cardHoverColor ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"? "bg-green-100":""} 
+                  ${d.status==="WAITING_FOR_DRAW"? "bg-yellow-100":""}  ${d.status==="NO_WINNER_WINNER_NOTIFIED" ?"bg-red-100":""}`} key={index} >
 
-                      <div className="max-w-[300px] max-h-[188px] overflow-hidden relative">
-                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r opacity-70 hover:w-6"
-                          onClick={(e)=>{
-                            const updatedItems = [...imgPos];
-                            const newImgPos = updatedItems[index]-1;
-                            if(newImgPos < 0){
-                              updatedItems[index] = img.has(d.id)?img.get(d.id).length:3;
+                      <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded ">
+                            <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"
+                            onClick={(e)=>{
+                              const updatedItems = [...imgPos];
+                              const newImgPos = updatedItems[index]-1;
+                              if(newImgPos < 0){
+                                updatedItems[index] = img.has(d.id)?img.get(d.id).length:3;
+                                setImgPos(updatedItems);
+                                return;
+                              }
+                              updatedItems[index] = newImgPos;
                               setImgPos(updatedItems);
-                              return;
-                            }
-                            updatedItems[index] = newImgPos;
-                            setImgPos(updatedItems);
-                          }}>
-                              <i className="material-icons text-base">arrow_back_ios</i>
-                          </button>
-                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" 
-                          src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
-                          {d.id && img && !img.has(d.id) && <img className=" min-w-[290px] min-h-[188px] object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
-                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l opacity-70 hover:w-6"
-                          onClick={(e)=>{
-                            const updatedItems = [...imgPos];
-                            const newImgPos = updatedItems[index]+1;
-                            if(newImgPos > (img.has(d.id)?img.get(d.id).length-1:3)){
-                              updatedItems[index] = 0;
+                            }}>
+                                <i className="material-icons text-sm pl-1">arrow_back_ios</i>
+                            </button>
+                            {d.id && img  &&  img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl" 
+                            src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
+                            {d.id && img && !img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] rounded-tl-2xl rounded-tr-2xl object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+
+                            <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"
+                            onClick={(e)=>{
+                              const updatedItems = [...imgPos];
+                              const newImgPos = updatedItems[index]+1;
+                              if(newImgPos > (img.has(d.id)?img.get(d.id).length-1:3)){
+                                updatedItems[index] = 0;
+                                setImgPos(updatedItems);
+                                return;
+                              }
+                              updatedItems[index] = newImgPos;
                               setImgPos(updatedItems);
-                              return;
-                            }
-                            updatedItems[index] = newImgPos;
-                            setImgPos(updatedItems);
-                          }}>
-                              <i className="material-icons text-base">arrow_forward_ios</i>
-                          </button>
+                            }}>
+                              <i className="material-icons text-sm">arrow_forward_ios</i>
+                            </button>
                       </div>
 
-
-                      <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-8 pr-8 break-all">
-                        <p>{d.product_description} {d.product_description} {d.product_description} 
-                        {d.product_description} {d.product_description} {d.product_description} 
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
-                        {d.product_description} {d.product_description} {d.product_description}
-                        </p>
+                     <div className="w-full p-5">              
+                        <div className="h-14 overflow-scroll mb-2">
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}</p>
                       </div>
-                      
-                      <div className=" flex flex-col  w-[300px] h-8 pl-2">
-                        <p>Product Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
-                        <p>BuyBack:{'\u00A0'}{'\u00A0'}<strong>${
-                              Math.round(
-                              slotArr.reduce((accumulator, currentValue)=>{
-                              // console.log(d.currentValue)
-                              return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
-                            }, 0)*0.9)}</strong></p>
-                     </div>
 
-                     <div className=" flex flex-col  w-[300px] h-4 pl-2">
-                        <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>     
-                        {/* (moment(e.end_time).clone().tz(props.info.timezone))!==undefined? (moment(e.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):"" */}
-                     </div>
+                      <div className="flex gap-6">
+                          <div className="flex flex-col flex-grow">
 
-                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
-                        <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winnning_number===null?"-":d.winnning_number}</p>     
-                     </div>
-
-                     {/* <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
-                        <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
-                     </div> */}
-
-                     <div className=" flex flex-col  w-[300px] h-4 pl-2 ">
-                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{statusConversion(d.status)}</p>     
-                     </div>
-
-
-                     <div className="flex flex-row justify-center items-center gap-2 w-[300px] h-8 p-0 mb-4">
-                        <button className="flex flex-col justify-center items-center p-4 w-40 h-8 bg-buttonColor text-white rounded-lg"
-                        onClick={() => {  
-                  
-                                setInd({original: {...d}});
-                                setIsOpen(true);
-                                console.log(ind)
-                            }}>Detail</button>
-                    </div>
-                  </div> )}) : (
-                            <div className="self-center flex flex-col justify-center items-center mt-24 mb-32">
-                                 <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
-                                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+                                <div className="font-inter mb-2">
+                                      <span className="font-inter font-medium">Product Price</span>
+                                      <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}</p>
                                 </div>
 
-                                <div id="buttonNot" className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
+                                <div className="font-inter mb-2">
+                                      <span className="font-inter font-medium">Buyback Price</span>
+                                      <p>{'\u00A0'}{'\u00A0'}$ {
+                                          Math.round(
+                                          slotArr.reduce((accumulator, currentValue)=>{
+                                          // console.log(d.currentValue)
+                                          return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
+                                        }, 0)*0.9)}.00</p>
+                                </div>
+
+
+                                <div className="font-inter mb-2">
+                                      <span className="font-inter font-medium">End Time</span>
+                                      <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
+                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>  
+                                </div>
+
+
+                                <div className="font-inter mb-2">
+                                    <span className="font-inter font-medium">Winning number</span>
+                                    <p>{'\u00A0'}{'\u00A0'}{d.winnning_number===null?"-":d.winnning_number}</p>
+                                </div>
+
+
+                                <div className="font-inter mb-2">
+                                    <span className="font-inter font-medium">Status</span>
+                                    <p>{'\u00A0'}{'\u00A0'}{statusConversion(d.status)}</p> 
+                                </div>
+                          </div>
+                          <div className="h-30 w-1/2">
+                                  <span className="font-inter font-medium">Description</span>
+                                  <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
+                                    " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end items-center w-full mb-6 pr-6">
+                        <button className="button"
+                        onClick={() => {  
+                                setInd({original: {...d}});
+                                setIsOpen(true);
+                            }}><i className="material-icons inline">search</i>Detail</button>
+                    </div>
+                  </div> )}) : (
+                            <div className="flex flex-col font-inter font-light text-xl">
+                            
+                                <div id="buttonNot" className="flex-row justify-center items-center self-center" style={{display : detail !=='false'?"none":""}}>
                                     <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                                         {'<<'}
                                     </button>{' '}

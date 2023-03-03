@@ -124,7 +124,7 @@ export default function ConfirmModal(props) {
                     </div>
                     
                     <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
-                        <button className="button"
+                        <button className="button_light"
                         onClick={()=>{
                             props.onClose()
                         }}><i className="material-icons inline">cancel</i>Decline</button>

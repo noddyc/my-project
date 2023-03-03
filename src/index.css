@@ -19,8 +19,17 @@
         @apply font-medium p-2 mb-2 bg-warningBg rounded-md;
     }
     .button{
-        @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-darkBg text-white text-xl
+        @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-darkBg text-lightBg text-xl
         font-bold rounded-full hover:opacity-60 ;
     }
+    .button_light{
+        @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-lightBg text-darkBg text-xl border-2 border-black
+        font-bold rounded-full hover:opacity-60 ;
+    }
+
+    .after-margin-200::after {
+        content: "";
+        margin-bottom: 0.5rem;
+      }
 }
 

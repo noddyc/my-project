@@ -10,7 +10,7 @@ function LeftSideBar(props) {
     }
     
     return (
-        <div className='flex flex-col w-[150px] justify-start bg-darkBg text-white h-screen pt-10 fixed top-0 bottom-0 z-50 
+        <div className='flex flex-col w-[150px] justify-start bg-darkBg text-lightBg h-screen pt-10 fixed top-0 bottom-0 z-50 
         navbarSM:hidden'>
             <div className=''>
                 <div className='flex flex-col justify-center items-center h-20 mb-10 border-l-4 border-l-darkBg'>

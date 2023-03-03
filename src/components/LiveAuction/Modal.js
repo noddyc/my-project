@@ -174,7 +174,7 @@ export default function Modal(props) {
 
 
                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5 navbarSM:w-[180px] navbarSM:gap-10">
-                        <button className="button navbarSM:w-80"
+                        <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose();
                         }}><i className="material-icons inline">cancel</i>Reject</button>

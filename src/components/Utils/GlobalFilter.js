@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useAsyncDebounce } from 'react-table'
 
 export const GlobalFilter = ({ filter, setFilter }) => {
@@ -7,16 +7,16 @@ export const GlobalFilter = ({ filter, setFilter }) => {
     setFilter(value || undefined)
   }, 1000)
   return (
-    <span>
-      Search:{' '}
-      <input
-        className="border-2 border-inputColor" 
-        value={value || ''}
-        onChange={e => {
-          setValue(e.target.value);
-          onChange(e.target.value);
-        }}
-      />
-    </span>
+    <Fragment>
+          <label className="label">Search:{'\u00A0'}</label>
+          <input
+            className="input" placeholder='Enter keyword'
+            value={value || ''}
+            onChange={e => {
+              setValue(e.target.value);
+              onChange(e.target.value);
+         }}
+       />
+    </Fragment>
   )
 }

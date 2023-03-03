@@ -61,63 +61,63 @@ export default function BidModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 navbarSM:w-[180px]">
-                    <div className=" flex flex-col  w-[300px] h-8 items-center justify-center overflow-scroll navbarSM:w-[180px]">
-                        <h3>{d.product_name}</h3>
+                  isolate w-[450px] navbarSM:w-[180px] ">
+                    <div className="h-14 overflow-scroll">
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
+                          </p>
                     </div>
 
-                    {/* <div className="max-w-[300px] max-h-[188px] overflow-hidden navbarSM:w-[180px]">
-                          <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
-                    </div> */}
-
-                    <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-2 pr-2 break-all navbarSM:w-[180px]">
-                        <p>{d.product_description}</p>
+              
+                    <div className="h-30 mt-5">
+                          <span className="font-inter font-medium">Description</span>
+                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
+                             " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
                     </div>
 
 
-                    <div className=" flex flex-col  w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
-                     </div>
+                    <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">Total Price</span>
+                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
+                    </div>
 
-                     <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
-                     <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>
-                     </div>
+                    <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">End time</span>
+                          <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
+                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                    </div>
 
-                     <div className=" flex flex-col  w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Owner: {'\u00A0'}{'\u00A0'}</span>{d.onwerId}</p>     
-                     </div>
+                    <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">Owner</span>
+                          <p>{'\u00A0'}{'\u00A0'}{d.onwerId}</p>     
+                    </div>
 
-                     <div className=" flex flex-col  w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Slot picked: {'\u00A0'}{'\u00A0'}</span>{d.slot_number}</p>     
-                     </div>
+                    <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">Slot Picked</span>
+                          <p>{'\u00A0'}{'\u00A0'}{d.slot_number}</p>     
+                    </div>
 
-                     {/* <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winning_number}</p>     
-                     </div> */}
-                     
-                     {/* <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Slot open: {'\u00A0'}{'\u00A0'}</span>{d.slotsOpen}</p>     
-                     </div> */}
+      
+                    <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">Status</span>
+                          <p>{'\u00A0'}{'\u00A0'}{statusConversion(d.status)}</p>     
+                    </div>
+                
+                    
 
-                     <div className=" flex flex-col w-[300px] h-4 pl-2 mb-4 navbarSM:w-[180px]">
-                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{statusConversion(d.status)}</p>     
-                     </div>
-
-                     <div className="flex flex-row justify-center items-center gap-32 w-[300px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
-                        <button className="flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
+                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5 navbarSM:w-[180px] navbarSM:gap-10">
+                        <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose();
-                        }}>Close</button>
+                        }}><i className="material-icons inline">cancel</i>Decline</button>
 
 
-                        <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor
-                        ${d.status === 'OPEN_LIVE' || d.status === 'OPEN_NOT_LIVE' ?'': 'hidden'} text-white rounded-lg p-1 navbarSM:w-80`}
+                        <button className={`button
+                        ${d.status === 'OPEN_LIVE' || d.status === 'OPEN_NOT_LIVE' ?'': 'hidden'} navbarSM:w-80`}
                         onClick={()=>{
                            setOpenConfirm(true)
-                            }}>Withdraw</button>
+                            }}><i className="material-icons inline">published_with_changes</i>Withdraw</button>
                     </div>
                 </div>
                 <ConfirmBidModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} info={props.info}

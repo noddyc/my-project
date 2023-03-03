@@ -53,76 +53,85 @@ export default function AuctionHistModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[300px] gap-4 navbarSM:w-[180px]">
-                     <div className=" flex flex-col  w-[300px] h-8 items-center justify-center overflow-scroll navbarSM:w-[180px]">
-                        <h3>{d.product_name}</h3>
-                    </div>
-
-                    {/* <div className="max-w-[300px] max-h-[188px] overflow-hidden navbarSM:w-[180px]">
-                          <img className="object-center" src={require('../../assets/card-img1.jpeg')} alt="" />
-                    </div> */}
-
-                    <div className="w-[300px] h-20 not-italic font-normal text-sm leading-5 tracking-[0.25px] 
-                      overflow-scroll text-roboto pl-2 pr-2 break-all navbarSM:w-[180px]">
-                        <p>{d.product_description}</p>
+                  isolate w-[450px] navbarSM:w-[180px] ">
+                    <div className="h-14 overflow-scroll">
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
+                          </p>
                     </div>
 
 
-                    <div className=" flex flex-col  w-[300px] h-8 pl-2 navbarSM:w-[180px]">
-                            <p>Total Price:{'\u00A0'}{'\u00A0'}<strong>${Math.round(d.product_price)}</strong></p>
+                    <div className="h-30 mt-5">
+                          <span className="font-inter font-medium">Description</span>
+                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
+                             " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
+                    </div>
+
+
+                    <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">Selection Price</span>
+                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price/10)}.00</p>    
+                    </div>
+
+            
+                    <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">End time</span>
+                          <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
+                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                    </div>
+
+                
+
+                    <div className="flex flex-col flex-wrap overflow-scroll w-full h-76 mt-5 navbarSM:w-[180px] ">
+                                <p className='font-inter font-medium'>Slots</p>
+                                <div className='grid grid-cols-2 w-full'>
+                                    {slotArr.map((i,index)=>{
+                                        if(d?.[i] === null){
+                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}: - </span></p></div>)
+                                        }
+                                        if(d?.[i]?.split === true){
+                                            if(d?.[i]?.player2 === null){
+                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/-`}</p></div>)
+                                            }else if(d?.[i]?.player1 === null){
+                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`-/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p></div>)
+                                            }
+                                            else{
+                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p></div>)
+                                            }
+                                        }
+
+                                        if(d?.[i]?.split === false){
+                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}`}</p></div>)
+                                        }
+                                        
+                                    })}
+                                </div>
                      </div>
 
-                     <div className=" flex flex-col w-[300px] h-8 pl-2 navbarSM:w-[180px]">  
-                      <p><span>End time: {'\u00A0'}{'\u00A0'}</span><strong>{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}</strong></p>  
-                     </div>
+                     <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">Winning Number</span>
+                          <p>{'\u00A0'}{'\u00A0'}{d.winnning_number===null?"-":d.winnning_number}</p>
+                    </div>
 
-                     <div className=" flex flex-col flex-wrap overflow-scroll w-[300px] h-64 navbarSM:w-[180px] pl-2">
-                      {slotArr.map((i,index)=>{
-                              if(d?.[i] === null){
-                                  return (<p key={index}><span>Slot {index}: - </span></p>)
-                              }
-                              if(d?.[i]?.split === true){
-                                  if(d?.[i]?.player2 === null){
-                                      return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/-`}</p>)
-                                  }else if(d?.[i]?.player1 === null){
-                                      return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`-/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p>)
-                                  }
-                                  else{
-                                      return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p>)
-                                  }
-                              }
-
-                              if(d?.[i]?.split === false){
-                                  return (<p key={index}><span>Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}`}</p>)
-                              }
-                              
-                          })}
-                     </div>
-
-                     <div className=" flex flex-col w-[300px] h-4 pl-2 navbarSM:w-[180px]">
-                        <p><span>Winning number: {'\u00A0'}{'\u00A0'}</span>{d.winnning_number === null?'-':d.winnning_number}</p>     
-                     </div>
-
-                     <div className=" flex flex-col w-[300px] h-4 pl-2 mb-4 navbarSM:w-[180px]">
-                        <p><span>Status: {'\u00A0'}{'\u00A0'}</span>{statusConversion(d.status)}</p>     
+                     <div className="font-inter mt-5">
+                          <span className="font-inter font-medium">Status</span>
+                          <p>{statusConversion(d.status)}</p>     
                      </div>
 
 
-                     <div className="flex flex-row justify-center items-center gap-32 w-[300px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
-                        <button className="flex flex-col justify-center items-center w-20 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
+                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5 navbarSM:w-[180px] navbarSM:gap-10">
+                        <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose();
-                        }}>Close</button>
+                        }}><i className="material-icons inline">cancel</i>Close</button>
 
 
-                    <button className={`flex flex-col justify-center items-center w-20 h-8 bg-buttonColor 
-                        text-white rounded-lg navbarSM:w-80 ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' ?'':'invisible'}`}
-                        onClick={()=>{
-                                setOpenConfirm(true)
-                              }
-                            }>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW'?'Join':''}</button>
+                        <button className={`button navbarSM:w-80 ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' ?'':'invisible'}`}
+                            onClick={()=>{
+                                    setOpenConfirm(true)
+                                  }
+                                }>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW'?'Join':''}</button>
                     </div>
                 </div>
                 <ConfirmAuctionHistModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 
