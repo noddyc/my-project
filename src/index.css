@@ -19,8 +19,8 @@
         @apply font-medium p-2 mb-2 bg-warningBg rounded-md;
     }
     .button{
-        @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
-        rounded-full hover:opacity-60 ;
+        @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-darkBg text-white text-xl
+        font-bold rounded-full hover:opacity-60 ;
     }
 }
 

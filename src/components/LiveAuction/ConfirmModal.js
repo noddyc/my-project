@@ -81,9 +81,9 @@ export default function ConfirmModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light text-xl">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[250px] gap-4 navbarSM:w-[180px]">
+                  isolate w-[375px] gap-4 navbarSM:w-[180px]">
                     
                     <div className="flex flex-col w-full mb-4 navbarSM:w-[180px]">
                       
@@ -96,20 +96,22 @@ export default function ConfirmModal(props) {
                           <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name) + " I am from USA "} {'\u00A0'}</p>
                       </div>
 
+                      <div className='flex gap-4 mb-5'>
+                        <div className="font-inter">
+                            <span className="font-inter font-medium">Total Price</span>
+                            <p>{'\u00A0'}{'\u00A0'}$ {Math.round(props.data.product_price/10)}.00</p>    
+                        </div>
 
-                      <div className="font-inter mb-2">
-                          <span className="font-inter font-medium">Total Price:</span>
-                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(props.data.product_price/10)}.00</p>    
-                      </div>
+                        <div className="font-inter">
+                            <span className="font-inter font-medium">Slot Picked</span>
+                            <p>{'\u00A0'}{'\u00A0'}{props.slot}</p>    
+                        </div>
 
-                      <div className="font-inter mb-2">
-                          <span className="font-inter font-medium">Slot Picked:</span>
-                          <p>{'\u00A0'}{'\u00A0'}{props.slot}</p>    
-                      </div>
+                        <div className="font-inter">
+                            <span className="font-inter font-medium">Slot Option</span>
+                            <p>{'\u00A0'}{'\u00A0'}{_.startCase(props.split)}</p>    
+                        </div>
 
-                      <div className="font-inter mb-2">
-                          <span className="font-inter font-medium">Slot Option:</span>
-                          <p>{'\u00A0'}{'\u00A0'}{_.startCase(props.split)}</p>    
                       </div>
                     </div>
 
@@ -121,16 +123,14 @@ export default function ConfirmModal(props) {
                         <p className={successMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
                     </div>
                     
-                    <div className="flex flex-row justify-center items-center gap-20 w-[250px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
-                        <button className="flex flex-row justify-center items-center w-[110px] p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
-                        rounded-full hover:opacity-75 navbarSM:w-80"
+                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
+                        <button className="button"
                         onClick={()=>{
                             props.onClose()
-                        }}><i className="material-icons inline">cancel</i>Close</button>
+                        }}><i className="material-icons inline">cancel</i>Decline</button>
 
-                        <button className={`flex flex-row justify-center items-center w-[110px] p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
-                        rounded-full hover:opacity-75 navbarSM:w-80`}
-                        onClick={submitHandler}><i className="material-icons inline">check_circle</i>Confirm</button>
+                        <button className={`button`}
+                        onClick={submitHandler}><i className="material-icons inline">check_circle</i>Accept</button>
                     </div>
                 </div>
         </div>

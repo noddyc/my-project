@@ -203,13 +203,15 @@ function LiveAuctionSection(props) {
 
 
     return (
-            <div className='overflow-scroll bg-lightBg h-full mb-20  w-[calc(100%)-150px] gap-2 flex flex-col justify-center items-start ml-[150px]  relative font-inter font-light
+            <div className='overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
             navbarSM:w-full navbarSM:pl-0 navbarSM:pr-0 navbarSM:ml-0'>
-                <div className="mb-8 mt-2 ml-2 absolute top-0 font-bold"><h1 className="text-5xl">Live Games</h1>
-                </div>
-                
-                <div className="mb-8 mt-2 ml-2 absolute top-16 navbarSM:hidden">
-                    <label htmlFor="cardbutton">Table Display:</label>
+
+              <div class="px-4 sm:px-0">
+                <h3 class="text-4xl font-inter font-bold">Live Games</h3>
+              </div>
+
+              <div className="mt-5 px-4 text-2xl font-inter font-medium">
+                    <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
                         if(detail ==='true'){
@@ -218,213 +220,212 @@ function LiveAuctionSection(props) {
                         setDetail('true');
                         }
                     }} value={detail}/>
-                </div>
+              </div>
 
-                <div className={`mt-2 ml-2 absolute top-24 gap-2 ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
-                  <label>Search: </label>
-                  <input className="border-2 border-inputColor" placeholder="Enter keyword" onChange={keywordHandler}></input>
-                </div>
+              <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
+                  <label className="label">Search:{'\u00A0'}</label>
+                  <input className="input" placeholder="Enter keyword" onChange={keywordHandler}></input>
+              </div>
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 w-full pl-16 pr-16 mt-16 absolute top-24">
+              <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 ">
+              {
+              detail !=='false' ? display.map((d, index) => {
+              return (
+                <div className="border-1 border-black flex flex-col items-start
+                isolate w-[450px] rounded-2xl bg-cardBg
+                hover:bg-cardHoverColor" key={index} >  
 
-                {
-                 detail !=='false' ? display.map((d, index) => {
-                  console.log(d)
-                 return (
-                  <div className="border-1 border-black flex flex-col items-start
-                  isolate w-[325px] rounded-2xl bg-cardBg 
-                  hover:bg-cardHoverColor" key={index} >  
-
-                      <div className="max-w-[325px] max-h-[212px] overflow-hidden relative rounded ">
-                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-4 h-12 rounded-r-2xl opacity-70 hover:w-6"
-                          onClick={(e)=>{
-                            const updatedItems = [...imgPos];
-                            const newImgPos = updatedItems[index]-1;
-                            if(newImgPos < 0){
-                              updatedItems[index] = img.has(d.id)?img.get(d.id).length:3;
-                              setImgPos(updatedItems);
-                              return;
-                            }
-                            updatedItems[index] = newImgPos;
+                    <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded ">
+                        <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"
+                        onClick={(e)=>{
+                          const updatedItems = [...imgPos];
+                          const newImgPos = updatedItems[index]-1;
+                          if(newImgPos < 0){
+                            updatedItems[index] = img.has(d.id)?img.get(d.id).length:3;
                             setImgPos(updatedItems);
-                          }}>
-                              <i className="material-icons text-sm pl-1">arrow_back_ios</i>
-                          </button>
-                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[325px] min-h-[212px] object-center rounded-tl-2xl rounded-tr-2xl" 
-                          src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
-                          {d.id && img && !img.has(d.id) && <img className=" min-w-[325px] min-h-[212px] rounded-tl-2xl rounded-tr-2xl object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+                            return;
+                          }
+                          updatedItems[index] = newImgPos;
+                          setImgPos(updatedItems);
+                        }}>
+                            <i className="material-icons text-sm pl-1">arrow_back_ios</i>
+                        </button>
+                        {d.id && img  &&  img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl" 
+                        src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
+                        {d.id && img && !img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] rounded-tl-2xl rounded-tr-2xl object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
 
-                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-4 h-12 rounded-l-2xl opacity-70 hover:w-6"
-                          onClick={(e)=>{
-                            const updatedItems = [...imgPos];
-                            const newImgPos = updatedItems[index]+1;
-                            if(newImgPos > (img.has(d.id)?img.get(d.id).length-1:3)){
-                              updatedItems[index] = 0;
-                              setImgPos(updatedItems);
-                              return;
-                            }
-                            updatedItems[index] = newImgPos;
+                        <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"
+                        onClick={(e)=>{
+                          const updatedItems = [...imgPos];
+                          const newImgPos = updatedItems[index]+1;
+                          if(newImgPos > (img.has(d.id)?img.get(d.id).length-1:3)){
+                            updatedItems[index] = 0;
                             setImgPos(updatedItems);
-                          }}>
-                            <i className="material-icons text-sm">arrow_forward_ios</i>
-                          </button>
-                      </div>
-
-
-                      <div className="w-full p-5">              
-                        <div className="h-14 overflow-scroll mb-2">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name) + " I am from USA "} {'\u00A0'}
-                          </p>
-                        </div>
-
-                        <div className="h-30 mb-2">
-                          <span className="font-inter font-medium">Description:</span>
-                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
-                             " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
-                        </div>
-
-                        <div className="font-inter mb-2">
-                              <span className="font-inter font-medium">Host:</span>
-                              <p>{'\u00A0'}{'\u00A0'}{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</p>
-                        </div>
-
-                        <div className="font-inter mb-2">
-                          <span className="font-inter font-medium">End Time:</span>
-                          <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD HH:mm:ss"):""}
-                          {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
-                        </div>
-
-
-
-                        <div className="font-inter mb-2">
-                          <span className="font-inter font-medium">Total Price:</span>
-                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
-                        </div>
-
-                        <div className="font-inter mb-2">
-                          <span className="font-inter font-medium">Buyback Price:</span>
-                          <p>{'\u00A0'}{'\u00A0'}$ {
-                                Math.round(
-                                slotArr.reduce((accumulator, currentValue)=>{
-                                // console.log(d.currentValue)
-                                return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
-                              }, 0)*0.9)}.00</p>
-                        </div>
-                      </div>
-
-                     {/* to make justify-center items-center work, need to include width */}
-                     <div className="flex justify-start items-center w-full mb-6 pl-4">
-                        <button className={`flex flex-row justify-center items-center w-[90px] p-4 h-[36px] gap-2 bg-darkBg text-white font-bold
-                        rounded-full hover:opacity-60 ${d.ownerId === auth().id ? "invisible":"" }`}
-                        onClick={() => {  
-                                setInd({original:{...display[index]}});
-                                setIsOpen(true);
-                          
-                            }}><i className="material-icons inline">add_circle</i><span>Join</span></button>
+                            return;
+                          }
+                          updatedItems[index] = newImgPos;
+                          setImgPos(updatedItems);
+                        }}>
+                          <i className="material-icons text-sm">arrow_forward_ios</i>
+                        </button>
                     </div>
-                  </div> )}
+
+                    <div className="w-full p-5">              
+                      <div className="h-14 overflow-scroll mb-2">
+                        <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
+                        </p>
+                      </div>
+
+                      <div className="flex gap-6">
+
+                            <div className="flex flex-col flex-grow">
+                                <div className="font-inter mb-2">
+                                      <span className="font-inter font-medium">Host:</span>
+                                      <p>{'\u00A0'}{'\u00A0'}{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</p>
+                                </div>
+
+                                <div className="font-inter mb-2">
+                                  <span className="font-inter font-medium">End Time:</span>
+                                  <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
+                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                                </div>
+
+                                <div className="font-inter mb-2">
+                                  <span className="font-inter font-medium">Total Price:</span>
+                                  <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
+                                </div>
+
+                                <div className="font-inter mb-2">
+                                  <span className="font-inter font-medium">Buyback Price:</span>
+                                  <p>{'\u00A0'}{'\u00A0'}$ {
+                                        Math.round(
+                                        slotArr.reduce((accumulator, currentValue)=>{
+                                        // console.log(d.currentValue)
+                                        return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
+                                      }, 0)*0.9)}.00</p>
+                                </div>
+                              </div>
+                              <div className="h-30 w-1/2">
+                                <span className="font-inter font-medium">Description:</span>
+                                <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
+                                  " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
+                              </div>
+                        </div>
+                       </div>
+
+                  {/* to make justify-center items-center work, need to include width */}
+                  <div className="flex justify-end items-center w-full mb-6 pr-6">
+                      <button className={`button ${d.ownerId === auth().id ? "invisible":"" }`}
+                      onClick={() => {  
+                              setInd({original:{...display[index]}});
+                              setIsOpen(true);
+                        
+                          }}><i className="material-icons inline">add_circle</i><span>Join</span></button>
+                  </div>
+                </div> )}
+                
+                ) : (
                   
-                  ) : (
-                            <div className="self-center flex flex-col justify-center items-center mt-24 mb-32">
-                                 <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
-                                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-                                </div>
-
-                                <div id="buttonNot" className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
-                                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                                        {'<<'}
-                                    </button>{' '}
-                                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                                        Previous
-                                    </button>{' '}
-                                    <button onClick={() => {
-
-                                      // console.log("hello I clicked");
-                                      nextPage()}} disabled={!canNextPage}>
-                                        Next
-                                    </button>{' '}
-                                    <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                                        {'>>'}
-                                    </button>{' '}
-                                    <span>
-                                        Page{' '}
-                                        <strong>
-                                        {pageIndex + 1} of {pageOptions.length}
-                                        </strong>{' '}
-                                    </span>
-                                    <span>
-                                        | Go to page:{' '}
-                                        <input
-                                        className="border-2 border-inputColor"
-                                        type='number'
-                                        defaultValue={pageIndex + 1}
-                                        onChange={e => {
-                                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                                            gotoPage(pageNumber)
-                                        }}
-                                        style={{ width: '50px' }}
-                                        />
-                                    </span>{' '}
-                                    <select
-                                        value={pageSize}
-                                        onChange={e => setPageSize(Number(e.target.value))}>
-                                        {[10, 25, 50].map(pageSize => (
-                                        <option key={pageSize} value={pageSize}>
-                                            Show {pageSize}
-                                        </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <table {...getTableProps() }
-                                   className="flex flex-col items-start w-11/12 mt-8">
-                                  <thead className="">
-                                    {headerGroups.map(headerGroup => (
-                                      <tr {...headerGroup.getHeaderGroupProps()}
-                                      className="">
-                                        {headerGroup.headers.map(column => (
-                                          <th className="max-w-[200px] min-w-[200px] border p-2 border-solid max-h-10 min-h-10 " 
-                                        
-                                          {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                              {column.render('Header')} 
-                                              <span>
-                                              {column.isSorted
-                                                ? column.isSortedDesc
-                                                  ? <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_downward</i>
-                                                  : <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_upward</i>
-                                                : ''}
-                                              </span>
-                                              </th>
-                                        ))}
-                                      </tr>
-                                    ))}
-                                  </thead>
-                                  <tbody className="" {...getTableBodyProps()}>
-                                    {page.map((row,index) => {
-                                      prepareRow(row)
-                                      return (
-                                        <tr {...row.getRowProps()}>
-                                          {row.cells.map(cell => {
-                                            return <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}
-                                             {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
-                                            </td>
-                                          })}
-                                          <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}>
-                                            <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
-                                            <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
-                                                setInd(row);
-                                                // console.log(ind)
-                                                setIsOpen(true);
-                                              }}>detail</button>
-                                              </div></td>
-                                        </tr>
-                                      )
-                                    })}
-                                  </tbody>
-                                </table>
-                            </div>
-                  )
-                }
+            <div className="self-center flex flex-col justify-center items-center mt-24 mb-32">
+                 <div className="flex-row justify-center items-center ml-2 absolute top-0 left-0" style={{display : detail !=='false'?"none":""}}>
+                  <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                 </div>
+
+                <div id="buttonNot" className="flex-row justify-center items-center ml-2 absolute top-16" style={{display : detail !=='false'?"none":""}}>
+                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                        {'<<'}
+                    </button>{' '}
+                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                        Previous
+                    </button>{' '}
+                    <button onClick={() => {
+
+                      // console.log("hello I clicked");
+                      nextPage()}} disabled={!canNextPage}>
+                        Next
+                    </button>{' '}
+                    <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                        {'>>'}
+                    </button>{' '}
+                    <span>
+                        Page{' '}
+                        <strong>
+                        {pageIndex + 1} of {pageOptions.length}
+                        </strong>{' '}
+                    </span>
+                    <span>
+                        | Go to page:{' '}
+                        <input
+                        className="border-2 border-inputColor"
+                        type='number'
+                        defaultValue={pageIndex + 1}
+                        onChange={e => {
+                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
+                            gotoPage(pageNumber)
+                        }}
+                        style={{ width: '50px' }}
+                        />
+                    </span>{' '}
+                    <select
+                        value={pageSize}
+                        onChange={e => setPageSize(Number(e.target.value))}>
+                        {[10, 25, 50].map(pageSize => (
+                        <option key={pageSize} value={pageSize}>
+                            Show {pageSize}
+                        </option>
+                        ))}
+                    </select>
+                </div>
+                <table {...getTableProps() }
+                   className="flex flex-col items-start w-11/12 mt-8">
+                  <thead className="">
+                    {headerGroups.map(headerGroup => (
+                      <tr {...headerGroup.getHeaderGroupProps()}
+                      className="">
+                        {headerGroup.headers.map(column => (
+                          <th className="max-w-[200px] min-w-[200px] border p-2 border-solid max-h-10 min-h-10 " 
+                        
+                          {...column.getHeaderProps(column.getSortByToggleProps())}>
+                              {column.render('Header')} 
+                              <span>
+                              {column.isSorted
+                                ? column.isSortedDesc
+                                  ? <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_downward</i>
+                                  : <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_upward</i>
+                                : ''}
+                              </span>
+                              </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody className="" {...getTableBodyProps()}>
+                    {page.map((row,index) => {
+                      prepareRow(row)
+                      return (
+                        <tr {...row.getRowProps()}>
+                          {row.cells.map(cell => {
+                            return <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}
+                             {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
+                            </td>
+                          })}
+                          <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}>
+                            <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
+                            <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
+                                setInd(row);
+                                setIsOpen(true);
+                              }}>detail</button>
+                              </div></td>
+                                            </tr>
+                                          )
+                                        })}
+                                      </tbody>
+                                    </table>
+                                </div>
+                      )
+                    }
+                    </div>
+                
                 <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></Modal>
             </div>
     );

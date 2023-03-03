@@ -143,13 +143,13 @@ function AuctionForm(props) {
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-4xl font-inter font-bold leading-6">Create New Game</h3>
+                        <h3 class="text-4xl font-inter font-bold">Create New Game</h3>
                     </div>
                 </div>
 
                 <div class="mt-5 md:col-span-2 md:mt-0">
                     <div>
-                        <div class="overflow-hidden shadow sm:rounded-md">
+                        <div class="overflow-hidden sm:rounded-md">
                             <div class="bg-white px-4 py-5 sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-6 sm:col-span-3">
@@ -250,7 +250,7 @@ function AuctionForm(props) {
                                     </div>
 
 
-                                    <div className='col-span-6'>
+                                    <div className='col-span-6 mb-20'>
                                         <div className='flex justify-between'>
                                             <button className='button'
                                             onClick={(e)=>{

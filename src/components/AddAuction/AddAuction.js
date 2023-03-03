@@ -16,8 +16,6 @@ const AddAuction = (props)=>{
     const auth = useAuthUser();
     console.log(props)
 
-
-///////////////////
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const handleImageChange = (e) => {
@@ -35,14 +33,6 @@ const AddAuction = (props)=>{
       console.log(e)
 
     };
-///////////////////
-
-    // useEffect(()=>{
-    //     console.log("line 27")
-    //     const socket = io('http://localhost:9001');
-    //     socket?.emit("newUser", auth().id)
-    //     props.setSocket(socket);
-    // }, []);
 
 
     useEffect(()=>{
@@ -63,10 +53,6 @@ return(
         <div className=" flex flex-row navbarSM:flex navbarSM:flex-col ">
             <LeftSideBar></LeftSideBar>
             <AuctionForm info={props.info}></AuctionForm>
-
-            {/* //////////////////// */}
-
-        {/* //////////////////// */}
         </div>
         <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>

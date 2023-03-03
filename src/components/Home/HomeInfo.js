@@ -216,67 +216,71 @@ const HomeInfo = (props)=>{
 
 
     return (
-        <div className='h-screen w-full flex-col items-center justify-center relative font-inter font-light'>
-            <div className='border-t-2 border-r-2 border-l-2 border-inputColor w-1/2 absolute left-1/4 top-16  bg-white
-            navbarSM:w-3/4 navbarSM:left-[15%]'>
-                <h1 className='h-24 not-italic font-normal text-center text-[60px] leading-[94px] font-roboto text-gray-700
-                navbarSM:text-[30px] navbarSM:leading-[94px]'>Change Information</h1></div>
-            <div className='border-b-2 border-r-2 border-l-2 border-inputColor  flex flex-col justify-center items-center p-4 gap-8 w-1/2
-            absolute left-1/4 top-40 bg-white pb-16 navbarSM:w-3/4 navbarSM:left-[15%]'>
+        <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl'>
+              <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                        <div class="px-4 sm:px-0">
+                            <h3 class="text-4xl font-inter font-bold">Personal Information</h3>
+                        </div>
+                </div>
+                <div class="mt-5 md:col-span-2 md:mt-0">
+                    <div className="">
+                        <div class="overflow-hidden sm:rounded-md">
+                            <div class="bg-white px-4 py-5 sm:p-6">
+                                <div class="grid grid-cols-6 gap-6">
 
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full mb-32'>
-                    <img src={require("../../assets/img1.jpeg")} alt="" className="h-40 mb-4 mt-12 w-40
-                    rounded-full rounded-brtl-xl"></img>
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <img src={require("../../assets/img1.jpeg")} alt="" className="h-40 w-40 rounded-full rounded-brtl-xl"></img>
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label htmlFor="name" className="label">Username</label>
+                                        <input id='name' type='text' maxLength="10" className="input" placeholder={display.username} onChange={usernameHandler}></input>
+                                        <p className={`${username && !usernameValid ? "flex":"invisible"}`}>duplicate username or invalid username</p>
+                                    </div> 
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label className="label">Email</label>
+                                        <input className="input" placeholder={display.email} onChange={emailHandler}></input>
+                                        <p className={`${email && !emailValid? "flex":"invisible"}`}>duplicate email or invalid email</p>
+                                    </div> 
+
+
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label className="label">First Name</label>
+                                        <input className="input" placeholder={display.firstname}
+                                        onChange={(e)=>{setFirstName(e.target.value)}}></input>
+                                    </div> 
+
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label className="label">Last Name</label>
+                                        <input className="input" placeholder={display.lastname}
+                                        onChange={(e)=>{setLastName(e.target.value)}}></input>
+                                    </div> 
+
+
+                                    <div class="col-span-6 sm:col-span-3 mb-12">
+                                        <label className="label">Address</label>
+                                        <textarea type='text' maxLength="100" rows="3" className="input" placeholder={display.address}
+                                        onChange={(e)=>{setAddress(e.target.value)}}></textarea>
+                                    </div> 
+
+                                    <div className='col-span-6 mb-20'>
+                                        <div className="flex justify-end">
+                                            <button className={`button ${(count()) ? "":"cursor-not-allowed"}`} onClick={submitHandler}>Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label>Username: </label>
-                    <input className="border-2 border-inputColor " placeholder={display.username} onChange={usernameHandler}></input>
-                    <p className={`${username && !usernameValid ? "flex":"invisible"}`}>duplicate username or invalid username</p>
-                </div>
-
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label>Email: </label>
-                    <input className="border-2 border-inputColor " placeholder={display.email} onChange={emailHandler}></input>
-                    <p className={`${email && !emailValid? "flex":"invisible"}`}>duplicate email or invalid email</p>
-                </div>
-
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label>Firstname: </label>
-                    <input className="border-2 border-inputColor " placeholder={display.firstname}
-                    onChange={(e)=>{setFirstName(e.target.value)}}></input>
-                </div>
-
-
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label>Lastname: </label>
-                    <input className="border-2 border-inputColor " placeholder={display.lastname}
-                    onChange={(e)=>{setLastName(e.target.value)}}></input>
-                </div>
-
-                <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label>Address: </label>
-                    <input className="border-2 border-inputColor " placeholder={display.address}
-                    onChange={(e)=>{setAddress(e.target.value)}}></input>
-                </div>
-
-                {/* <div className='flex flex-col items-start p-0 h-20 gap-2 w-full'>
-                    <label htmlFor="timezone" >Choose an timezone to change: {`(${display.timezone})`} </label>
-                        <select name="timezone" id="timezone" className= {`w-3/4 border-2 border-inputColor`} onChange={handleChange}>
-                            <option value=''>-</option>
-                            {
-                             (
-                                timezonelist.map((i, index)=>{
-                                    return (<option key={index} value={i}>{i}</option>)
-                                }))
-                            } 
-                        </select>
-                </div>
-                 */}
-                <button className={`flex flex-col justify-center items-center p-4 w-40 h-12 bg-buttonColor text-white rounded-lg
-                     navbarSM:w-20 ${(count()) ? "":"opacity-50 cursor-not-allowed"}`} onClick={submitHandler}>Submit</button>
-            </div>
-        </div>
+              </div>
+        </div> 
         );
 }
 export default HomeInfo;
