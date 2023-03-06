@@ -26,12 +26,12 @@ const InfoNavBar = (props)=>{
             
             <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full mt-5'>
                     <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>FirstName</label>
-                    <h5 className="pl-10 not-italic">{props.info.firstname}</h5>
+                    <h5 className="pl-10 not-italic">{_.startCase(props.info.firstname)}</h5>
             </div>
             
             <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full mt-5'>
                     <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>LastName</label>
-                    <h5 className="pl-10 not-italic">{props.info.lastname}</h5>
+                    <h5 className="pl-10 not-italic">{_.startCase(props.info.lastname)}</h5>
             </div>
 
         

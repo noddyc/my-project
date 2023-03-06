@@ -5,7 +5,7 @@ import { useAuthUser } from "react-auth-kit";
 import qs from 'qs'
 import axios from 'axios'
 import {debounce} from 'lodash'
-import { timezonelist } from "../Utils/timezonelist";
+import _ from 'lodash'
 import {ip} from '../Utils/ip'
 
 
@@ -249,14 +249,14 @@ const HomeInfo = (props)=>{
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <label className="label">First Name</label>
-                                        <input className="input" placeholder={display.firstname}
+                                        <input className="input" placeholder={_.startCase(display.firstname)}
                                         onChange={(e)=>{setFirstName(e.target.value)}}></input>
                                     </div> 
 
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <label className="label">Last Name</label>
-                                        <input className="input" placeholder={display.lastname}
+                                        <input className="input" placeholder={_.startCase(display.lastname)}
                                         onChange={(e)=>{setLastName(e.target.value)}}></input>
                                     </div> 
 

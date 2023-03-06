@@ -92,17 +92,17 @@ export default function AuctionHistModal(props) {
                                         }
                                         if(d?.[i]?.split === true){
                                             if(d?.[i]?.player2 === null){
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/-`}</p></div>)
+                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
                                             }else if(d?.[i]?.player1 === null){
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`-/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p></div>)
+                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                             else{
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}/${d?.[i]?.player_2?.firstname+" "+d?.[i]?.player_2?.lastname??'-'}`}</p></div>)
+                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                         }
 
                                         if(d?.[i]?.split === false){
-                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${d?.[i]?.player_1?.firstname+" "+d?.[i]?.player_1?.lastname??'-'}`}</p></div>)
+                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
                                         }
                                         
                                     })}
