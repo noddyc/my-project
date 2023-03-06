@@ -11,7 +11,7 @@ const Navbar = (props) =>{
     const navigate = useNavigate();
     const auth = useAuthUser();
     const [toggle, setToggle] = useState("hidden");
-    const [toggleHeight, setToggleHeight] = useState('h-[80px]');
+    const [toggleHeight, setToggleHeight] = useState('h-80px');
     const [len, setLen] = useState(props.notifications.filter((e)=>!e.viewed).length)
 
     console.log(props.info.firstname)
@@ -111,7 +111,7 @@ const Navbar = (props) =>{
     }
     
     return(
-        <nav className={`flex items-center justify-around relative text-black bg-slate-300  navbarSM:${toggleHeight} navbarSM:flex-col navbarSM:items-start`}>
+        <nav className={`flex items-center justify-around relative text-black bg-slate-300  ${toggleHeight} navbarSM:flex-col navbarSM:items-start`}>
             <div className="flex-grow text-2xl my-2 mr-2 ml-4"></div>
             <a href="#/" onClick={barmenuHandler} className={`hidden flex-col justify-between h-5 absolute top-3 right-4 w-8 navbarSM:flex`}>
                 <span className="bg-white h-1 w-full rounded-2xl"></span>
@@ -125,7 +125,7 @@ const Navbar = (props) =>{
                     " ": props.info.firstname.toUpperCase()} {props.info.lastname.toUpperCase()}</span></div>}
                     <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0 relative text-darkBg"><i className="material-icons hover:cursor-pointer" style={{fontSize: '36px'}}
                     onClick={bellClickHandler}>notifications</i>
-                    {<div className="absolute top-5 right-10 bg-red-700 w-5 h-5 text-xs text-white flex justify-center items-center rounded-lg">{len}</div>}
+                        <div className="absolute top-5 right-10 bg-red-700 w-5 h-5 text-xs text-white flex justify-center items-center rounded-lg">{len}</div>
                     </div>
                     <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0"><img onClick={imgClickHandler} src={require("../../assets/img1.jpeg")} 
                     className="flex flex-row justify-center items-center isolate w-8 h-8 p-0 rounded-2xl" style={{cursor:"pointer", height:"3rem", width:"3rem", borderRadius:"10rem"}}></img></div>
@@ -141,7 +141,6 @@ const Navbar = (props) =>{
                     <NavLink to='/logout' className="list-none  navbarSM:text-center"><span className="block p-4  no-underline navbarSM:py-2 navbarSM:px-4">Sign Out</span></NavLink>
                 </ul>
             </div>
-
         </nav>
        )
 }
