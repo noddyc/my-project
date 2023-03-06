@@ -16,8 +16,6 @@ const ProfileBox = (props)=>{
             <h5>{props.info.lastname}</h5>
             <div className="">Email: </div>
             <h5>{props.info.email}</h5>
-            {/* <div className="">Timezone: </div>
-            <h5>{Intl.DateTimeFormat().resolvedOptions().timeZone}</h5> */}
             <div className="">Address: </div>
             <h5>{props.info.address}</h5>
             

@@ -10,7 +10,7 @@ import {useAuthUser} from 'react-auth-kit';
 const Navbar = (props) =>{
     const navigate = useNavigate();
     const auth = useAuthUser();
-    const [toggle, setToggle] = useState("hidden");
+    const [toggle, setToggle] = useState("flex");
     const [toggleHeight, setToggleHeight] = useState('h-80px');
     const [len, setLen] = useState(props.notifications.filter((e)=>!e.viewed).length)
 
@@ -86,7 +86,11 @@ const Navbar = (props) =>{
 
     const navLinkStyles = ({isActive})=>{
         return{
-            color: isActive?'#334155':'none',
+            border: isActive?'solid':'none',
+            borderColor: isActive?'#334155':'none',
+            borderWidth: isActive?'1px':'none',
+            borderRadius: isActive?'10px':'none',
+            backgroundColor: isActive? '#334155':'none'
         }
     }
     
@@ -110,39 +114,43 @@ const Navbar = (props) =>{
         navigate('/notifications')
     }
     
-    return(
-        <nav className={`flex items-center justify-around relative text-black bg-slate-300  ${toggleHeight} navbarSM:flex-col navbarSM:items-start`}>
-            <div className="flex-grow text-2xl my-2 mr-2 ml-4"></div>
-            <a href="#/" onClick={barmenuHandler} className={`hidden flex-col justify-between h-5 absolute top-3 right-4 w-8 navbarSM:flex`}>
-                <span className="bg-white h-1 w-full rounded-2xl"></span>
-                <span className="bg-white h-1 w-full rounded-2xl"></span>
-                <span className="bg-white h-1 w-full rounded-2xl"></span>
-            </a>
-            <div className={`h-full m-0 px-2 py-0 gap-2 navbarSM:w-full navbarSM:hidden`}>
-                <ul className={`flex m-0 px-2 py-0 gap-2  navbarSM:flex-col navbarSM:w-full`}>
-                    {props.info.firstname !== undefined && props.info.lastname !== undefined  && 
-                    <div className="flex justify-center items-center gap-1 font-inter font-medium text-xl text-darkBg"><span>{props.info.firstname === undefined ?
-                    " ": props.info.firstname.toUpperCase()} {props.info.lastname.toUpperCase()}</span></div>}
-                    <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0 relative text-darkBg"><i className="material-icons hover:cursor-pointer" style={{fontSize: '36px'}}
-                    onClick={bellClickHandler}>notifications</i>
-                        <div className="absolute top-5 right-10 bg-red-700 w-5 h-5 text-xs text-white flex justify-center items-center rounded-lg">{len}</div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-1 w-[126.67px] h-20 pt-3 pb-4 px-0"><img onClick={imgClickHandler} src={require("../../assets/img1.jpeg")} 
-                    className="flex flex-row justify-center items-center isolate w-8 h-8 p-0 rounded-2xl" style={{cursor:"pointer", height:"3rem", width:"3rem", borderRadius:"10rem"}}></img></div>
-                </ul>
+    return (
+        <nav className="bg-slate-200">
+            <div className="hidden  navbarSM:block">
+                <div className="flex justify-end h-[80px]">
+                    <i className="material-icons text-black text-4xl mr-10 py-4" onClick={barmenuHandler}>menu</i>
+                </div>
+
+                <div className={`${toggle} justify-center h-[300px]`}>
+                    <ul className="flex-col">
+                        <NavLink style={navLinkStyles} to='/main' className='flex font-inter font-medium text-2xl mb-4 text-white px-2 justify-center'><span>Home</span></NavLink>
+                        <NavLink  style={navLinkStyles} to='/liveauction' className='flex font-inter font-medium text-2xl mb-4 text-white px-2 justify-center'><span>Live Games</span></NavLink>
+                        <NavLink  style={navLinkStyles} to='/auctionhist' className='flex font-inter font-medium text-2xl mb-4 text-white px-2 justify-center'><span>Game History</span></NavLink>
+                        <NavLink  style={navLinkStyles} to='/bidhist' className='flex font-inter font-medium text-2xl mb-4 text-white px-2 justify-center'><span>Selections</span></NavLink>
+                        <NavLink  style={navLinkStyles} to='/addauction' className='flex font-inter font-medium text-2xl mb-4 text-white px-2 justify-center'><span>New Game</span></NavLink>
+                        <NavLink to='/logout' className='flex font-inter font-medium text-2xl text-white px-2 justify-center'><span>Sign Out</span></NavLink>
+                    </ul>
+                </div>                
             </div>
 
-            <div className={`h-full hidden navbarSM:w-full navbarSM:${toggle} text-darkBg font-inter font-medium text-xl`}>
-                <ul className={`flex m-0 p-0 navbarSM:flex-col navbarSM:w-full`}>
-                    <NavLink style={navLinkStyles} to='/main' className="list-none  navbarSM:text-center"><span className="block p-4  no-underline navbarSM:py-2 navbarSM:px-4">Home</span></NavLink>
-                    <NavLink  style={navLinkStyles} to='/liveauction' className="list-none  navbarSM:text-center"><span  className="block p-4 no-underline navbarSM:py-2 navbarSM:px-4">Live Auctions</span></NavLink>
-                    <NavLink  style={navLinkStyles} to='/auctionhist' className="list-none  navbarSM:text-center"><span  className="block p-4 no-underline navbarSM:py-2 navbarSM:px-4">Auction History</span></NavLink>
-                    <NavLink  style={navLinkStyles} to='/bidhist' className="list-none  navbarSM:text-center"><span  className="block p-4  no-underline navbarSM:py-2 navbarSM:px-4">Bid History</span></NavLink>
-                    <NavLink to='/logout' className="list-none  navbarSM:text-center"><span className="block p-4  no-underline navbarSM:py-2 navbarSM:px-4">Sign Out</span></NavLink>
-                </ul>
+            <div className="block h-[80px] navbarSM:hidden">
+                <div className="flex justify-end">
+                    <ul className={`flex gap-10`}>
+                        {props.info.firstname !== undefined && props.info.lastname !== undefined  && 
+                        <div className="flex items-center"><span className="font-inter font-medium text-2xl text-darkBg">{props.info.firstname === undefined ?
+                        " ": props.info.firstname.toUpperCase()} {props.info.lastname.toUpperCase()}</span></div>}
+
+                        <div className="flex items-center relative"><i className="material-icons text-4xl text-darkBg" 
+                        onClick={bellClickHandler}>notifications</i>
+                        {<div className="absolute font-inter font-medium top-5 -right-1 bg-red-700 w-5 h-5 text-xs text-white flex justify-center items-center rounded-full">{len}</div>}
+                        </div>
+                        <div className="w-[126.67px] pt-3 pb-4 px-0"><img onClick={imgClickHandler} src={require("../../assets/img1.jpeg")} 
+                        className="cursor-pointer h-[3rem] w-[3rem] rounded-full"></img></div>
+                    </ul>
+                </div>
             </div>
         </nav>
-       )
+      );
 }
 
 export default Navbar;
