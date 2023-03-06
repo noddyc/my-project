@@ -64,7 +64,7 @@ export default function ConfirmAuctionHistModal(props) {
                 axios(config).then((response) => {
                     console.log(JSON.stringify(response.data));
                     props.setDetectChange((prev)=>{return !prev})
-                    setSuccessMsg("Roll over successfully");
+                    setSuccessMsg("Roll Over Successfully");
                 }).catch((error) => {
                     console.log("error222")
                     setErrMsg("Failed to roll over");
@@ -74,7 +74,7 @@ export default function ConfirmAuctionHistModal(props) {
             }catch(err){
                 console.log("here111");
                 console.log(err);
-                setErrMsg("Failed to roll over");
+                setErrMsg("Failed to Roll Over");
                 return ;
             }
           }
@@ -97,17 +97,17 @@ export default function ConfirmAuctionHistModal(props) {
               axios(config).then((response) => {
                   console.log(JSON.stringify(response.data));
                   props.setDetectChange((prev)=>{return !prev})
-                  setSuccessMsg("Join game successfully");
+                  setSuccessMsg("Join Game Successfully");
               }).catch((error) => {
                   console.log("error222")
-                  setErrMsg("Failed to join game");
+                  setErrMsg("Failed to Join Game");
                   setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
                 })
               setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
           }catch(err){
               console.log("here111");
               console.log(err);
-              setErrMsg("Failed to join game");
+              setErrMsg("Failed to Join Game");
               return;
           }
         }
@@ -119,9 +119,9 @@ export default function ConfirmAuctionHistModal(props) {
         <div style={OVERLAY_STYLES} />
         <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[250px] gap-4 navbarSM:w-[180px]">
+                  isolate w-[250px] gap-4  ">
                     
-                    <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36 navbarSM:w-[180px]">
+                    <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36  ">
                             <h1>{(props.data.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':props.data.status==='WAITING_FOR_DRAW'?'Join':'') + ' Detail Confirmation'} {'\u00A0'}{'\u00A0'}</h1>
                             <p>Product Name: <strong>{props.data.product_name}</strong></p>
                             {
@@ -132,16 +132,16 @@ export default function ConfirmAuctionHistModal(props) {
                             props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>As host, you can roll over this game if no winner is declared</strong>:''}</p>
                      </div>
 
-                     <div className='w-full navbarSM:w-[180px]'> 
+                     <div className='w-full  '> 
                         <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
                     </div>
 
-                    <div className='w-full navbarSM:w-[180px]'> 
+                    <div className='w-full  '> 
                         <p className={successMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
                     </div>
 
                     
-                    <div className="flex flex-row justify-center items-center gap-20 w-[250px] h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
+                    <div className="flex flex-row justify-center items-center gap-20 w-[250px] h-8 mb-4   navbarSM:gap-10">
                         <button className="flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
                         onClick={()=>{
                             props.onClose()

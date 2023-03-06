@@ -106,7 +106,7 @@ function AuctionForm(props) {
                     axios.post('http://localhost:9001/api/posts', formData, 
                     {headers: {'Content-Type': 'multipart/form-data'}}).then(
                         (response)=>{
-                            setSuccessMsg("Game created successfully")
+                            setSuccessMsg("Game Created Successfully")
                             setTimeout(()=>{
                                 setName("")
                                 setDescription("")
@@ -118,17 +118,17 @@ function AuctionForm(props) {
                             },1000);
                         }
                     ).catch(()=>{
-                        setErrMsg("Failed to add game");
+                        setErrMsg("Failed to Add Game");
                     })
                 }
             ).catch(()=>{
-                setErrMsg("Failed to add game");
+                setErrMsg("Failed to Add Game");
             })
 
 
         }catch(err){
             if (err.response?.status) {
-                setErrMsg('Failed to add game');
+                setErrMsg('Failed to Add Game');
             }
             else{
                 setErrMsg(err.message);

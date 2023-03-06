@@ -13,6 +13,7 @@ import { ColumnFilter } from '../Utils/ColumnFilter'
 import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 import _ from 'lodash'
+import AHTableLg from "./AHTableLg";
 
 function AuctionHistSection(props) {
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
@@ -41,18 +42,15 @@ function AuctionHistSection(props) {
     }, 500)
 
 
-    const statusConversion = (status, winning)=>{
+    const statusConversion = (status)=>{
       if(status === "OPEN_LIVE"){
-        return "OPEN LIVE"
-      }
-      if(status === "OPEN_NOT_LIVE"){
-        return "OPEN NOT LIVE"
-      }
-      if(status === "WAITING_FOR_DRAW"){
-        return "WAITING FOR DRAW";
-      }
-      if(status === "NO_WINNER_WINNER_NOTIFIED"){
-        return "WINNING NUMBER POSTED"
+        return "Open Live"
+      }else if(status === "OPEN_NOT_LIVE"){
+        return "Open Not Live"
+      }else if(status === "NO_WINNER_WINNER_NOTIFIED"){
+        return "WinNum Posted"
+      }else if(status === "WAITING_FOR_DRAW"){
+        return "Wait For DRAW"
       }
     }
 
@@ -345,101 +343,60 @@ function AuctionHistSection(props) {
                                 setIsOpen(true);
                             }}><i className="material-icons inline">search</i>Detail</button>
                     </div>
-                  </div> )}) : (
-                            <div className="flex flex-col font-inter font-light text-xl">
+                  </div> )}) : 
+
+
+                      <>
+                      <AHTableLg detail={detail} gotoPage={gotoPage} canPreviousPage={canPreviousPage} 
+                      previousPage={previousPage} nextPage={nextPage} canNextPage={canNextPage} pageCount={pageCount}
+                      pageIndex={pageIndex} pageOptions={pageOptions} pageSize={pageSize} 
+                      setPageSize={setPageSize} getTableProps={getTableProps} headerGroups={headerGroups}
+                      getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow}
+                      setInd={setInd} setIsOpen={setIsOpen}></AHTableLg>
+
+                      <div className="hidden navbarSM:flex navbarSM:flex-col">
+                          {display.map((d, index)=>{
+                            return (
+                              <table className="mb-10 font-inter font-light text-xl">
+                              <tbody>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Name</p></td>
+                                  <td className="border-2 border-black text-center">{_.startCase(d.product_name)}</td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Win Num</p></td>
+                                  <td className="border-2 border-black  text-center">{d.winnning_number===null?"-":d.winnning_number}</td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>End Time</p></td>
+                                  <td className="border-2 border-black text-center">
+                                    {(moment(d.end_time).clone().tz(props.info.timezone)) !== undefined ? 
+                                    (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD ") : ""}
+                                    ({moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss") === "12:40:00" ? 'DAY' : 'NIGHT'})
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Status</p></td>
+                                  <td className="border-2 border-black text-center">{statusConversion(d.status)}</td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl px-2"><p>Detail</p></td>
+                                  <td className="border-2 border-black text-center w-[300px]"> 
+                                  <button className=""
+                                  onClick={() => {  
+                                          setInd({original: {...d}});
+                                          setIsOpen(true);
+                                      }}><span className="underline">Detail</span></button>
+                                </td>
+                                </tr>
+                              </tbody>
+                            </table>
                             
-                                <div id="buttonNot" className="flex-row justify-center items-center self-center" style={{display : detail !=='false'?"none":""}}>
-                                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                                        {'<<'}
-                                    </button>{' '}
-                                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                                        Previous
-                                    </button>{' '}
-                                    <button onClick={() => {console.log("hello I clicked");
-                                      nextPage()}} disabled={!canNextPage}>
-                                        Next
-                                    </button>{' '}
-                                    <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                                        {'>>'}
-                                    </button>{' '}
-                                    <span>
-                                        Page{' '}
-                                        <strong>
-                                        {pageIndex + 1} of {pageOptions.length}
-                                        </strong>{' '}
-                                    </span>
-                                    <span>
-                                        | Go to page:{' '}
-                                        <input
-                                        className="border-2 border-inputColor"
-                                        type='number'
-                                        defaultValue={pageIndex + 1}
-                                        onChange={e => {
-                                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                                            gotoPage(pageNumber)
-                                        }}
-                                        style={{ width: '50px' }}
-                                        />
-                                    </span>{' '}
-                                    <select
-                                        value={pageSize}
-                                        onChange={e => setPageSize(Number(e.target.value))}>
-                                        {[10, 25, 50].map(pageSize => (
-                                        <option key={pageSize} value={pageSize}>
-                                            Show {pageSize}
-                                        </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <table {...getTableProps() }
-                                   className="flex flex-col items-start w-11/12 mt-8">
-                                  <thead className="">
-                                    {headerGroups.map(headerGroup => (
-                                      <tr {...headerGroup.getHeaderGroupProps()}
-                                      className="">
-                                        {headerGroup.headers.map(column => (
-                                          <th className="max-w-[200px] min-w-[200px] border p-2 border-solid max-h-10 min-h-10 " 
-                                        
-                                          {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                              {column.render('Header')} 
-                                              <span>
-                                              {column.isSorted
-                                                ? column.isSortedDesc
-                                                  ? <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_downward</i>
-                                                  : <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_upward</i>
-                                                : ''}
-                                              </span>
-                                              </th>
-                                        ))}
-                                      </tr>
-                                    ))}
-                                  </thead>
-                                  <tbody className="" {...getTableBodyProps()}>
-                                    {page.map((row,index) => {
-                                      console.log(index)
-                                      prepareRow(row)
-                                      return (
-                                        <tr {...row.getRowProps()}>
-                                          {row.cells.map(cell => {
-                                            return <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}
-                                             {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
-                                            </td>
-                                          })}
-                                          <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}>
-                                            <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
-                                            <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
-                                                setInd(row);
-                                                console.log(ind)
-                                                setIsOpen(true);
-                                              }}>detail</button>
-                                              </div></td>
-                                        </tr>
-                                      )
-                                    })}
-                                  </tbody>
-                                </table>
-                            </div>
-                  )
+                            )
+                          })}
+                      </div>
+                  </>  
+                  
                 }
                 </div>
                 <AuctionHistModal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></AuctionHistModal>

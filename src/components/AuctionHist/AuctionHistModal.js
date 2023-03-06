@@ -55,7 +55,7 @@ export default function AuctionHistModal(props) {
         <div style={OVERLAY_STYLES} />
         <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[450px] navbarSM:w-[180px] ">
+                  isolate w-[450px]   ">
                     <div className="h-14 overflow-scroll">
                           <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
                           </p>
@@ -83,7 +83,7 @@ export default function AuctionHistModal(props) {
 
                 
 
-                    <div className="flex flex-col flex-wrap overflow-scroll w-full h-76 mt-5 navbarSM:w-[180px] ">
+                    <div className="flex flex-col flex-wrap overflow-scroll w-full h-76 mt-5   ">
                                 <p className='font-inter font-medium'>Slots</p>
                                 <div className='grid grid-cols-2 w-full'>
                                     {slotArr.map((i,index)=>{
@@ -120,7 +120,7 @@ export default function AuctionHistModal(props) {
                      </div>
 
 
-                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5 navbarSM:w-[180px] navbarSM:gap-10">
+                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5   navbarSM:gap-10">
                         <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose();

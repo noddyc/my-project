@@ -14,6 +14,7 @@ import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 import {io} from 'socket.io-client'
 import _ from 'lodash'
+import LATableLg from "./LATableLg";
 
 
 function upperFirstLetter(text){
@@ -203,8 +204,7 @@ function LiveAuctionSection(props) {
 
 
     return (
-            <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
-            '>
+            <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
               <div class="px-4 sm:px-0">
                 <h3 class="text-4xl font-inter font-bold">Live Games</h3>
               </div>
@@ -327,103 +327,60 @@ function LiveAuctionSection(props) {
                   </div>
                 </div> )}
                 
-                ) : (
+                ) : 
+                  <>
+                      <LATableLg detail={detail} gotoPage={gotoPage} canPreviousPage={canPreviousPage} 
+                      previousPage={previousPage} nextPage={nextPage} canNextPage={canNextPage} pageCount={pageCount}
+                      pageIndex={pageIndex} pageOptions={pageOptions} pageSize={pageSize} 
+                      setPageSize={setPageSize} getTableProps={getTableProps} headerGroups={headerGroups}
+                      getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow}
+                      setInd={setInd} setIsOpen={setIsOpen}></LATableLg>
 
-            <div className="flex flex-col font-inter font-light text-xl">
-                <div id="buttonNot" className="flex-row justify-center items-center self-center" style={{display : detail !=='false'?"none":""}}>
-                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                        {'<<'}
-                    </button>{' '}
-                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                        Previous
-                    </button>{' '}
-                    <button onClick={() => {
-
-                      // console.log("hello I clicked");
-                      nextPage()}} disabled={!canNextPage}>
-                        Next
-                    </button>{' '}
-                    <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                        {'>>'}
-                    </button>{' '}
-                    <span>
-                        Page{' '}
-                        <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                        </strong>{' '}
-                    </span>
-                    <span>
-                        | Go to page:{' '}
-                        <input
-                        className="border-2 border-inputColor"
-                        type='number'
-                        defaultValue={pageIndex + 1}
-                        onChange={e => {
-                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                            gotoPage(pageNumber)
-                        }}
-                        style={{ width: '50px' }}
-                        />
-                    </span>{' '}
-                    <select
-                        value={pageSize}
-                        onChange={e => setPageSize(Number(e.target.value))}>
-                        {[10, 25, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                        ))}
-                    </select>
-                </div>
-                <table {...getTableProps() }
-                   className="flex flex-col items-start w-11/12 mt-8">
-                  <thead className="">
-                    {headerGroups.map(headerGroup => (
-                      <tr {...headerGroup.getHeaderGroupProps()}
-                      className="">
-                        {headerGroup.headers.map(column => (
-                          <th className="max-w-[200px] min-w-[200px] border p-2 border-solid max-h-10 min-h-10 " 
-                        
-                          {...column.getHeaderProps(column.getSortByToggleProps())}>
-                              {column.render('Header')} 
-                              <span>
-                              {column.isSorted
-                                ? column.isSortedDesc
-                                  ? <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_downward</i>
-                                  : <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_upward</i>
-                                : ''}
-                              </span>
-                              </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody className="" {...getTableBodyProps()}>
-                    {page.map((row,index) => {
-                      prepareRow(row)
-                      return (
-                        <tr {...row.getRowProps()}>
-                          {row.cells.map(cell => {
-                            return <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}
-                             {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
-                            </td>
+                      <div className="hidden navbarSM:flex navbarSM:flex-col">
+                          {display.map((d, index)=>{
+                            return (
+                              <table className="mb-10 font-inter font-light text-xl">
+                              <tbody>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Name</p></td>
+                                  <td className="border-2 border-black text-center">{_.startCase(d.product_name)}</td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Host</p></td>
+                                  <td className="border-2 border-black  text-center">{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>End Time</p></td>
+                                  <td className="border-2 border-black text-center">
+                                    {(moment(d.end_time).clone().tz(props.info.timezone)) !== undefined ? 
+                                    (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD ") : ""}
+                                    ({moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss") === "12:40:00" ? 'DAY' : 'NIGHT'})
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Price</p></td>
+                                  <td className="border-2 border-black text-center">$ {Math.round(d.product_price)}.00</td>
+                                </tr>
+                                <tr>
+                                  <td className="border-2 border-black text-center font-inter font-medium text-xl px-2"><p>Detail</p></td>
+                                  <td className="border-2 border-black text-center w-[300px]"> 
+                                        <button className={` ${d.ownerId === auth().id ? "invisible":"" }`}
+                            onClick={() => {  
+                                    setInd({original:{...display[index]}});
+                                    setIsOpen(true);
+                              
+                                }}><span className="underline">Join</span></button></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            
+                              
+                            )
                           })}
-                          <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}>
-                            <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
-                            <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
-                                setInd(row);
-                                setIsOpen(true);
-                              }}>detail</button>
-                              </div></td>
-                                            </tr>
-                                          )
-                                        })}
-                                      </tbody>
-                                    </table>
-                        </div>
-                      )
-                    }
-                    </div>
+                      </div>
+                  </>    
+                }
+              </div>
                 
                 <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></Modal>
             </div>

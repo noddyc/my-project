@@ -83,9 +83,9 @@ export default function ConfirmModal(props) {
         <div style={OVERLAY_STYLES} />
         <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light text-xl">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[375px] gap-4 navbarSM:w-[180px]">
+                  isolate w-[375px] gap-4   ">
                     
-                    <div className="flex flex-col w-full mb-4 navbarSM:w-[180px]">
+                    <div className="flex flex-col w-full mb-4   ">
                       
                       <div className='font-inter font-bold mb-2'>
                           <h1>Confirm Slot Detail:{'\u00A0'}{'\u00A0'}</h1>
@@ -115,15 +115,15 @@ export default function ConfirmModal(props) {
                       </div>
                     </div>
 
-                    <div className='w-full navbarSM:w-[180px]'> 
+                    <div className='w-full   '> 
                         <p className={errMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
                     </div>
 
-                    <div className='w-full navbarSM:w-[180px]'> 
+                    <div className='w-full   '> 
                         <p className={successMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
                     </div>
                     
-                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4 navbarSM:w-[180px] navbarSM:gap-10">
+                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4    navbarSM:gap-10">
                         <button className="button_light"
                         onClick={()=>{
                             props.onClose()

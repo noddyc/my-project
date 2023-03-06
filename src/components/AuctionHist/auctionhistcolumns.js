@@ -1,4 +1,5 @@
 import moment from 'moment'
+import _ from 'lodash'
 
 export const COLUMNS= [
   {
@@ -13,7 +14,10 @@ export const COLUMNS= [
     Header: 'Name',
     Footer: 'name',
     accessor: 'product_name',
-    sticky: 'left'
+    sticky: 'left',
+    Cell: (row)=>{
+      return _.startCase(row.cell.value)
+    }
   },
   {
     Header: 'Winning Number',
@@ -25,13 +29,13 @@ export const COLUMNS= [
     sticky: 'left'
   },
   {
-    Header: 'Closing Time',
-    Footer: 'closing_time',
+    Header: 'End Time',
+    Footer: 'end_time',
     accessor: 'end_time',
     sticky: 'left',
     Cell:(row)=>{
-      return (moment(row.cell.value).clone().tz('UTC')).format("YYYY-MM-DD HH:mm:ss")
-      // return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
+      let val = row.cell.value;
+      return (moment(val).clone().tz('UTC')).format("YY-MM-DD")+" ("+((moment(val).clone().tz('UTC')).format("HH")==21?'NIGHT':'DAY') + ")"
     },
     sortType:(a,b) => {
         console.log(a.values.end_time);
@@ -43,13 +47,13 @@ export const COLUMNS= [
     Footer: 'Status',
     accessor: (data)=>{
       if(data.status === "OPEN_LIVE"){
-        return "OPEN LIVE"
+        return "Open Live"
       }else if(data.status === "OPEN_NOT_LIVE"){
-        return "OPEN NOT LIVE"
+        return "Open Not Live"
       }else if(data.status === "NO_WINNER_WINNER_NOTIFIED"){
-        return "WIN NUM POSTED"
+        return "WinNum Posted"
       }else if(data.status === "WAITING_FOR_DRAW"){
-        return "WAITING FOR DRAW"
+        return "Wait For DRAW"
       }
     },
     sticky: 'left'

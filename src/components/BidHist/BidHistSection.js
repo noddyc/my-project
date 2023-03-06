@@ -13,6 +13,7 @@ import { ColumnFilter } from '../Utils/ColumnFilter'
 import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 import _ from 'lodash'
+import BHTableLg from "./BHTableLg";
 
 function BidHistSection(props) {
     const auth = useAuthUser();
@@ -39,18 +40,15 @@ function BidHistSection(props) {
       setKeyWord(e.target.value)
     }, 500)
 
-    const statusConversion = (status, winning)=>{
+    const statusConversion = (status)=>{
       if(status === "OPEN_LIVE"){
-        return "OPEN LIVE"
-      }
-      if(status === "OPEN_NOT_LIVE"){
-        return "OPEN NOT LIVE"
-      }
-      if(status === "WAITING_FOR_DRAW"){
-        return "WAITING FOR DRAW";
-      }
-      if(status === "NO_WINNER_WINNER_NOTIFIED"){
-        return "WINNING NUMBER POSTED"
+        return "Open Live"
+      }else if(status === "OPEN_NOT_LIVE"){
+        return "Open Not Live"
+      }else if(status === "NO_WINNER_WINNER_NOTIFIED"){
+        return "WinNum Posted"
+      }else if(status === "WAITING_FOR_DRAW"){
+        return "Wait For DRAW"
       }
     }
 
@@ -229,7 +227,7 @@ function BidHistSection(props) {
     return (
             <div className='after-margin-200  overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
                 <div class="px-4 sm:px-0">
-                  <h3 class="text-4xl font-inter font-bold">Selection History</h3>
+                  <h3 class="text-4xl font-inter font-bold">Selections</h3>
                 </div>
                 <div className="mt-5 px-4 text-2xl font-inter font-medium">
                     <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
@@ -356,100 +354,58 @@ function BidHistSection(props) {
                           }}><i className="material-icons inline">search</i><span>Detail</span></button>
                     </div>
 
-                  </div> )}) : (
-                            <div className="flex flex-col font-inter font-light text-xl">
-                      
-                                <div id="buttonNot" className="flex-row justify-center items-center self-center" style={{display : detail !=='false'?"none":""}}>
-                                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                                        {'<<'}
-                                    </button>{' '}
-                                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                                        Previous
-                                    </button>{' '}
-                                    <button onClick={() => {console.log("hello I clicked");
-                                      nextPage()}} disabled={!canNextPage}>
-                                        Next
-                                    </button>{' '}
-                                    <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                                        {'>>'}
-                                    </button>{' '}
-                                    <span>
-                                        Page{' '}
-                                        <strong>
-                                        {pageIndex + 1} of {pageOptions.length}
-                                        </strong>{' '}
-                                    </span>
-                                    <span>
-                                        | Go to page:{' '}
-                                        <input
-                                        className="border-2 border-inputColor"
-                                        type='number'
-                                        defaultValue={pageIndex + 1}
-                                        onChange={e => {
-                                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                                            gotoPage(pageNumber)
-                                        }}
-                                        style={{ width: '50px' }}
-                                        />
-                                    </span>{' '}
-                                    <select
-                                        value={pageSize}
-                                        onChange={e => setPageSize(Number(e.target.value))}>
-                                        {[10, 25, 50].map(pageSize => (
-                                        <option key={pageSize} value={pageSize}>
-                                            Show {pageSize}
-                                        </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <table {...getTableProps() }
-                                   className="flex flex-col items-start w-11/12 mt-8">
-                                  <thead className="">
-                                    {headerGroups.map(headerGroup => (
-                                      <tr {...headerGroup.getHeaderGroupProps()}
-                                      className="">
-                                        {headerGroup.headers.map(column => (
-                                          <th className="max-w-[200px] min-w-[200px] border p-2 border-solid max-h-10 min-h-10 " 
-                                        
-                                          {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                              {column.render('Header')} 
-                                              <span>
-                                              {column.isSorted
-                                                ? column.isSortedDesc
-                                                  ? <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_downward</i>
-                                                  : <i className="material-icons" style={{display:"inline", fontSize:"0.75rem"}}>arrow_upward</i>
-                                                : ''}
-                                              </span>
-                                              </th>
-                                        ))}
-                                      </tr>
-                                    ))}
-                                  </thead>
-                                  <tbody className="" {...getTableBodyProps()}>
-                                    {page.map((row,index) => {
-                                      prepareRow(row)
-                                      return (
-                                        <tr {...row.getRowProps()}>
-                                          {row.cells.map(cell => {
-                                            return <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}
-                                             {...cell.getCellProps()}><div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">{cell.render('Cell')}</div>
-                                            </td>
-                                          })}
-                                          <td className={`max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] border p-2 border-solid ${index%2===0?"":"bg-yellow-100"}`}>
-                                            <div className="max-w-[200px] min-w-[200px] max-h-[30px] min-h-[30px] overflow-scroll break-normal">
-                                            <button style={{textDecoration:"underline", marginLeft:'1rem'}} onClick={() => {
-                                                setInd(row);
-                                                // console.log(ind)
-                                                setIsOpen(true);
-                                              }}>detail</button>
-                                              </div></td>
-                                        </tr>
-                                      )
-                                    })}
-                                  </tbody>
-                                </table>
-                            </div>
-                  )
+                  </div> )}) : 
+                        <>
+                        <BHTableLg detail={detail} gotoPage={gotoPage} canPreviousPage={canPreviousPage} 
+                        previousPage={previousPage} nextPage={nextPage} canNextPage={canNextPage} pageCount={pageCount}
+                        pageIndex={pageIndex} pageOptions={pageOptions} pageSize={pageSize} 
+                        setPageSize={setPageSize} getTableProps={getTableProps} headerGroups={headerGroups}
+                        getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow}
+                        setInd={setInd} setIsOpen={setIsOpen}></BHTableLg>
+  
+                        <div className="hidden navbarSM:flex navbarSM:flex-col">
+                            {display.map((d, index)=>{
+                              return (
+                                <table className="mb-10 font-inter font-light text-xl">
+                                <tbody>
+                                  <tr>
+                                    <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Name</p></td>
+                                    <td className="border-2 border-black text-center">{_.startCase(d.product_name)}</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Win Num</p></td>
+                                    <td className="border-2 border-black  text-center">{d.winning_number===null?"-":d.winning_number}</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>End Time</p></td>
+                                    <td className="border-2 border-black text-center">
+                                      {(moment(d.end_time).clone().tz(props.info.timezone)) !== undefined ? 
+                                      (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD ") : ""}
+                                      ({moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss") === "12:40:00" ? 'DAY' : 'NIGHT'})
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Slot Picked</p></td>
+                                    <td className="border-2 border-black text-center">{d.slot_number}</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="border-2 border-black text-center font-inter font-medium text-xl px-2"><p>Detail</p></td>
+                                    <td className="border-2 border-black text-center w-[300px]"> 
+                                    <button className={`${d.ownerId === auth().id ? "invisible":"" }`}
+                                    onClick={() => {  
+                                            setInd({original:{...display[index]}});
+                                            setIsOpen(true);
+                                      
+                          }}><span className="underline">Detail</span></button>
+                                  </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              
+                              )
+                            })}
+                        </div>
+                    </>  
                 }
                 </div>
                 <BidModal  open={isOpen} onClose={() => setIsOpen(false)} socket={props.socket} d={ind} setDetectChange={setDetectChange} info={props.info}></BidModal>

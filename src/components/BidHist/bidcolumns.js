@@ -22,13 +22,13 @@ export const COLUMNS = [
     sticky: 'left'
   },
   {
-    Header: 'Closing Time',
-    Footer: 'closing_time',
+    Header: 'End Time',
+    Footer: 'end_time',
     accessor: 'end_time',
     sticky: 'left',
     Cell:(row)=>{
-      return (moment(row.cell.value).clone().tz('UTC')).format("YYYY-MM-DD HH:mm:ss")
-      // return moment(row.cell.value).format("YYYY/MM/DD-HH:MM:SS")
+      let val = row.cell.value;
+      return (moment(val).clone().tz('UTC')).format("YY-MM-DD")+" "+((moment(val).clone().tz('UTC')).format("HH")==21?'NIGHT':'DAY')
     },
     sortType:(a,b) => {
         console.log(a.values.end_time);
