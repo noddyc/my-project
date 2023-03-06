@@ -31,7 +31,7 @@ let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6
 
 
 export default function ConfirmBidModal(props) {
-    console.log(props)
+    // console.log(props)
     const auth = useAuthUser();
     const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("")
@@ -54,8 +54,8 @@ export default function ConfirmBidModal(props) {
           setSuccessMsg("Withdraw Request Sent Successfully");
           setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1000);
         }catch(err){
-            console.log("here111");
-            console.log(err);
+            // console.log("here111");
+            // console.log(err);
             setErrMsg("Failed to Withdraw Selection");
             setTimeout(()=>{setErrMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }

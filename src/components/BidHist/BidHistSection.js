@@ -91,8 +91,10 @@ function BidHistSection(props) {
               };
               axios(config)
               .then((response) => {
+                
                 let data = response.data;
-
+                console.log("line 96");
+                console.log(data)
                 data.forEach((e)=>{
                   auctionId.push(e.auctionId);
                 })
@@ -100,7 +102,7 @@ function BidHistSection(props) {
                 auctionId = auctionId.filter((value, index, self)=>{
                   return self.indexOf(value) === index;
                 })
-                console.log(auctionId)
+                // console.log(auctionId)
 
                 let arr = [];
                 data.forEach((e, index)=>{
@@ -139,7 +141,7 @@ function BidHistSection(props) {
                   const myMap = new Map();
                   response.data.forEach(
                     (e)=>{
-                      console.log(e)
+                      // console.log(e)
                       let key = e.auctionId;
                       if(!myMap.has(key)){
                         let arr = [];
@@ -178,6 +180,18 @@ function BidHistSection(props) {
             console.log([err.message])
         }
     }, [detectChange, keyword])
+
+
+    useEffect(()=>{
+      // console.log("this is navbar")
+      props.socket.off("increaseNotifyCount").on("increaseNotifyCount", (e)=>{
+          console.log("line 186")
+          props.setNotifications((prev)=>[...prev, e])
+          localStorage.setItem('count', props.notifiCount);
+
+          setDetectChange((prev)=> !prev)
+      })
+  }, [props.socket]);
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [MOCK_DATA])
@@ -226,8 +240,8 @@ function BidHistSection(props) {
 
     return (
             <div className='after-margin-200  overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
-                <div class="px-4 sm:px-0">
-                  <h3 class="text-4xl font-inter font-bold">Selections</h3>
+                <div className="px-4 sm:px-0">
+                  <h3 className="text-4xl font-inter font-bold">Selections</h3>
                 </div>
                 <div className="mt-5 px-4 text-2xl font-inter font-medium">
                     <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
@@ -254,7 +268,7 @@ function BidHistSection(props) {
                 <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5">
                 {
                  detail !=='false' ? display.map((d, index) => {
-                  console.log(d)
+                  // console.log(d)
                  return (
                   <div className={`border-1 border-black flex flex-col items-start
                   isolate w-[450px] rounded-2xl bg-cardBg hover:bg-cardHoverColor ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"  ?"bg-green-100":""} ${d.status==="NO_WINNER_WINNER_NOTIFIED" || d.status==="WAITING_FOR_DRAW" ?"bg-red-100":""}`} key={index} >          

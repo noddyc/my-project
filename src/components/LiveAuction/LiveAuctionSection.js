@@ -205,8 +205,8 @@ function LiveAuctionSection(props) {
 
     return (
             <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
-              <div class="px-4 sm:px-0">
-                <h3 class="text-4xl font-inter font-bold">Live Games</h3>
+              <div className="px-4 sm:px-0">
+                <h3 className="text-4xl font-inter font-bold">Live Games</h3>
               </div>
 
               <div className="mt-5 px-4 text-2xl font-inter font-medium">

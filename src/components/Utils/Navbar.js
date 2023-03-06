@@ -14,11 +14,11 @@ const Navbar = (props) =>{
     const [toggleHeight, setToggleHeight] = useState('h-80px');
     const [len, setLen] = useState(props.notifications.filter((e)=>!e.viewed).length)
 
-    console.log(props.info.firstname)
+    // console.log(props.info.firstname)
 
     useEffect(()=>{
         try{
-            console.log(ip)
+            // console.log(ip)
             let data = qs.stringify({
                 'id': auth().id 
               }); 
@@ -70,7 +70,7 @@ const Navbar = (props) =>{
     // also retrive notifications from db
     // want to make instant changes on bid history
     useEffect(()=>{
-        console.log("this is navbar")
+        // console.log("this is navbar")
         props.socket.off("increaseNotifyCount").on("increaseNotifyCount", (e)=>{
             props.setNotifications((prev)=>[...prev, e])
             localStorage.setItem('count', props.notifiCount);
@@ -79,7 +79,7 @@ const Navbar = (props) =>{
 
     useEffect(()=>{
         setLen(props.notifications.filter((e)=>!e.viewed).length)
-        console.log("len updated")
+        // console.log("len updated")
     }, [props.notifications])
 
 
@@ -100,7 +100,7 @@ const Navbar = (props) =>{
 
     const barmenuHandler =  async (e)=>{
         e.preventDefault();
-        console.log("hello")
+        // console.log("hello")
         if(toggle==="hidden"){
             setToggle("flex");
             setToggleHeight('h-[250px]')

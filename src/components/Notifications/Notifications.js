@@ -64,6 +64,8 @@ function Notifications(props) {
         }
     }, [])
 
+    
+
 
     return (
         <div className="h-screen relative">

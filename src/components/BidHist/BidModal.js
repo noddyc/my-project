@@ -31,7 +31,7 @@ let slotArr=['slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6
 export default function BidModal(props) {
    //  console.log(props)
     let d = props.d.original
-    console.log(d)
+    // console.log(d)
 
     // const [slot, setSlot] = useState("");
     const slotRef = useRef();
@@ -106,7 +106,7 @@ export default function BidModal(props) {
                 
                     
 
-                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5   navbarSM:gap-10">
+                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5  navbarSM:gap-10">
                         <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose();

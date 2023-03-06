@@ -140,19 +140,19 @@ function AuctionForm(props) {
 
     return (
         <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl'>
-            <div class="md:grid md:grid-cols-3 md:gap-6">
-                <div class="md:col-span-1">
-                    <div class="px-4 sm:px-0">
-                        <h3 class="text-4xl font-inter font-bold">Create New Game</h3>
+            <div className="md:grid md:grid-cols-3 md:gap-6">
+                <div className="md:col-span-1">
+                    <div className="px-4 sm:px-0">
+                        <h3 className="text-4xl font-inter font-bold">Create New Game</h3>
                     </div>
                 </div>
 
-                <div class="mt-5 md:col-span-2 md:mt-0">
+                <div className="mt-5 md:col-span-2 md:mt-0">
                     <div>
-                        <div class="overflow-hidden sm:rounded-md">
-                            <div class="bg-white px-4 py-5 sm:p-6">
-                                <div class="grid grid-cols-6 gap-6">
-                                    <div class="col-span-6 sm:col-span-3">
+                        <div className="overflow-hidden sm:rounded-md">
+                            <div className="bg-white px-4 py-5 sm:p-6">
+                                <div className="grid grid-cols-6 gap-6">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor="name" className="label">Name</label>
                                         <input id='name' type='text' maxLength="20" 
                                             value={name} onChange={(e)=>{setErrMsg("");
@@ -160,7 +160,7 @@ function AuctionForm(props) {
                                             setName(e.target.value)}} placeholder="Enter Game Name" className="input"/>
                                     </div>         
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor='description' className="label">Description</label>
                                          <textarea id='description' type='text' maxLength="200" rows="3"
                                          value={description} onChange={(e)=>{setErrMsg("");
@@ -169,7 +169,7 @@ function AuctionForm(props) {
                                          className="input"/>
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor='price' className='label'>Price</label>
                                         <input id='price' type="numeric" min="1" step="1" className='input'
                                             value={price} onChange={(e)=>{setErrMsg("");
@@ -178,7 +178,7 @@ function AuctionForm(props) {
                                     </div>
 
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor='date' className='label'>End Date</label>
 
                                         <input id='date' name='date' type="date" className='input' value={endTime}
@@ -187,10 +187,10 @@ function AuctionForm(props) {
                                             setSuccessMsg("");
                                             setEndTime(e.target.value)}}/>
 
-                                        <p class="mt-2 text-sm text-gray-500">End Date must be 24 hours from current time.</p>
+                                        <p className="mt-2 text-sm text-gray-500">End Date must be 24 hours from current time.</p>
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor='day-night' className='label'>Time Option</label>
                                         <select id='day-night' name='day-night' value={dayNight} onChange={handleDayNightChange} className='input'>
                                             <option value="day">Day: 12:40:00</option>
@@ -199,7 +199,7 @@ function AuctionForm(props) {
                                     </div>
 
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <form>
                                             <label htmlFor="image" className='label'>
                                                 Images

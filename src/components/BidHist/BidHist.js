@@ -10,13 +10,7 @@ import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 const BidHist = (props)=>{  
   const auth = useAuthUser();
 
-  // useEffect(()=>{
-  //     console.log("line 27")
-  //     const socket = io('http://localhost:9001');
-  //     socket?.emit("newUser", auth().id)
-  //     props.setSocket(socket);
-  // }, []);
-
+ 
     return (
     <div className="h-screen relative">
         {props.info !== undefined && <Navbar notifications={props.notifications} setNotifications={props.setNotifications}  socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
@@ -24,7 +18,7 @@ const BidHist = (props)=>{
        
       <div className="">
             <LeftSideBar></LeftSideBar>
-            <BidHistSection socket={props.socket} info={props.info}></BidHistSection>
+            <BidHistSection socket={props.socket} info={props.info} setNotifications={props.setNotifications}></BidHistSection>
       </div>
       <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>

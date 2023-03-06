@@ -217,29 +217,29 @@ const HomeInfo = (props)=>{
 
     return (
         <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl'>
-              <div class="md:grid md:grid-cols-3 md:gap-6">
-                <div class="md:col-span-1">
-                        <div class="px-4 sm:px-0">
-                            <h3 class="text-4xl font-inter font-bold">Personal Information</h3>
+              <div className="md:grid md:grid-cols-3 md:gap-6">
+                <div className="md:col-span-1">
+                        <div className="px-4 sm:px-0">
+                            <h3 className="text-4xl font-inter font-bold">Personal Information</h3>
                         </div>
                 </div>
-                <div class="mt-5 md:col-span-2 md:mt-0">
+                <div className="mt-5 md:col-span-2 md:mt-0">
                     <div className="">
-                        <div class="overflow-hidden sm:rounded-md">
-                            <div class="bg-white px-4 py-5 sm:p-6">
-                                <div class="grid grid-cols-6 gap-6">
+                        <div className="overflow-hidden sm:rounded-md">
+                            <div className="bg-white px-4 py-5 sm:p-6">
+                                <div className="grid grid-cols-6 gap-6">
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <img src={require("../../assets/img1.jpeg")} alt="" className="h-40 w-40 rounded-full rounded-brtl-xl"></img>
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor="name" className="label">Username</label>
                                         <input id='name' type='text' maxLength="10" className="input" placeholder={display.username} onChange={usernameHandler}></input>
                                         <p className={`${username && !usernameValid ? "flex":"invisible"}`}>duplicate username or invalid username</p>
                                     </div> 
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label className="label">Email</label>
                                         <input className="input" placeholder={display.email} onChange={emailHandler}></input>
                                         <p className={`${email && !emailValid? "flex":"invisible"}`}>duplicate email or invalid email</p>
@@ -247,21 +247,21 @@ const HomeInfo = (props)=>{
 
 
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label className="label">First Name</label>
                                         <input className="input" placeholder={_.startCase(display.firstname)}
                                         onChange={(e)=>{setFirstName(e.target.value)}}></input>
                                     </div> 
 
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
                                         <label className="label">Last Name</label>
                                         <input className="input" placeholder={_.startCase(display.lastname)}
                                         onChange={(e)=>{setLastName(e.target.value)}}></input>
                                     </div> 
 
 
-                                    <div class="col-span-6 sm:col-span-3 mb-12">
+                                    <div className="col-span-6 sm:col-span-3 mb-12">
                                         <label className="label">Address</label>
                                         <textarea type='text' maxLength="100" rows="3" className="input" placeholder={display.address}
                                         onChange={(e)=>{setAddress(e.target.value)}}></textarea>
