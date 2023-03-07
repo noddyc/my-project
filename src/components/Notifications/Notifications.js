@@ -72,9 +72,8 @@ function Notifications(props) {
         <div className="h-screen relative">
         <Navbar notifications={props.notifications} setNotifications={props.setNotifications} socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
        info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
-        <div className="flex flex-row h-[calc(100%-80px)] navbarSM:flex navbarSM:flex-col">
-              <LeftSideBar></LeftSideBar>
-              <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
+        <LeftSideBar></LeftSideBar>
+        <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
                 <div className="px-4 sm:px-0">
                   <h3 className="text-4xl font-inter font-bold">Notifications</h3>
                 </div>
@@ -176,8 +175,7 @@ function Notifications(props) {
                             </div>)
 
                         })
-                    }
-                </div>    
+                    }  
               </div>
         </div>
         <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
