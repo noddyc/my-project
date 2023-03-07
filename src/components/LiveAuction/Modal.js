@@ -173,7 +173,7 @@ export default function Modal(props) {
                     </div>
 
 
-                    <div className="flex flex-row justify-center items-center gap-32 w-full mt-5   navbarSM:gap-10">
+                    <div className="flex flex-row justify-center items-center gap-32 w-full mt-5  navbarSM:gap-10">
                         <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose();

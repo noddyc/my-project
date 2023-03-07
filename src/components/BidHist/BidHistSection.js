@@ -91,7 +91,6 @@ function BidHistSection(props) {
               };
               axios(config)
               .then((response) => {
-                
                 let data = response.data;
                 console.log("line 96");
                 console.log(data)
@@ -188,8 +187,10 @@ function BidHistSection(props) {
           console.log("line 186")
           props.setNotifications((prev)=>[...prev, e])
           localStorage.setItem('count', props.notifiCount);
-
-          setDetectChange((prev)=> !prev)
+          setTimeout(()=>{
+            setDetectChange((prev)=> !prev)
+          },1000)
+        
       })
   }, [props.socket]);
 
