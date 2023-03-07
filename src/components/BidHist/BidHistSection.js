@@ -128,7 +128,7 @@ function BidHistSection(props) {
 
                 let config = {
                   method: 'post',
-                  url: 'http://localhost:9001/auction/getImage',
+                  url: `http://${ip}:9001/auction/getImage`,
                   headers: { 
                     'Content-Type': 'application/x-www-form-urlencoded'
                   },

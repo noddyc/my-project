@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 import {useAuthUser} from 'react-auth-kit';
 import axios from 'axios';
 import qs from 'qs';
+import {ip} from "../Utils/ip"
 
 
 function getSlot(sentence){
@@ -24,7 +25,7 @@ function Notifications(props) {
 
     useEffect(()=>{
         console.log("line 27")
-        const socket = io('http://localhost:9001');
+        const socket = io(`http://${ip}:9001`);
         socket?.emit("newUser", auth().id)
         props.setSocket(socket);
     }, []);
@@ -48,7 +49,7 @@ function Notifications(props) {
               });
             let config = {
                 method: 'post',
-                url: 'http://localhost:9001/notifications/updateNotifications',
+                url: `http://${ip}:9001/notifications/updateNotifications`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -150,7 +151,7 @@ function Notifications(props) {
                                             });
                                             let config = {
                                                 method: 'post',
-                                                url: 'http://localhost:9001/notifications/deleteNotifications',
+                                                url: `http://${ip}:9001/notifications/deleteNotifications`,
                                                 headers: { 
                                                 'Content-Type': 'application/x-www-form-urlencoded'
                                                 },
