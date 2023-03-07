@@ -120,7 +120,7 @@ function AuctionHistSection(props) {
 
                 let config = {
                   method: 'post',
-                  url: `http://${ip}:9001/auction/getImage`,
+                  url: `${ip}/auction/getImage`,
                   headers: { 
                     'Content-Type': 'application/x-www-form-urlencoded'
                   },

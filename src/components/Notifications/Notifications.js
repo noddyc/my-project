@@ -25,7 +25,7 @@ function Notifications(props) {
 
     useEffect(()=>{
         console.log("line 27")
-        const socket = io(`http://${ip}:9001`);
+        const socket = io(`${ip}`);
         socket?.emit("newUser", auth().id)
         props.setSocket(socket);
     }, []);
@@ -49,7 +49,7 @@ function Notifications(props) {
               });
             let config = {
                 method: 'post',
-                url: `http://${ip}:9001/notifications/updateNotifications`,
+                url: `${ip}/notifications/updateNotifications`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -151,7 +151,7 @@ function Notifications(props) {
                                             });
                                             let config = {
                                                 method: 'post',
-                                                url: `http://${ip}:9001/notifications/deleteNotifications`,
+                                                url: `${ip}/notifications/deleteNotifications`,
                                                 headers: { 
                                                 'Content-Type': 'application/x-www-form-urlencoded'
                                                 },
