@@ -50,7 +50,7 @@ const Navbar = (props) =>{
               });
               let config = {
                 method: 'post',
-                url: 'http://localhost:9001/notifications/displayNotifications',
+                url: `${ip}/notifications/displayNotifications`,
                 headers: { 
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
