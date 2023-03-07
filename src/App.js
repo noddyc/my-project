@@ -23,7 +23,7 @@ function App() {
   const [toggleInfo, setToggleInfo] = useState("translate-x-full")
   const [socket, setSocket] = useState(() => {
     const storedSocket = localStorage.getItem('socket');
-    return storedSocket !== null ? io.connect(storedSocket) : io('http://localhost:9001');
+    return storedSocket !== null ? io.connect(storedSocket) : io(`${ip}`);
   });
   const [notifiCount, setNotificount] = useState(()=>{
     const storedCount = localStorage.getItem('count');
