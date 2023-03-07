@@ -130,7 +130,7 @@ const Navbar = (props) =>{
                         <NavLink  style={navLinkStyles} to='/bidhist' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>Selections</span></NavLink>
                         <NavLink  style={navLinkStyles} to='/addauction' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>New Game</span></NavLink>
                         <NavLink  style={navLinkStyles} to='/notifications' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>Notifications</span></NavLink>
-                        <NavLink to='/logout' className='flex font-inter font-medium text-2xl text-darkBg px-2 justify-center'><span>Sign Out</span></NavLink>
+                        <NavLink to='/logout' className='flex font-inter font-medium text-2xl text-darkBg px-2 justify-center'><span>Log Out</span></NavLink>
                     </ul>
                 </div>                
             </div>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 import {useNavigate} from "react-router-dom"
 import {ip} from '../Utils/ip'
+import _ from 'lodash'
 
 // regex validate user
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -259,7 +260,7 @@ const Registration = () =>{
 
                                     <p id="emailnote" className={`${emailFocus && email && !validEmail ? "warning":"hidden" } mt-5`}>
                                         <i className="material-icons inline text-lg">error</i>
-                                        {'\u00A0'}Please enter a valid email address
+                                        {'\u00A0'}{_.startCase("Please enter a valid email address")}
                                     </p>
                                 </div>
 
@@ -284,9 +285,9 @@ const Registration = () =>{
                                     <p id="usernamenote" className={`${userFocus && user && !validName? "warning":"hidden" } mt-5`}>
                                     <i className="material-icons inline text-lg">error</i>
                                     {'\u00A0'}
-                                        Username must be 4 to 24 characters.<br />
-                                        Must begin with a letter.<br />
-                                        Letters, numbers, underscores, hyphens allowed.
+                                        {_.startCase("Username must be 4 to 24 characters.")}<br />
+                                        {_.startCase("Must begin with a letter.")}<br />
+                                        {_.startCase("Letters, numbers, underscores, hyphens allowed.")}
                                     </p>
                                 </div>
 
@@ -307,7 +308,7 @@ const Registration = () =>{
                                             onBlur={() => setFirstNameFocus(false)} className="input"></input>
                                     <p id="firstnamenote" className={`${firstnameFocus && firstname && !validFirstName ? "warning":"hidden" } mt-5`}>
                                         <i className="material-icons inline text-lg">error</i>
-                                        {'\u00A0'}First name must contain with letters only<br />
+                                        {'\u00A0'}{_.startCase("First name must contain with letters only")}<br />
                                     </p>
                                 </div>
 
@@ -328,7 +329,7 @@ const Registration = () =>{
                                             onBlur={() => setLastNameFocus(false)} className="input"></input>
                                     <p id="lastnamenote" className={`${lastnameFocus && lastname && !validLastName ? "warning":"hidden" } mt-5`}>
                                     <i className="material-icons inline text-lg">error</i>
-                                    {'\u00A0'}Last name must contain with letters only<br />
+                                    {'\u00A0'}{_.startCase("Last name must contain with letters only")}<br />
                                     </p>
                                 </div>
 
@@ -349,8 +350,8 @@ const Registration = () =>{
 
                                     <p id="passwordnote" className={`${pwdFocus && !validPwd? "warning":"hidden" } mt-5`}>
                                     <i className="material-icons inline text-lg">error</i>
-                                    {'\u00A0'}Password must be 8 to 24 characters.<br />
-                                        Must include uppercase and lowercase letters, a number and a special character.
+                                    {'\u00A0'}{_.startCase("Password must be 8 to 24 characters.")}<br />
+                                        {_.startCase("Must include uppercase and lowercase letters, a number and a special character.")}
                                     </p>
                                 </div>
 
@@ -369,7 +370,7 @@ const Registration = () =>{
                                         aria-describedby="confirmnote" onFocus={() => setMatchFocus(true)} onBlur={() => setMatchFocus(false)} placeholder="Confirm Password" className="input"></input>
                                     <p id="confirmnote" className={`${matchFocus && !validMatch? "warning":"hidden" } mt-5`}>
                                     <i className="material-icons inline text-lg">error</i>
-                                    {'\u00A0'}Password must match.
+                                    {'\u00A0'}{_.startCase("Password must match.")}
                                      </p>
                                 </div>
                                 

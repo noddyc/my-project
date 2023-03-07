@@ -13,7 +13,7 @@ const Logout = () => {
     })
     return (
         <div>
-            Logging out
+            Logging Out
         </div>
     );
 };

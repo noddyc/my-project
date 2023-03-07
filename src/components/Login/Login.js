@@ -4,7 +4,7 @@ import qs from 'qs';
 import { useSignIn, useIsAuthenticated} from 'react-auth-kit';
 import {BrowserRouter as Router, useNavigate, Route, Switch} from "react-router-dom"
 import {ip} from '../Utils/ip'
-
+import _ from 'lodash'
 // regex validate password
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 // regex validate email
@@ -130,7 +130,7 @@ const Login = (props) =>{
 
                                         <p id="emailnote" className={`${emailFocus && email && !validEmail ? "warning":"hidden" } mt-5`}>
                                             <i className="material-icons inline text-lg">error</i>
-                                            {'\u00A0'}Please enter a valid email address
+                                            {'\u00A0'}{_.startCase("Please enter a valid email address")}
                                         </p>
 
                                     </div>
@@ -153,8 +153,8 @@ const Login = (props) =>{
 
                                         <p id="passwordnote" className={`${pwdFocus && !validPwd? "warning":"hidden" } mt-5`}>
                                             <i className="material-icons inline text-lg">error</i>
-                                            {'\u00A0'}Password must be 8 to 24 characters.<br />
-                                            Must include uppercase and lowercase letters, a number and a special character.
+                                            {'\u00A0'}{_.startCase("Password must be 8 to 24 characters.")}<br />
+                                            {_.startCase("Must include uppercase and lowercase letters, a number and a special character.")}
                                         </p>
                                     </div>
 

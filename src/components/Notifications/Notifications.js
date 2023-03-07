@@ -80,7 +80,7 @@ function Notifications(props) {
                 </div>
 
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 ">
+                <div className="flex flex-col flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 ">
                     {
                         props.notifications.sort((a,b)=>b.id-a.id).map((item, index)=>{
                             let slot = getSlot(item.message);

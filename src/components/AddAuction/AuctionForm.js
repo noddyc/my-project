@@ -5,6 +5,7 @@ import qs from 'qs'
 import { useAuthUser} from 'react-auth-kit';
 import { useNavigate} from "react-router-dom"
 import {ip} from '../Utils/ip'
+import _ from 'lodash'
 
 
 function AuctionForm(props) {
@@ -71,10 +72,10 @@ function AuctionForm(props) {
         try{
             let endTimeDate = new Date(endTime+'T'+myMap[dayNight])
             if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(endTimeDate)){
-                throw new Error("Fields must be valid or end time must be 24 hours from current time");
+                throw new Error(_.startCase("Fields must be valid or end time must be 24 hours from current time"));
             }
             if(selectedImages.length > 0 && selectedImages.length > 4){
-                throw new Error("Maximum of 4 images to upload")
+                throw new Error(_.startCase("Maximum of 4 Images to Upload"))
             }
             let obj = {
                 start_time: dateConversion(new Date()),

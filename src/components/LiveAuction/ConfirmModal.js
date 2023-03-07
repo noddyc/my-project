@@ -41,7 +41,7 @@ export default function ConfirmModal(props) {
         try{
             // console.log(props.data)
             if(props.slot === ""){
-                throw new Error("No slot is selected");
+                throw new Error("No Slot is Selected");
             }
 
 
@@ -63,10 +63,10 @@ export default function ConfirmModal(props) {
             axios(config).then((response) => {
                 console.log(JSON.stringify(response.data));
                 props.setDetectChange((prev)=>{return !prev})
-                setSuccessMsg("Joined game successfully");
+                setSuccessMsg("Joined Game Successfully");
             }).catch((error) => {
                 console.log("error222")
-                setErrMsg("Failed to join game");
+                setErrMsg("Failed to Join Game");
                 setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
               })
             setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
