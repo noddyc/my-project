@@ -83,8 +83,7 @@ function Notifications(props) {
                     {
                         props.notifications.sort((a,b)=>b.id-a.id).map((item, index)=>{
                             let slot = getSlot(item.message);
-
-                            return(<div className={ `flex-col justify-start w-[450px] rounded-2xl border-2 border-darkBg p-2
+                            return(<div className={ `flex-col justify-start w-[450px] rounded-2xl border-2 border-darkBg p-2 mb-5
                              hover:shadow-xl ${!item.viewed?'bg-red-100':'bg-cardBGColor'}`} key={index} >
 
                                 <div className="flex gap-6">
