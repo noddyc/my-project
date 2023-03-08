@@ -14,13 +14,6 @@ const Home = (props)=>{
     const obj = useOutletContext();
     const auth = useAuthUser();
 
-    // useEffect(()=>{
-    //     console.log("line 27")
-    //     const socket = io('http://localhost:9001');
-    //     socket?.emit("newUser", auth().id)
-    //     props.setSocket(socket);
-    // }, []);
-
 
     useEffect(()=>{
         if(!isAuthenticated()){

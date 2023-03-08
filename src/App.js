@@ -33,17 +33,12 @@ function App() {
 
   const [detectChange, setDetectChange] = useState(false);
 
-
-
   // Emit a newUser event with a user ID when the component mounts
   useEffect(() => {
     if(auth() != null){
       socket.emit('newUser', auth().id);
     }
   }, [socket, auth]);
-
-
-
 
 
   return (
@@ -70,6 +65,11 @@ function App() {
             <Route path="/addauction" element={<AddAuction socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
             detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
+
+            <Route path="/addwinnum" element={<AddWinNum socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
+            detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
+
           </Route>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/logout' element={<Logout/>}/>
