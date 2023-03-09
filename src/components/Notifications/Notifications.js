@@ -7,8 +7,26 @@ import {useAuthUser} from 'react-auth-kit';
 import axios from 'axios';
 import qs from 'qs';
 import {ip} from "../Utils/ip"
+import _ from 'lodash'
 
 
+
+function findWords(sentence, target, count) {
+    const words = sentence.split(" ");
+    const index = words.indexOf(target);
+    console.log(words)
+    console.log(index)
+  
+    if (index !== -1 && index < words.length - count) {
+      const wordsAfterGame = words.slice(index + 1, index + 1 + count);
+      console.log(wordsAfterGame)
+      return wordsAfterGame;
+    } else {
+      return null;
+    }
+  }
+
+  
 function getSlot(sentence){
     const lastWord = sentence.split(" ").pop(); 
     const lastNumber = parseInt(lastWord); 
@@ -72,7 +90,7 @@ function Notifications(props) {
         <div className="h-screen relative">
         <Navbar notifications={props.notifications} setNotifications={props.setNotifications} socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
        info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
-        <LeftSideBar></LeftSideBar>
+        <LeftSideBar info={props.info}></LeftSideBar>
         <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
                 <div className="px-4 sm:px-0">
                   <h3 className="text-4xl font-inter font-bold">Notifications</h3>
@@ -81,17 +99,50 @@ function Notifications(props) {
 
                 <div className="flex-col flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 ">
                     {
-                        props.notifications.sort((a,b)=>b.id-a.id).map((item, index)=>{
+                        props.notifications.sort((a,b)=>{ 
+                            if (a.viewed === b.viewed) {
+                                return 0; // no change in ordering
+                            } else if (a.viewed) {
+                                return 1; // a is viewed, b is not, so b should come first
+                            } else {
+                                return -1; // b is viewed, a is not, so a should come first
+                            }}).map((item, index)=>{
                             let slot = getSlot(item.message);
                             return(<div className={ `flex-col justify-start w-[450px] rounded-2xl border-2 border-darkBg p-2 mb-5
                              hover:shadow-xl ${!item.viewed?'bg-red-100':'bg-cardBGColor'}`} key={index} >
 
-                                <div className="flex gap-6">
+                                <div className="flex-col gap-6 mb-5">
                                     <div className="flex flex-col flex-grow px-2">
                                         <div className="font-inter font-medium flex ">
-                                            <p>{item.message}</p>
+                                            <span className="font-inter font-medium">{item.message.split(' ')[0]}</span>
+                                            <p>{'\u00A0'}{'\u00A0'}{item.message.split(' ')[1]+'\u00A0'+item.message.split(' ')[2]
+                                            +'\u00A0'+item.message.split(' ')[3]+item.message.split(' ')[4]}</p>                          
                                         </div>
                                     </div>
+                                    
+                                    <div className="flex flex-col flex-grow px-2">
+                                        <div className="font-inter font-medium flex ">
+                                            <span className="font-inter font-medium">Type:</span>
+                                            <p>{'\u00A0'}{'\u00A0'}{_.startCase(item.message.split(' ')[5]+'\u00A0'+
+                                            item.message.split(' ')[6])}</p>                          
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col flex-grow px-2">
+                                        <div className="font-inter font-medium flex ">
+                                            <span className="font-inter font-medium">Game:</span>
+                                            <p>{'\u00A0'}{'\u00A0'}{findWords(item.message, 'Game', 2)}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col flex-grow px-2">
+                                        <div className="font-inter font-medium flex ">
+                                            <span className="font-inter font-medium">Slot:</span>
+                                            <p>{'\u00A0'}{'\u00A0'}{findWords(item.message, 'Slot', 1)}</p>
+                                        </div>
+                                    </div>
+
+
                                 </div>    
 
                                 <div className=" ">
@@ -115,7 +166,7 @@ function Notifications(props) {
                                                 return ind != index
                                             })
                                         })
-                                    }}>Decline</button>
+                                    }}><i className="material-icons inline">cancel</i>Decline</button>
 
                                     <button className="button hover:bg-cardHoverColor" onClick = {async (e)=>{
                                             props.socket.emit("increaseCount", 
@@ -132,7 +183,7 @@ function Notifications(props) {
                                                     return ind != index
                                                 })
                                             })
-                                        }}>Confirm</button>
+                                        }}><i className="material-icons inline">check_circle</i>Confirm</button>
                                 </div>
                                 :
                                 <button className="button_light hover:bg-cardHoverColor"

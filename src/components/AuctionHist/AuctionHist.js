@@ -20,12 +20,9 @@ const AuctionHist = (props)=>{
     <div className="h-screen relative">
         {props.info !== undefined && <Navbar notifications={props.notifications} setNotifications={props.setNotifications}  socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
        info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>}
-       
-      <div className="">
-            <LeftSideBar></LeftSideBar>
+            <LeftSideBar info={props.info}></LeftSideBar>
             <AuctionHistSection info={props.info}></AuctionHistSection>
-      </div>
-      <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
+            <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>
     );
 }

@@ -275,7 +275,7 @@ function LiveAuctionSection(props) {
 
                     <div className="w-full p-5">              
                       <div className="h-14 overflow-scroll mb-2">
-                        <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
+                        <p className="font-inter font-bold text-xl">{_.startCase(d.product_name) +" (ID: "+d.id+ ")" } {'\u00A0'}
                         </p>
                       </div>
 
@@ -343,7 +343,7 @@ function LiveAuctionSection(props) {
                               <tbody>
                                 <tr>
                                   <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Name</p></td>
-                                  <td className="border-2 border-black text-center">{_.startCase(d.product_name)}</td>
+                                  <td className="border-2 border-black text-center">{_.startCase(d.product_name)+" (ID: "+d.id+ ")"}</td>
                                 </tr>
                                 <tr>
                                   <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Host</p></td>

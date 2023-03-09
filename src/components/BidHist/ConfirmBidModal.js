@@ -43,19 +43,64 @@ export default function ConfirmBidModal(props) {
           let slot = props.data.slot_number
           let receiverId = props.data.onwerId
           let senderId = auth().id 
-          props.socket.emit("createNotification", 
-          {
-            name: props.info.firstname+" " + props.info.lastname,
-            auctionId: auctionId,
-            slot: slot,
-            receiverId: receiverId,
-            senderId: senderId
+
+          // check if message already in db
+          // handle duplicate message
+          let msg = `Player ${_.startCase(props.info.firstname+" " + props.info.lastname)} (id: ${senderId}) request retraction of Game (id: ${auctionId}) on Slot ${slot}`
+
+          let data = qs.stringify({
+            'message': msg
+          });
+          let config = {
+            method: 'post',
+            url: `${ip}/notifications/searchNotifications`,
+            headers: { 
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            if(JSON.stringify(response.data.length) == 0){
+                props.socket.emit("createNotification", 
+                {
+                  name: props.info.firstname+" " + props.info.lastname,
+                  auctionId: auctionId,
+                  slot: slot,
+                  receiverId: receiverId,
+                  senderId: senderId
+                })
+            }else{
+                let data = qs.stringify({
+                  'id': response.data[0].id 
+                });
+                let config = {
+                  method: 'post',
+                  url: `${ip}/notifications/updateNotificationsView`,
+                  headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  data : data
+                };
+                
+                axios(config)
+                .then((response) => {
+                  console.log(JSON.stringify(response.data));
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+            setSuccessMsg("Withdraw Request Sent Successfully");
+            setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1000);
           })
-          setSuccessMsg("Withdraw Request Sent Successfully");
-          setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1000);
+          .catch((error) => {
+            throw new Error(error.message)
+          });
+        
         }catch(err){
-            // console.log("here111");
-            // console.log(err);
             setErrMsg("Failed to Withdraw Selection");
             setTimeout(()=>{setErrMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);
         }

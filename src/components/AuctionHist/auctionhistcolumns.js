@@ -16,7 +16,8 @@ export const COLUMNS= [
     accessor: 'product_name',
     sticky: 'left',
     Cell: (row)=>{
-      return _.startCase(row.cell.value)
+      // console.log(row.cell.row.original.id)
+      return _.startCase(row.cell.value)+" (ID: "+row.cell.row.original.id+")"
     }
   },
   {

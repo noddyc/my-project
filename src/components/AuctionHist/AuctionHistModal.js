@@ -27,12 +27,56 @@ const OVERLAY_STYLES = {
 }
 let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7','slot8','slot9']
 
+
+function isCurrentTimeInRange() {
+  const currentTime = new Date();
+
+  const startTimeMidDay = new Date(currentTime);
+  startTimeMidDay.setHours(12);
+  startTimeMidDay.setMinutes(35);
+  startTimeMidDay.setSeconds(40);
+
+  const endTimeMidDay = new Date(currentTime);
+  endTimeMidDay.setHours(12);
+  endTimeMidDay.setMinutes(40);
+  endTimeMidDay.setSeconds(40);
+
+  const startTimeEvening = new Date(currentTime);
+  startTimeEvening.setHours(21);
+  startTimeEvening.setMinutes(17);
+  startTimeEvening.setSeconds(40);
+
+  const endTimeEvening = new Date(currentTime);
+  endTimeEvening.setHours(21);
+  endTimeEvening.setMinutes(2);
+  endTimeEvening.setSeconds(40);
+
+  return (currentTime >= startTimeMidDay && currentTime <= endTimeMidDay) || (currentTime >= startTimeEvening && currentTime <= endTimeEvening);
+}
+
+
 export default function AuctionHistModal(props) {
     console.log(props)
-    let d = props.d.original
+    // check count slots and time is between range
 
+
+    let d = props.d.original
     const [openConfirm, setOpenConfirm] = useState(false)
     const auth = useAuthUser();
+
+    const countSlots = () =>{
+      let count = 0;
+      for(let i = 0; i < slotArr.length; i++){
+        if(d?.[slotArr[i]] !== null){
+          count++;
+        }
+      }
+      console.log("line 48");
+      console.log(count);
+      return count === 6;
+    }
+
+
 
     const statusConversion = (status, winning)=>{
       if(status === "OPEN_LIVE"){
@@ -88,21 +132,21 @@ export default function AuctionHistModal(props) {
                                 <div className='grid grid-cols-2 w-full'>
                                     {slotArr.map((i,index)=>{
                                         if(d?.[i] === null){
-                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}: - </span></p></div>)
+                                            return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}: - </span></p></div>)
                                         }
                                         if(d?.[i]?.split === true){
                                             if(d?.[i]?.player2 === null){
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
+                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
                                             }else if(d?.[i]?.player1 === null){
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                             else{
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                         }
 
                                         if(d?.[i]?.split === false){
-                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
+                                            return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
                                         }
                                         
                                     })}
@@ -127,11 +171,12 @@ export default function AuctionHistModal(props) {
                         }}><i className="material-icons inline">cancel</i>Close</button>
 
 
-                        <button className={`button navbarSM:w-80 ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' ?'':'invisible'}`}
+                        <button className={`button navbarSM:w-80 ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'':'invisible'}`}
                             onClick={()=>{
                                     setOpenConfirm(true)
                                   }
-                                }>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW'?'Join':''}</button>
+                                  // open not live
+                                }>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'Join':''}</button>
                     </div>
                 </div>
                 <ConfirmAuctionHistModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 

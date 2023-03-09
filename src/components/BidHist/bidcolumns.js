@@ -1,4 +1,5 @@
 import moment from 'moment'
+import _ from 'lodash'
 
 export const COLUMNS = [
   {
@@ -13,7 +14,11 @@ export const COLUMNS = [
     Header: 'Name',
     Footer: 'name',
     accessor: 'product_name',
-    sticky: 'left'
+    sticky: 'left',
+    Cell: (row)=>{
+      // console.log(row.cell.row.original.id)
+      return _.startCase(row.cell.value)+" (ID: "+row.cell.row.original.id+")"
+    }
   },
   {
     Header: 'Winning Number',

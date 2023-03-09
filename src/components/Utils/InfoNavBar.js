@@ -23,6 +23,11 @@ const InfoNavBar = (props)=>{
                     <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>Username</label>
                     <h5 className="pl-10 not-italic">{props.info.username === undefined?"   ":props.info.username.toUpperCase()}</h5>
             </div>
+
+            <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full mt-5'>
+                    <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>Access</label>
+                    <h5 className="pl-10 not-italic">{props.info.identity}</h5>
+            </div>
             
             <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full mt-5'>
                     <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>FirstName</label>
@@ -40,8 +45,9 @@ const InfoNavBar = (props)=>{
                     <h5 className="pl-10 not-italic">{props.info.email}</h5>
             </div>
 
+    
         
-            <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full mt-5'>
+            <div className='flex flex-col justify-center items-start p-0 h-25 gap-2 w-full mt-5'>
                     <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>Address</label>
                     <h5 className="not-italic">{props.info.address}</h5>
             </div>

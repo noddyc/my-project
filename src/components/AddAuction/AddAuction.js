@@ -49,12 +49,10 @@ return(
     <div className="flex-col">
         {props.info !== undefined && <Navbar notifications={props.notifications} setNotifications={props.setNotifications}  socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
        info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>}
-       
-        <div className=" flex flex-row navbarSM:flex navbarSM:flex-col ">
-            <LeftSideBar></LeftSideBar>
-            <AuctionForm info={props.info}></AuctionForm>
-        </div>
-        <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
+      
+          <LeftSideBar info={props.info}></LeftSideBar>
+          <AuctionForm info={props.info}></AuctionForm>
+          <InfoNavBar info={props.info} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></InfoNavBar>
     </div>
   )
 }

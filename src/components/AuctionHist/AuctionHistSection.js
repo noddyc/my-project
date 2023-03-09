@@ -288,7 +288,7 @@ function AuctionHistSection(props) {
 
                      <div className="w-full p-5">              
                         <div className="h-14 overflow-scroll mb-2">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}</p>
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)+" (ID: "+d.id+ ")"} {'\u00A0'}</p>
                       </div>
 
                       <div className="flex gap-6">
@@ -357,11 +357,11 @@ function AuctionHistSection(props) {
                       <div className="hidden navbarSM:flex navbarSM:flex-col">
                           {display.map((d, index)=>{
                             return (
-                              <table className="mb-10 font-inter font-light text-xl">
+                              <table key={index} className="mb-10 font-inter font-light text-xl">
                               <tbody>
                                 <tr>
                                   <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Name</p></td>
-                                  <td className="border-2 border-black text-center">{_.startCase(d.product_name)}</td>
+                                  <td className="border-2 border-black text-center">{_.startCase(d.product_name)+" (ID: "+d.id+ ")"}</td>
                                 </tr>
                                 <tr>
                                   <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Win Num</p></td>

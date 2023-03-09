@@ -6,11 +6,10 @@ import AuctionHist from "./components/AuctionHist/AuctionHist";
 import LiveAuction from "./components/LiveAuction/LiveAuction";
 import BidHist from "./components/BidHist/BidHist";
 import AddAuction from "./components/AddAuction/AddAuction"
+import WinNum from "./components/WinNum/WinNum";
 import Logout from './components/Logout/Logout'
 import {Routes,Route} from "react-router-dom"
 import React, {useState, useEffect} from 'react'
-import axios from "axios";
-import qs from 'qs';
 import {ip} from './components/Utils/ip.js'
 import {useAuthUser} from 'react-auth-kit';
 import { io } from "socket.io-client";
@@ -66,7 +65,7 @@ function App() {
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
             detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 
-            <Route path="/addwinnum" element={<AddWinNum socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
+            <Route path="/winnum" element={<WinNum socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
             detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 

@@ -35,6 +35,8 @@ const Navbar = (props) =>{
                     // console.log(response.data.timezone)
                     props.setInfo(response.data)
                 }
+            ).then(
+                console.log(props.info)
             )            
         }catch(err){
             console.log(err.message)
@@ -122,7 +124,7 @@ const Navbar = (props) =>{
                     <i className="material-icons text-black text-4xl mr-10 py-4" onClick={barmenuHandler}>menu</i>
                 </div>
 
-                <div className={`${toggle} justify-center h-[350px]`}>
+                <div className={`${toggle} justify-center ${props.info.identity === 'ADMIN' ? 'h-[400px]':'h-[350px]'}`}>
                     <ul className="flex-col">
                         <NavLink style={navLinkStyles} to='/main' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>Home</span></NavLink>
                         <NavLink  style={navLinkStyles} to='/liveauction' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>Live Games</span></NavLink>
@@ -130,6 +132,7 @@ const Navbar = (props) =>{
                         <NavLink  style={navLinkStyles} to='/bidhist' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>Selections</span></NavLink>
                         <NavLink  style={navLinkStyles} to='/addauction' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>New Game</span></NavLink>
                         <NavLink  style={navLinkStyles} to='/notifications' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>Notifications</span></NavLink>
+                        {props.info.identity === 'ADMIN' && <NavLink  style={navLinkStyles} to='/winnum' className='flex font-inter font-medium text-2xl mb-4 text-darkBg px-2 justify-center'><span>Win Number</span></NavLink>}
                         <NavLink to='/logout' className='flex font-inter font-medium text-2xl text-darkBg px-2 justify-center'><span>Log Out</span></NavLink>
                     </ul>
                 </div>                
