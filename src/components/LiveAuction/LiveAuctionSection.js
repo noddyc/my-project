@@ -204,7 +204,8 @@ function LiveAuctionSection(props) {
 
 
     return (
-            <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
+            <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
+            navbarSM:ml-[10px]'>
               <div className="px-4 sm:px-0">
                 <h3 className="text-4xl font-inter font-bold">Live Games</h3>
               </div>
@@ -236,7 +237,8 @@ function LiveAuctionSection(props) {
               return (
                 <div className="border-1 border-black flex flex-col items-start
                 isolate w-[450px] rounded-2xl bg-cardBg
-                hover:bg-cardHoverColor" key={index} >  
+                hover:bg-cardHoverColor navbarSM:w-[200px]" 
+                key={index} >  
 
                     <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded ">
                         <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"

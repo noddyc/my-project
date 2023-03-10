@@ -9,7 +9,6 @@ module.exports = {
       'tablet' :'1px',
       'desktop':'980px',
       'navbarSM' : {'max':'880px'},
-      'navbarXSM' : {'max': '768px'}
     },
     extend: {
       fontFamily:{
