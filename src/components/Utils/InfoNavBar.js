@@ -25,7 +25,7 @@ const InfoNavBar = (props)=>{
             </div>
 
             <div className='flex flex-col justify-center items-start p-0 h-20 gap-2 w-full mt-5'>
-                    <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>Access</label>
+                    <label htmlFor='name' className='w-full pl-10 not-italic text-left text-2xl font-medium'>Role</label>
                     <h5 className="pl-10 not-italic">{props.info.identity}</h5>
             </div>
             

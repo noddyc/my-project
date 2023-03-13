@@ -110,9 +110,9 @@ export default function ConfirmBidModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light text-xl">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light text-xl navbarSM:text-sm navbarSM:w-[90%]">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[375px] gap-4">
+                  isolate  gap-4">
 
                     <div className="flex flex-col w-full mb-4 ">
                         <div className='font-inter font-bold mb-2'>
@@ -147,13 +147,13 @@ export default function ConfirmBidModal(props) {
 
                     
           
-                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4  navbarSM:gap-10">
-                        <button className="button_light navbarSM:w-80"
+                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4  navbarSM:justify-start navbarSM:gap-x-[10vw]">
+                        <button className="button_light navbarSM:text-xs navbarSM:w-1/2"
                         onClick={()=>{
                             props.onClose()
                         }}><i className="material-icons inline">cancel</i>Decline</button>
 
-                        <button className={`button navbarSM:w-80`}
+                        <button className={`button navbarSM:text-xs navbarSM:w-1/2`}
                         onClick={submitHandler}><i className="material-icons inline">check_circle</i>Accept</button>
                     </div>
                 </div>

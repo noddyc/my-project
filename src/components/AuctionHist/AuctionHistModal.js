@@ -97,9 +97,10 @@ export default function AuctionHistModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl  navbarSM:w-[90%]
+        navbarSM:text-medium">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[450px]   ">
+                  isolate w-[450px]   navbarSM:w-[90%]">
                     <div className="h-14 overflow-scroll">
                           <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
                           </p>
@@ -165,18 +166,18 @@ export default function AuctionHistModal(props) {
 
 
                      <div className="flex flex-row justify-center items-center gap-32 w-full mt-5   navbarSM:gap-10">
-                        <button className="button_light navbarSM:w-80"
+                        <button className="button_light "
                         onClick={()=>{
                             props.onClose();
                         }}><i className="material-icons inline">cancel</i>Close</button>
 
 
-                        <button className={`button navbarSM:w-80 ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'':'invisible'}`}
+                        <button className={`button text-xs ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'':'invisible'}`}
                             onClick={()=>{
                                     setOpenConfirm(true)
                                   }
                                   // open not live
-                                }>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'Join':''}</button>
+                                }><i className="material-icons inline">check_circle</i>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'Join':''}</button>
                     </div>
                 </div>
                 <ConfirmAuctionHistModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 

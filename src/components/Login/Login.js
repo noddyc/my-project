@@ -97,7 +97,7 @@ const Login = (props) =>{
     )
 
     return(
-        <div className="ml-[200px] mt-10 w-1/2 font-inter font-light text-xl">
+        <div className="ml-[200px] mt-10 w-1/2 font-inter font-light text-xl navbarSM:ml-[20vw]">
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">

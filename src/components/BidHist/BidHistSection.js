@@ -240,11 +240,11 @@ function BidHistSection(props) {
     const { pageIndex, pageSize } = state
 
     return (
-            <div className='after-margin-200  overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
+            <div className='after-margin-200  overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6 navbarSM:ml-[10px]'>
                 <div className="px-4 sm:px-0">
                   <h3 className="text-4xl font-inter font-bold">Selections</h3>
                 </div>
-                <div className="mt-5 px-4 text-2xl font-inter font-medium">
+                <div className="mt-5 px-4 text-2xl font-inter font-medium navbarSM:invisible">
                     <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
@@ -256,7 +256,7 @@ function BidHistSection(props) {
                     }} value={detail}/>
                 </div>
 
-                <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
+                <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'} navbarSM:w-3/4`}>
                     <label className="label">Search:{'\u00A0'}</label>
                     <input className="input" placeholder="Enter keyword" onChange={keywordHandler}></input>
                 </div>
@@ -272,7 +272,8 @@ function BidHistSection(props) {
                   // console.log(d)
                  return (
                   <div className={`border-1 border-black flex flex-col items-start
-                  isolate w-[450px] rounded-2xl bg-cardBg hover:bg-cardHoverColor ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"  ?"bg-green-100":""} ${d.status==="NO_WINNER_WINNER_NOTIFIED" || d.status==="WAITING_FOR_DRAW" ?"bg-red-100":""}`} key={index} >          
+                  isolate w-[450px] rounded-2xl bg-cardBg hover:bg-cardHoverColor ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"  ?"bg-green-100":""} ${d.status==="NO_WINNER_WINNER_NOTIFIED" || d.status==="WAITING_FOR_DRAW" ?"bg-red-100":""}
+                  navbarSM:hidden`} key={index} >          
        
                       <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded ">
                           <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"
@@ -378,7 +379,11 @@ function BidHistSection(props) {
                         getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow}
                         setInd={setInd} setIsOpen={setIsOpen}></BHTableLg>
   
-                        <div className="hidden navbarSM:flex navbarSM:flex-col">
+                    </>  
+                }
+                </div>
+
+                <div className="hidden navbarSM:flex navbarSM:flex-col navbarSM:w-[90%] navbarSM:ml-[10px]">
                             {display.map((d, index)=>{
                               return (
                                 <table className="mb-10 font-inter font-light text-xl">
@@ -420,9 +425,6 @@ function BidHistSection(props) {
                               )
                             })}
                         </div>
-                    </>  
-                }
-                </div>
                 <BidModal  open={isOpen} onClose={() => setIsOpen(false)} socket={props.socket} d={ind} setDetectChange={setDetectChange} info={props.info}></BidModal>
             </div>
     );

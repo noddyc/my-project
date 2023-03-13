@@ -28,7 +28,7 @@ function WinNumSection(props) {
     }
 
     return (
-        <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl'>
+        <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl navbarSM:ml-[20vw]'>
             <div className="md:grid md:grid-cols-3 md:gap-6">
                 <div className="md:col-span-1">
                     <div className="px-4 sm:px-0">
@@ -84,14 +84,14 @@ function WinNumSection(props) {
                                     </div>
 
                                     <div className='col-span-6 mb-20'>
-                                        <div className='flex justify-between'>
-                                            <button className='button' onClick={()=>{
+                                        <div className='flex justify-between navbarSM:gap-[4vw]'>
+                                            <button className='button navbarSM:text-xs navbarSM:w-1/2' onClick={()=>{
                                                 setFirstNumber("");
                                                 setSecondNumber("");
                                                 setSpecialNumber("");
                                                 setErrMsg("");
                                             }}><i className="material-icons inline">cancel</i><span>Cancel</span></button>
-                                            <button className='button'
+                                            <button className='button navbarSM:text-xs navbarSM:w-1/2'
                                             onClick={submitHandler}
                                             ><i className="material-icons inline">add_circle</i><span>Submit</span></button>
                                         </div>

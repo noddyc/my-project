@@ -210,7 +210,7 @@ function LiveAuctionSection(props) {
                 <h3 className="text-4xl font-inter font-bold">Live Games</h3>
               </div>
 
-              <div className="mt-5 px-4 text-2xl font-inter font-medium">
+              <div className="mt-5 px-4 text-2xl font-inter font-medium navbarSM:invisible">
                     <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
@@ -222,12 +222,12 @@ function LiveAuctionSection(props) {
                     }} value={detail}/>
               </div>
 
-              <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'}`}>
+              <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='true'?'flex':'hidden'} navbarSM:${detail==='true'?'flex':'hidden'} navbarSM:w-3/4`}>
                   <label className="label">Search:{'\u00A0'}</label>
                   <input className="input" placeholder="Enter keyword" onChange={keywordHandler}></input>
               </div>
 
-              <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='false'?'flex':'hidden'} navbarSM:${detail==='false'?'flex':'hidden'}`}>
+              <div className={`w-1/2 px-4 flex-row justify-center items-center ${detail==='false'?'flex':'hidden'} navbarSM:${detail==='false'?'flex':'hidden'}`}>
                   <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
               </div>
 
@@ -237,7 +237,7 @@ function LiveAuctionSection(props) {
               return (
                 <div className="border-1 border-black flex flex-col items-start
                 isolate w-[450px] rounded-2xl bg-cardBg
-                hover:bg-cardHoverColor navbarSM:w-[200px]" 
+                hover:bg-cardHoverColor navbarSM:hidden" 
                 key={index} >  
 
                     <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded ">
@@ -338,7 +338,11 @@ function LiveAuctionSection(props) {
                       getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow}
                       setInd={setInd} setIsOpen={setIsOpen}></LATableLg>
 
-                      <div className="hidden navbarSM:flex navbarSM:flex-col">
+                  </>    
+                }
+              </div>
+
+              <div className="hidden navbarSM:flex navbarSM:flex-col navbarSM:w-[90%] navbarSM:ml-[10px]">
                           {display.map((d, index)=>{
                             return (
                               <table className="mb-10 font-inter font-light text-xl">
@@ -379,10 +383,7 @@ function LiveAuctionSection(props) {
                               
                             )
                           })}
-                      </div>
-                  </>    
-                }
-              </div>
+                </div>
                 
                 <Modal open={isOpen} onClose={() => setIsOpen(false)} d={ind} setDetectChange={setDetectChange} info={props.info}></Modal>
             </div>

@@ -20,11 +20,11 @@
     }
     .button{
         @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-darkBg text-lightBg text-xl
-        font-bold rounded-full hover:opacity-60 ;
+        font-bold rounded-full hover:opacity-60 navbarSM:h-[20px] navbarSM:w-32 navbarSM:text-sm;
     }
     .button_light{
         @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-lightBg text-darkBg text-xl border-2 border-black
-        font-bold rounded-full hover:opacity-60 ;
+        font-bold rounded-full hover:opacity-60 navbarSM:h-[20px] navbarSM:w-32 navbarSM:text-sm;
     }
 
     .after-margin-200::after {

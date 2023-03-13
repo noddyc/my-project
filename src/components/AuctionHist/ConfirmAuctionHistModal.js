@@ -117,7 +117,7 @@ export default function ConfirmAuctionHistModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg ">
                 <div className="flex flex-col items-start p-0
                   isolate w-[250px] gap-4  ">
                     
@@ -141,14 +141,14 @@ export default function ConfirmAuctionHistModal(props) {
                     </div>
 
                     
-                    <div className="flex flex-row justify-center items-center gap-20 w-[250px] h-8 mb-4   navbarSM:gap-10">
-                        <button className="flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80"
+                    <div className="flex flex-row justify-center items-center gap-10 w-[250px] h-8 mb-4 navbarSM:justify-start navbarSM:gap-x-[5vw]">
+                        <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose()
-                        }}>Close</button>
+                        }}><i className="material-icons inline">cancel</i>Close</button>
 
-                        <button className={`flex flex-col justify-center items-center w-32 h-8 bg-buttonColor text-white rounded-lg navbarSM:w-80`}
-                        onClick={submitHandler}>Confirm</button>
+                        <button className={`button navbarSM:w-80`}
+                        onClick={submitHandler}><i className="material-icons inline">check_circle</i>Confirm</button>
                     </div>
                 </div>
         </div>

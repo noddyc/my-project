@@ -81,11 +81,10 @@ export default function ConfirmModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light text-xl">
-                <div className="flex flex-col items-start p-0
-                  isolate w-[375px] gap-4   ">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-xl font-inter font-light text-xl navbarSM:w-[90%]">
+                <div className="flex flex-col items-start p-0">
                     
-                    <div className="flex flex-col w-full mb-4   ">
+                    <div className="flex flex-col w-full mb-4">
                       
                       <div className='font-inter font-bold mb-2'>
                           <h1>Confirm Slot Detail:{'\u00A0'}{'\u00A0'}</h1>
@@ -93,10 +92,10 @@ export default function ConfirmModal(props) {
                       
                                 
                       <div className="h-10 overflow-scroll mb-2">
-                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name) + " I am from USA "} {'\u00A0'}</p>
+                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name)} {'\u00A0'}</p>
                       </div>
 
-                      <div className='flex gap-4 mb-5'>
+                      <div className='flex gap-4 mb-5 navbarSM:flex-col'>
                         <div className="font-inter">
                             <span className="font-inter font-medium">Total Price</span>
                             <p>{'\u00A0'}{'\u00A0'}$ {Math.round(props.data.product_price/10)}.00</p>    
@@ -123,13 +122,13 @@ export default function ConfirmModal(props) {
                         <p className={successMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
                     </div>
                     
-                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4    navbarSM:gap-10">
-                        <button className="button_light"
+                    <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4 navbarSM:justify-start navbarSM:gap-x-[10vw]">
+                        <button className="button_light navbarSM:text-xs navbarSM:w-1/2"
                         onClick={()=>{
                             props.onClose()
                         }}><i className="material-icons inline">cancel</i>Decline</button>
 
-                        <button className={`button`}
+                        <button className={`button navbarSM:text-xs navbarSM:w-1/2`}
                         onClick={submitHandler}><i className="material-icons inline">check_circle</i>Accept</button>
                     </div>
                 </div>

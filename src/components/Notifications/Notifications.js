@@ -91,7 +91,7 @@ function Notifications(props) {
         <Navbar notifications={props.notifications} setNotifications={props.setNotifications} socket={props.socket} notifiCount={props.notifiCount} setNotificount={props.setNotificount} 
        info={props.info} setInfo={props.setInfo} toggleInfo={props.toggleInfo} setToggleInfo={props.setToggleInfo}></Navbar>
         <LeftSideBar info={props.info}></LeftSideBar>
-        <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6'>
+        <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6 navbarSM:ml-[10vw]'>
                 <div className="px-4 sm:px-0">
                   <h3 className="text-4xl font-inter font-bold">Notifications</h3>
                 </div>
@@ -109,7 +109,7 @@ function Notifications(props) {
                             }}).map((item, index)=>{
                             let slot = getSlot(item.message);
                             return(<div className={ `flex-col justify-start w-[450px] rounded-2xl border-2 border-darkBg p-2 mb-5
-                             hover:shadow-xl ${!item.viewed?'bg-red-100':'bg-cardBGColor'}`} key={index} >
+                             hover:shadow-xl ${!item.viewed?'bg-red-100':'bg-cardBGColor'} navbarSM:w-[250px]`} key={index} >
 
                                 <div className="flex-col gap-6 mb-5">
                                     <div className="flex flex-col flex-grow px-2">
@@ -123,9 +123,8 @@ function Notifications(props) {
                                     <div className="flex flex-col flex-grow px-2">
                                         <div className="font-inter font-medium flex ">
                                             <span className="font-inter font-medium">Type:</span>
-                                            <p>{'\u00A0'}{'\u00A0'}{_.startCase(item.message.split(' ')[5]+'\u00A0'+
-                                            item.message.split(' ')[6])}</p>                          
-                                        </div>
+                                            <p>{'\u00A0'}{'\u00A0'}{item.message.split(' ')[5]==='confirm'?'Retraction Confirm':'Retraction Requested'}</p> 
+                                        </div>                      
                                     </div>
 
                                     <div className="flex flex-col flex-grow px-2">
@@ -216,7 +215,7 @@ function Notifications(props) {
                                         }
                                     }
                                     }
-                                    >Dismiss
+                                    ><i className="material-icons inline">cancel</i>Dismiss
                                 </button>}
                             
 
