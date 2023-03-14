@@ -211,6 +211,9 @@ const Registration = () =>{
                 setEmail('');
                 setFirstName('');
                 setLastName('');
+                setTimeout(()=>{
+                    navigate('/', {replace:true})
+                }, 1000);
     
             } catch (err) {
                 // console.log(err.name)
@@ -226,7 +229,7 @@ const Registration = () =>{
         }
 
     return(
-        <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl'>
+        <div className='ml-[200px] mt-10 w-1/2 font-inter font-light text-xl navbarSM:ml-[20vw]'>
               <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
                         <div class="px-4 sm:px-0">
@@ -376,10 +379,12 @@ const Registration = () =>{
                                 
                                 <div class="col-span-6 sm:col-span-3">
                                     <p ref={errRef} className={errMsg ? "warning" :"warning invisible"} aria-live="assertive">Failed to Register: {errMsg}</p>
+
+                                    <p  className={success ? "warning" :"warning invisible"} aria-live="assertive">Successfully Register</p>
                                  
                                     <div  className="flex justify-center mt-5">
                                         <button onClick={handleSubmit} 
-                                        className="button">Register</button>
+                                        className="button"><i className="material-icons inline navbarSM:text-sm">check_circle</i>Register</button>
                                     </div>
 
                                     <div className="flex-col mt-5 font-medium">

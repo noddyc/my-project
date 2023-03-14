@@ -283,10 +283,10 @@ function LiveAuctionSection(props) {
                         </p>
                       </div>
 
-                      <div className="flex gap-6 navbarSM:flex-col navbarSM:gap-0 navbarSM:text-sm">
+                      <div className="flex gap-6 flex-col navbarSM:gap-0 navbarSM:text-sm">
 
                             <div className="flex flex-col flex-grow">
-                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                  <div className="font-inter mb-2 w-1/2">
                                         <span className="font-inter font-medium">Host</span>
                                         <p>{'\u00A0'}{'\u00A0'}{upperFirstLetter(d.User.firstname)} {upperFirstLetter(d.User.lastname)}</p>
                                   </div>
@@ -298,8 +298,8 @@ function LiveAuctionSection(props) {
                                   </div>
                           
 
-                                <div className="navbarSM:flex navbarSM:flex-row">
-                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                <div className="flex flex-row">
+                                  <div className="font-inter mb-2 w-1/2">
                                     <span className="font-inter font-medium">Total Price</span>
                                     <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
                                   </div>
@@ -316,7 +316,7 @@ function LiveAuctionSection(props) {
                                 </div>
                                 
                               </div>
-                              <div className="h-30 w-1/2 navbarSM:w-full">
+                              <div className="h-30 w-full">
                                 <span className="font-inter font-medium">Description</span>
                                 <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                                   " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>

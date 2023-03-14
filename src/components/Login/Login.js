@@ -164,7 +164,7 @@ const Login = (props) =>{
 
                                         <div  className="flex justify-center mt-5">
                                             <button onClick={handleSubmit} 
-                                            className="button">Login</button>
+                                            className="button"><i className="material-icons inline navbarSM:text-sm">check_circle</i>Login</button>
                                         </div>
 
                                         <div className="flex-col mt-5 font-medium">

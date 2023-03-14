@@ -318,16 +318,16 @@ function BidHistSection(props) {
                           </p>
                         </div>
 
-                        <div className="flex gap-6 navbarSM:flex-col navbarSM:gap-0">
+                        <div className="flex gap-6 flex-col navbarSM:gap-0">
                             <div className="flex flex-col flex-grow">
 
-                                <div className="navbarSM:flex navbarSM:flex-row">
-                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                <div className="flex flex-row">
+                                  <div className="font-inter mb-2 w-1/2">
                                     <span className="font-inter font-medium">Total Price</span>
                                     <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
                                   </div>
 
-                                    <div className="font-inter mb-2 navbarSM:w-1/2">
+                                    <div className="font-inter mb-2 w-1/2">
                                       <span className="font-inter font-medium">End Time</span>
                                       <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
                                       {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
@@ -335,9 +335,9 @@ function BidHistSection(props) {
 
                                 </div>
 
-                                <div className="navbarSM:flex navbarSM:flex-row">
-                                  <div className="font-inter mb-2 navbarSM:w-1/2">
-                                    <span className="font-inter font-medium">Owner</span>
+                                <div className="flex flex-row">
+                                  <div className="font-inter mb-2 w-1/2">
+                                    <span className="font-inter font-medium">Host</span>
                                     <p>{'\u00A0'}{'\u00A0'}{d.onwerId}</p> 
                                   </div>
 
@@ -348,8 +348,8 @@ function BidHistSection(props) {
 
                                 </div>
 
-                                <div className="navbarSM:flex navbarSM:flex-row"> 
-                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                <div className="flex flex-row"> 
+                                  <div className="font-inter mb-2 w-1/2">
                                     <span className="font-inter font-medium">Winning Number</span>
                                     <p>{'\u00A0'}{'\u00A0'}{d.winning_number}</p> 
                                   </div>
@@ -361,7 +361,7 @@ function BidHistSection(props) {
                                 </div>
                             </div>
 
-                            <div className="h-30 w-1/2 navbarSM:w-full">
+                            <div className="h-30 w-full">
                                 <span className="font-inter font-medium">Description</span>
                                 <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                                   " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>

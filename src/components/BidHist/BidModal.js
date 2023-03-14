@@ -61,7 +61,7 @@ export default function BidModal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl navbarSM:w-[90%] navbarSM:text-medium">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl navbarSM:w-[90%] navbarSM:text-xs">
                 <div className="flex flex-col items-start p-0
                   isolate w-[450px]  navbarSM:w-[90%] ">
                     <div className="h-14 overflow-scroll">
@@ -70,7 +70,7 @@ export default function BidModal(props) {
                     </div>
 
               
-                    <div className="h-30 mt-5">
+                    <div className="h-30 mt-5 navbarSM:mt-0">
                           <span className="font-inter font-medium">Description</span>
                           <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                              " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
@@ -89,7 +89,7 @@ export default function BidModal(props) {
                     </div>
 
                     <div className="font-inter mt-5">
-                          <span className="font-inter font-medium">Owner</span>
+                          <span className="font-inter font-medium">Host</span>
                           <p>{'\u00A0'}{'\u00A0'}{d.onwerId}</p>     
                     </div>
 
@@ -107,17 +107,17 @@ export default function BidModal(props) {
                     
 
                      <div className="flex flex-row justify-center items-center gap-32 w-full mt-5  navbarSM:gap-[calc(10%)]">
-                        <button className="button_light navbarSM:w-80"
+                        <button className="button_light"
                         onClick={()=>{
                             props.onClose();
-                        }}><i className="material-icons inline">cancel</i>Decline</button>
+                        }}><i className="material-icons inline navbarSM:text-sm">cancel</i>Decline</button>
 
 
                         <button className={`button
-                        ${d.status === 'OPEN_LIVE' || d.status === 'OPEN_NOT_LIVE' ?'': 'hidden'} navbarSM:w-80`}
+                        ${d.status === 'OPEN_LIVE' || d.status === 'OPEN_NOT_LIVE' ?'': 'hidden'} navbarSM:w-28`}
                         onClick={()=>{
                            setOpenConfirm(true)
-                            }}><i className="material-icons inline">published_with_changes</i>Withdraw</button>
+                            }}><i className="material-icons inline navbarSM:text-sm">published_with_changes</i>Withdraw</button>
                     </div>
                 </div>
                 <ConfirmBidModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} info={props.info}

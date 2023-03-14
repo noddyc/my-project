@@ -98,7 +98,7 @@ export default function AuctionHistModal(props) {
         <>
         <div style={OVERLAY_STYLES} />
         <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl  navbarSM:w-[90%]
-        navbarSM:text-medium">
+        navbarSM:text-xs">
                 <div className="flex flex-col items-start p-0
                   isolate w-[450px]   navbarSM:w-[90%]">
                     <div className="h-14 overflow-scroll">
@@ -107,7 +107,7 @@ export default function AuctionHistModal(props) {
                     </div>
 
 
-                    <div className="h-30 mt-5">
+                    <div className="h-30 mt-5 navbarSM:mt-0">
                           <span className="font-inter font-medium">Description</span>
                           <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                              " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
@@ -133,21 +133,21 @@ export default function AuctionHistModal(props) {
                                 <div className='grid grid-cols-2 w-full'>
                                     {slotArr.map((i,index)=>{
                                         if(d?.[i] === null){
-                                            return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}: - </span></p></div>)
+                                            return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong> - </span></p></div>)
                                         }
                                         if(d?.[i]?.split === true){
                                             if(d?.[i]?.player2 === null){
-                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
+                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
                                             }else if(d?.[i]?.player1 === null){
-                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                             else{
-                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                         }
 
                                         if(d?.[i]?.split === false){
-                                            return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
+                                            return (<div key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
                                         }
                                         
                                     })}
@@ -169,7 +169,7 @@ export default function AuctionHistModal(props) {
                         <button className="button_light "
                         onClick={()=>{
                             props.onClose();
-                        }}><i className="material-icons inline">cancel</i>Close</button>
+                        }}><i className="material-icons inline navbarSM:text-sm">cancel</i>Close</button>
 
 
                         <button className={`button text-xs ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'':'invisible'}`}
@@ -177,7 +177,7 @@ export default function AuctionHistModal(props) {
                                     setOpenConfirm(true)
                                   }
                                   // open not live
-                                }><i className="material-icons inline">check_circle</i>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'Join':''}</button>
+                                }><i className="material-icons inline navbarSM:text-sm">check_circle</i>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'Join':''}</button>
                     </div>
                 </div>
                 <ConfirmAuctionHistModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 

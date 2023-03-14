@@ -220,7 +220,7 @@ function AuctionForm(props) {
                                                 selectedImages.map((image, index) => {
                                                     return (
                                                     <div key={index} className="w-full border-2 border-inputColor rounded-lg px-1 mb-1 flex
-                                                    items-center">
+                                                    items-center navbarSM:text-sm">
                                                         <p className='flex-grow'>{image.name}</p>
                                                         <button 
                                                         onClick={(e) => {e.preventDefault(); deleteHandler(image); setErrMsg("")}}>
@@ -246,14 +246,20 @@ function AuctionForm(props) {
                                         <p className={errMsg ? "warning" : "invisible"} aria-live="assertive">{errMsg}</p>
                                     </div>
 
-                                    <div className='col-span-6 sm:col-span-3 mb-1'> 
+                                    <div className='col-span-6 sm:col-span-3 mb-1 '> 
                                         <p className={successMsg ? "warning" : "invisible"} aria-live="assertive">{successMsg}</p>
                                     </div>
 
 
-                                    <div className='col-span-6 mb-20'>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className='col-span-6 mb-20'>
                                         <div className='flex justify-between navbarSM:gap-[4vw]'>
-                                            <button className='button navbarSM:text-xs navbarSM:w-1/2'
+                                            <button className='button navbarSM:text-xs'
                                             onClick={(e)=>{
                                                 e.preventDefault();
                                                 setName("");
@@ -262,17 +268,11 @@ function AuctionForm(props) {
                                                 setEndTime("");
                                                 setSelectedImages([]);
                                                 setSuccessMsg("")
-                                            }}><i className="material-icons inline">cancel</i><span>Cancel</span></button>
-                                            <button className='button navbarSM:text-xs navbarSM:w-1/2'
-                                            onClick={handleSubmit}><i className="material-icons inline">add_circle</i><span>Submit</span></button>
+                                            }}><i className="material-icons inline navbarSM:text-sm">cancel</i><span>Cancel</span></button>
+                                            <button className='button navbarSM:text-xs '
+                                            onClick={handleSubmit}><i className="material-icons inline navbarSM:text-sm">add_circle</i><span>Submit</span></button>
                                         </div>
                                     </div>
-                                </div>    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div> 
     );
 }

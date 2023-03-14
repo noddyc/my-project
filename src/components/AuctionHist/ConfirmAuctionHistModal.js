@@ -145,10 +145,10 @@ export default function ConfirmAuctionHistModal(props) {
                         <button className="button_light navbarSM:w-80"
                         onClick={()=>{
                             props.onClose()
-                        }}><i className="material-icons inline">cancel</i>Close</button>
+                        }}><i className="material-icons inline navbarSM:text-sm">cancel</i>Close</button>
 
                         <button className={`button navbarSM:w-80`}
-                        onClick={submitHandler}><i className="material-icons inline">check_circle</i>Confirm</button>
+                        onClick={submitHandler}><i className="material-icons inline navbarSM:text-sm">check_circle</i>Confirm</button>
                     </div>
                 </div>
         </div>

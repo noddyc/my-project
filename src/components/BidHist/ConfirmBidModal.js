@@ -115,14 +115,14 @@ export default function ConfirmBidModal(props) {
                 <div className="flex flex-col items-start p-0
                   isolate  gap-4">
 
-                    <div className="flex flex-col w-full mb-4 ">
+                    <div className="flex flex-col w-full mb-2">
                         <div className='font-inter font-bold mb-2'>
                               <h1>Confirm Withdraw Slot Detail{'\u00A0'}{'\u00A0'}</h1>
                         </div>
                     </div>
 
                     <div className="h-10 overflow-scroll mb-2">
-                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name) + " I am from USA "} {'\u00A0'}</p>
+                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name)} {'\u00A0'}</p>
                     </div>
 
                     <div className='flex gap-4 mb-5'>
@@ -152,10 +152,10 @@ export default function ConfirmBidModal(props) {
                         <button className="button_light navbarSM:text-xs navbarSM:w-1/2"
                         onClick={()=>{
                             props.onClose()
-                        }}><i className="material-icons inline">cancel</i>Decline</button>
+                        }}><i className="material-icons inline navbarSM:text-xs">cancel</i>Decline</button>
 
                         <button className={`button navbarSM:text-xs navbarSM:w-1/2`}
-                        onClick={submitHandler}><i className="material-icons inline">check_circle</i>Accept</button>
+                        onClick={submitHandler}><i className="material-icons inline navbarSM:text-sm">check_circle</i>Accept</button>
                     </div>
                 </div>
         </div>

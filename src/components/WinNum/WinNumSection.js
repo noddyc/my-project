@@ -1,6 +1,10 @@
 import {React, useState}  from 'react';
 import _ from 'lodash'
 import moment from 'moment'
+import {ip} from  '../Utils/ip'
+import qs from 'qs'
+import axios from 'axios';
+
 
 const numberRegex = /^[0-9]$/
 
@@ -22,6 +26,33 @@ function WinNumSection(props) {
                 throw new Error(_.startCase('Please enter number from 0 to 9 only'))
             }
             
+            let data = qs.stringify({
+                'firstNumber': firstNumber,
+                'secondNumber': secondNumber,
+                'thirdNumber': thirdNumber,
+                'specialNumber': specialNumber 
+              });
+              let config = {
+                method: 'post',
+                url: `${ip}/winningNum/submitWinningNumber`,
+                headers: { 
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data : data
+              };
+              
+              axios(config)
+              .then((response) => {
+                console.log(JSON.stringify(response.data));
+                setSuccessMsg("Successfully Submitted Winning Number")
+                setTimeout(()=>{
+                    setFirstNumber("");
+                    setSecondNumber("");
+                    setSpecialNumber("");
+                    setErrMsg("");
+                    setSuccessMsg("")
+                }, 1000)
+              })
         }catch(err){
             setErrMsg(err.message);
         }
@@ -83,25 +114,27 @@ function WinNumSection(props) {
                                         <p className={successMsg ? "warning" : "invisible"} aria-live="assertive">{successMsg}</p>
                                     </div>
 
-                                    <div className='col-span-6 mb-20'>
-                                        <div className='flex justify-between navbarSM:gap-[4vw]'>
-                                            <button className='button navbarSM:text-xs navbarSM:w-1/2' onClick={()=>{
-                                                setFirstNumber("");
-                                                setSecondNumber("");
-                                                setSpecialNumber("");
-                                                setErrMsg("");
-                                            }}><i className="material-icons inline">cancel</i><span>Cancel</span></button>
-                                            <button className='button navbarSM:text-xs navbarSM:w-1/2'
-                                            onClick={submitHandler}
-                                            ><i className="material-icons inline">add_circle</i><span>Submit</span></button>
-                                        </div>
-                                    </div>
                                 </div>    
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <div className='col-span-6 mb-20'>
+                                        <div className='flex justify-between navbarSM:gap-[4vw]'>
+                                            <button className='button navbarSM:text-xs navbarSM:w-3/4' onClick={()=>{
+                                                setFirstNumber("");
+                                                setSecondNumber("");
+                                                setSpecialNumber("");
+                                                setErrMsg("");
+                                            }}><i className="material-icons inline">cancel</i><span>Cancel</span></button>
+                                            <button className='button navbarSM:text-xs navbarSM:w-3/4'
+                                            onClick={submitHandler}
+                                            ><i className="material-icons inline">add_circle</i><span>Submit</span></button>
+                                        </div>
+                                    </div>
         </div> 
     );
 }

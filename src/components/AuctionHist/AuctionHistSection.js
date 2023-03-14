@@ -293,12 +293,12 @@ function AuctionHistSection(props) {
                           <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)+" (ID: "+d.id+ ")"} {'\u00A0'}</p>
                       </div>
 
-                      <div className="flex gap-6 navbarSM:flex-col navbarSM:gap-0 navbarSM:text-sm">
+                      <div className="flex gap-6 flex-col navbarSM:gap-0 navbarSM:text-sm">
                           <div className="flex flex-col flex-grow">
 
 
-                                <div className="navbarSM:flex navbarSM:flex-row">
-                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                <div className="flex flex-row">
+                                  <div className="font-inter mb-2 w-1/2">
                                         <span className="font-inter font-medium">Product Price</span>
                                         <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}</p>
                                   </div>
@@ -321,8 +321,8 @@ function AuctionHistSection(props) {
                                 </div>
 
 
-                                <div className="navbarSM:flex navbarSM:flex-row">
-                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                <div className="flex flex-row">
+                                  <div className="font-inter mb-2 w-1/2">
                                       <span className="font-inter font-medium">Winning number</span>
                                       <p>{'\u00A0'}{'\u00A0'}{d.winnning_number===null?"-":d.winnning_number}</p>
                                   </div>
@@ -335,7 +335,7 @@ function AuctionHistSection(props) {
                                 </div>
                           </div>
 
-                          <div className="h-30 w-1/2 navbarSM:w-full">
+                          <div className="h-30 w-full">
                                   <span className="font-inter font-medium">Description</span>
                                   <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                                     " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>

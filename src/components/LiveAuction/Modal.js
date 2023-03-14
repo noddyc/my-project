@@ -67,42 +67,42 @@ export default function Modal(props) {
     return ReactDom.createPortal(
         <>
         <div style={OVERLAY_STYLES} />
-        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl navbarSM:w-[90%]
-        navbarSM:text-medium">
+        <div style={MODAL_STYLES} className="border-4 border-cardBorderColor rounded-lg font-inter font-light text-xl flex flex-col items-center navbarSM:w-[90%]
+        navbarSM:text-xs">
                 <div className="flex flex-col items-start p-0
-                  isolate w-[450px]  navbarSM:w-[90%]">
+                  isolate w-[450px] navbarSM:w-[90%]">
                     <div className="h-14 overflow-scroll ">
                           <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
                           </p>
                     </div>
 
-                    <div className="h-30 mt-5">
+                    <div className="h-30 mt-5 navbarSM:mt-0">
                           <span className="font-inter font-medium">Description:</span>
                           <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                              " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
                     </div>
 
 
-                    <div className="flex flex-col flex-wrap overflow-scroll w-full h-76 mt-5">
+                    <div className="flex flex-col flex-wrap overflow-scroll w-full h-76 mt-5 navbarSM:mt-2">
                                 <p className='font-inter font-medium'>Slots:</p>
                                 <div className='grid grid-cols-2 w-full'>
                                     {slotArr.map((i,index)=>{
                                         if(d?.[i] === null){
-                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}: - </span></p></div>)
+                                            return (<div className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong> - </span></p></div>)
                                         }
                                         if(d?.[i]?.split === true){
                                             if(d?.[i]?.player2 === null){
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
+                                                return (<div className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
                                             }else if(d?.[i]?.player1 === null){
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                             else{
-                                                return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                         }
 
                                         if(d?.[i]?.split === false){
-                                            return (<div><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}Slot {index}:{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
+                                            return (<div className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
                                         }
                                         
                                     })}
@@ -178,7 +178,7 @@ export default function Modal(props) {
                         <button className="button_light "
                         onClick={()=>{
                             props.onClose();
-                        }}><i className="material-icons inline">cancel</i>Reject</button>
+                        }}><i className="material-icons inline navbarSM:text-sm">cancel</i>Reject</button>
 
                         <button className={`button  ${slotFilled()?'hidden':''}`}
                         onClick={()=>{
@@ -187,7 +187,7 @@ export default function Modal(props) {
                             }else{
                                 return;
                             }
-                            }}><i className="material-icons inline">check_circle</i>Submit</button>
+                            }}><i className="material-icons inline navbarSM:text-sm">check_circle</i>Submit</button>
                     </div>
                 </div>
                 <ConfirmModal 

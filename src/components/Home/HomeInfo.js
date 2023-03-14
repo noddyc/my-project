@@ -269,7 +269,8 @@ const HomeInfo = (props)=>{
 
                                     <div className='col-span-6 mb-20'>
                                         <div className="flex justify-end">
-                                            <button className={`button ${(count()) ? "":"cursor-not-allowed"}`} onClick={submitHandler}>Submit</button>
+                                            <button className={`button ${(count()) ? "":"cursor-not-allowed"}`} onClick={submitHandler}>
+                                            <i className="material-icons inline navbarSM:text-sm">check_circle</i>Submit</button>
                                         </div>
                                     </div>
                                 </div>
