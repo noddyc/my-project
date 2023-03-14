@@ -244,7 +244,7 @@ function BidHistSection(props) {
                 <div className="px-4 sm:px-0">
                   <h3 className="text-4xl font-inter font-bold">Selections</h3>
                 </div>
-                <div className="mt-5 px-4 text-2xl font-inter font-medium navbarSM:invisible">
+                <div className="mt-5 px-4 text-2xl font-inter font-medium">
                     <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
@@ -261,21 +261,21 @@ function BidHistSection(props) {
                     <input className="input" placeholder="Enter keyword" onChange={keywordHandler}></input>
                 </div>
 
-                <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='false'?'flex':'hidden'} navbarSM:${detail==='false'?'flex':'hidden'}`}>
+                <div className={`w-1/2  px-4 flex-row justify-center items-center ${detail==='false'?'flex':'hidden'} navbarSM:${detail==='false'?'flex':'hidden'} navbarSM:w-3/4`}>
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                 </div>
 
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5">
+                <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 navbarSM:justify-center">
                 {
                  detail !=='false' ? display.map((d, index) => {
                   // console.log(d)
                  return (
                   <div className={`border-1 border-black flex flex-col items-start
                   isolate w-[450px] rounded-2xl bg-cardBg hover:bg-cardHoverColor ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"  ?"bg-green-100":""} ${d.status==="NO_WINNER_WINNER_NOTIFIED" || d.status==="WAITING_FOR_DRAW" ?"bg-red-100":""}
-                  navbarSM:hidden`} key={index} >          
+                  navbarSM:w-[300px]`} key={index} >          
        
-                      <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded ">
+                      <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded  navbarSM:max-w-[300px]  navbarSM:max-h-[200px]">
                           <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"
                           onClick={(e)=>{
                             const updatedItems = [...imgPos];
@@ -290,9 +290,10 @@ function BidHistSection(props) {
                           }}>
                               <i className="material-icons text-sm pl-1">arrow_back_ios</i>
                           </button>
-                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl" 
+                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl navbarSM:min-w-[300px]  navbarSM:min-h-[200px]" 
                           src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
-                          {d.id && img && !img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] rounded-tl-2xl rounded-tr-2xl object-center" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+                          {d.id && img && !img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] rounded-tl-2xl rounded-tr-2xl object-center
+                          navbarSM:min-w-[300px]  navbarSM:min-h-[200px]" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
 
                           <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"
                           onClick={(e)=>{
@@ -311,49 +312,56 @@ function BidHistSection(props) {
                       </div>
 
 
-                    <div className="w-full p-5">              
-                        <div className="h-14 overflow-scroll mb-2">
+                    <div className="w-full p-5 navbarSM:text-sm">              
+                        <div className="h-14 overflow-scroll mb-2 navbarSM:h-8">
                           <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)+" (ID: "+d.id+ ")"} {'\u00A0'}
                           </p>
                         </div>
 
-                        <div className="flex gap-6">
+                        <div className="flex gap-6 navbarSM:flex-col navbarSM:gap-0">
                             <div className="flex flex-col flex-grow">
 
-                                <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">Total Price</span>
-                                  <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
+                                <div className="navbarSM:flex navbarSM:flex-row">
+                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                    <span className="font-inter font-medium">Total Price</span>
+                                    <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
+                                  </div>
+
+                                    <div className="font-inter mb-2 navbarSM:w-1/2">
+                                      <span className="font-inter font-medium">End Time</span>
+                                      <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
+                                      {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                                  </div>
+
                                 </div>
 
-                                <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">End Time</span>
-                                  <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
-                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                                <div className="navbarSM:flex navbarSM:flex-row">
+                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                    <span className="font-inter font-medium">Owner</span>
+                                    <p>{'\u00A0'}{'\u00A0'}{d.onwerId}</p> 
+                                  </div>
+
+                                  <div className="font-inter mb-2">
+                                    <span className="font-inter font-medium">Slot Picked</span>
+                                    <p>{'\u00A0'}{'\u00A0'}{d.slot_number}</p> 
+                                  </div>
+
                                 </div>
 
-                                <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">Owner</span>
-                                  <p>{'\u00A0'}{'\u00A0'}{d.onwerId}</p> 
-                                </div>
+                                <div className="navbarSM:flex navbarSM:flex-row"> 
+                                  <div className="font-inter mb-2 navbarSM:w-1/2">
+                                    <span className="font-inter font-medium">Winning Number</span>
+                                    <p>{'\u00A0'}{'\u00A0'}{d.winning_number}</p> 
+                                  </div>
 
-                                <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">Slot Picked</span>
-                                  <p>{'\u00A0'}{'\u00A0'}{d.slot_number}</p> 
-                                </div>
-
-
-                                <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">Winning Number</span>
-                                  <p>{'\u00A0'}{'\u00A0'}{d.winning_number}</p> 
-                                </div>
-
-                                <div className="font-inter mb-2">
-                                  <span className="font-inter font-medium">Status</span>
-                                  <p>{'\u00A0'}{'\u00A0'}{statusConversion(d.status)}</p>
+                                  <div className="font-inter mb-2">
+                                    <span className="font-inter font-medium">Status</span>
+                                    <p>{'\u00A0'}{'\u00A0'}{statusConversion(d.status)}</p>
+                                  </div>
                                 </div>
                             </div>
 
-                            <div className="h-30 w-1/2">
+                            <div className="h-30 w-1/2 navbarSM:w-full">
                                 <span className="font-inter font-medium">Description</span>
                                 <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
                                   " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
@@ -378,12 +386,8 @@ function BidHistSection(props) {
                         setPageSize={setPageSize} getTableProps={getTableProps} headerGroups={headerGroups}
                         getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow}
                         setInd={setInd} setIsOpen={setIsOpen}></BHTableLg>
-  
-                    </>  
-                }
-                </div>
 
-                <div className="hidden navbarSM:flex navbarSM:flex-col navbarSM:w-[90%] navbarSM:ml-[10px]">
+                        <div className="hidden navbarSM:flex navbarSM:flex-col navbarSM:w-[90%] navbarSM:ml-[10px]">
                             {display.map((d, index)=>{
                               return (
                                 <table className="mb-10 font-inter font-light text-xl">
@@ -425,6 +429,10 @@ function BidHistSection(props) {
                               )
                             })}
                         </div>
+                      </>  
+                }
+                </div>
+
                 <BidModal  open={isOpen} onClose={() => setIsOpen(false)} socket={props.socket} d={ind} setDetectChange={setDetectChange} info={props.info}></BidModal>
             </div>
     );

@@ -49,7 +49,8 @@ export default function ConfirmBidModal(props) {
           let msg = `Player ${_.startCase(props.info.firstname+" " + props.info.lastname)} (id: ${senderId}) request retraction of Game (id: ${auctionId}) on Slot ${slot}`
 
           let data = qs.stringify({
-            'message': msg
+            'message': msg,
+            'response': 'NONE'
           });
           let config = {
             method: 'post',
