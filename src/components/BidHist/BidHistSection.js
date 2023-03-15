@@ -105,8 +105,8 @@ function BidHistSection(props) {
 
                 let arr = [];
                 data.forEach((e, index)=>{
-                    // console.log(e.Auction)
-                    arr.push({id: e.id, userId:e.userId, slot_number:e.slot_number,
+                    console.log(e.Auction)
+                    arr.push({User:e.Auction.User, id: e.id, userId:e.userId, slot_number:e.slot_number,
                     auctionId: e.auctionId, end_time: e.Auction['end_time'],
                     product_description: e.Auction['product_description'],
                     product_name: e.Auction['product_name'],
@@ -269,7 +269,7 @@ function BidHistSection(props) {
                 <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 navbarSM:justify-center">
                 {
                  detail !=='false' ? display.map((d, index) => {
-                  // console.log(d)
+                  console.log(d)
                  return (
                   <div className={`border-1 border-black flex flex-col items-start
                   isolate w-[450px] rounded-2xl bg-cardBg hover:bg-cardHoverColor ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"  ?"bg-green-100":""} ${d.status==="NO_WINNER_WINNER_NOTIFIED" || d.status==="WAITING_FOR_DRAW" ?"bg-red-100":""}
@@ -338,7 +338,7 @@ function BidHistSection(props) {
                                 <div className="flex flex-row">
                                   <div className="font-inter mb-2 w-1/2">
                                     <span className="font-inter font-medium">Host</span>
-                                    <p>{'\u00A0'}{'\u00A0'}{d.onwerId}</p> 
+                                    <p>{'\u00A0'}{'\u00A0'}{_.startCase(d.User.firstname)} {_.startCase(d.User.lastname)}</p> 
                                   </div>
 
                                   <div className="font-inter mb-2">
