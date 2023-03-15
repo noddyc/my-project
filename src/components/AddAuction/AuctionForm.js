@@ -104,7 +104,7 @@ function AuctionForm(props) {
                         formData.append('image', selectedImages[i]);
                         formData.append('auctionId', auctionId);
                         }
-                    axios.post('http://localhost:9001/api/posts', formData, 
+                    axios.post(`${ip}/api/posts`, formData, 
                     {headers: {'Content-Type': 'multipart/form-data'}}).then(
                         (response)=>{
                             setSuccessMsg("Game Created Successfully")
