@@ -146,7 +146,7 @@ function Notifications(props) {
 
                                 <div className=" ">
                                 {item.type !== "RETRACTION_RECEIVE"? 
-                                 <div className="flex flex-row justify-center items-center gap-32 w-full mt-5">
+                                 <div className="flex flex-row justify-center items-center gap-32 w-full mt-5 navbarSM:gap-4 navbarSM:justify-start">
                                 
                                     <button className="button_light hover:bg-cardHoverColor"
                                     onClick = {async (e)=>{
@@ -165,7 +165,7 @@ function Notifications(props) {
                                                 return ind != index
                                             })
                                         })
-                                    }}><i className="material-icons inline">cancel</i>Decline</button>
+                                    }}><i className="material-icons inline navbarSM:text-sm">cancel</i>Decline</button>
 
                                     <button className="button hover:bg-cardHoverColor" onClick = {async (e)=>{
                                             props.socket.emit("increaseCount", 
@@ -182,7 +182,7 @@ function Notifications(props) {
                                                     return ind != index
                                                 })
                                             })
-                                        }}><i className="material-icons inline">check_circle</i>Confirm</button>
+                                        }}><i className="material-icons inline navbarSM:text-sm">check_circle</i>Confirm</button>
                                 </div>
                                 :
                                 <button className="button_light hover:bg-cardHoverColor"
@@ -215,7 +215,7 @@ function Notifications(props) {
                                         }
                                     }
                                     }
-                                    ><i className="material-icons inline">cancel</i>Dismiss
+                                    ><i className="material-icons inline navbarSM:text-sm">cancel</i>Dismiss
                                 </button>}
                             
 
