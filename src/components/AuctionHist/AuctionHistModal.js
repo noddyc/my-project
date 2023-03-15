@@ -32,13 +32,13 @@ function isCurrentTimeInRange() {
   const currentTime = new Date();
 
   const startTimeMidDay = new Date(currentTime);
-  startTimeMidDay.setHours(12);
-  startTimeMidDay.setMinutes(35);
+  startTimeMidDay.setHours(10);
+  startTimeMidDay.setMinutes(20);
   startTimeMidDay.setSeconds(40);
 
   const endTimeMidDay = new Date(currentTime);
-  endTimeMidDay.setHours(12);
-  endTimeMidDay.setMinutes(40);
+  endTimeMidDay.setHours(10);
+  endTimeMidDay.setMinutes(30);
   endTimeMidDay.setSeconds(40);
 
   const startTimeEvening = new Date(currentTime);
