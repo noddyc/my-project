@@ -49,7 +49,7 @@ function isCurrentTimeInRange() {
 
   const endTimeEvening = new Date(currentTime);
   endTimeEvening.setHours(21);
-  endTimeEvening.setMinutes(2);
+  endTimeEvening.setMinutes(22);
   endTimeEvening.setSeconds(40);
 
   return (currentTime >= startTimeMidDay && currentTime <= endTimeMidDay) || (currentTime >= startTimeEvening && currentTime <= endTimeEvening);

@@ -318,8 +318,7 @@ function LiveAuctionSection(props) {
                               </div>
                               <div className="h-30 w-full">
                                 <span className="font-inter font-medium">Description</span>
-                                <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
-                                  " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
+                                <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
                               </div>
                         </div>
                        </div>

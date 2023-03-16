@@ -48,6 +48,7 @@ function WinNumSection(props) {
                 setTimeout(()=>{
                     setFirstNumber("");
                     setSecondNumber("");
+                    setThirdNumber("");
                     setSpecialNumber("");
                     setErrMsg("");
                     setSuccessMsg("")

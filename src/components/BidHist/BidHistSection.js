@@ -25,15 +25,9 @@ function BidHistSection(props) {
     const [detail, setDetail] = useState("true");
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
-
     const [imgPos, setImgPos] = useState([]);
-
     const [img, setImg] = useState(null);
-    
-    
-
     const [MOCK_DATA, setMOCK_DATA] = useState([])
-
     const [keyword, setKeyWord] = useState("");
 
     const keywordHandler = debounce((e)=>{
@@ -48,7 +42,7 @@ function BidHistSection(props) {
       }else if(status === "NO_WINNER_WINNER_NOTIFIED"){
         return "WinNum Posted"
       }else if(status === "WAITING_FOR_DRAW"){
-        return "Wait For DRAW"
+        return "Wait For Draw"
       }
     }
 
@@ -114,14 +108,16 @@ function BidHistSection(props) {
                     slotsOpen: e.Auction['slotsOpen'],
                     status: e.Auction['status'],
                     onwerId: e.Auction['ownerId'],
-                    winning_number: e.Auction['winnning_number']===null?"-":e.Auction['winnning_number']})
+                    winning_number: e.Auction['winNum']})
                 })
-                // console.log(arr);
+                console.log(arr);
                 setDisplay(arr)
                 setMOCK_DATA(arr);
                 setImgPos(new Array(arr.length).fill(0));
               })
               .then((response)=>{
+
+                //get image
                 let data = qs.stringify({
                   'auctionId': auctionId
                 }, {arrayFormat:`indices`});
@@ -314,7 +310,7 @@ function BidHistSection(props) {
 
                     <div className="w-full p-5 navbarSM:text-sm">              
                         <div className="h-14 overflow-scroll mb-2 navbarSM:h-8">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)+" (ID: "+d.id+ ")"} {'\u00A0'}
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)+" (ID: "+d.auctionId+ ")"} {'\u00A0'}
                           </p>
                         </div>
 
@@ -351,7 +347,7 @@ function BidHistSection(props) {
                                 <div className="flex flex-row"> 
                                   <div className="font-inter mb-2 w-1/2">
                                     <span className="font-inter font-medium">Winning Number</span>
-                                    <p>{'\u00A0'}{'\u00A0'}{d.winning_number}</p> 
+                                    <p>{'\u00A0'}{'\u00A0'}{d.winning_number===null || d.winning_number===undefined?"-":d.winning_number.specialNumber}</p> 
                                   </div>
 
                                   <div className="font-inter mb-2">
@@ -389,6 +385,7 @@ function BidHistSection(props) {
 
                         <div className="hidden navbarSM:flex navbarSM:flex-col navbarSM:w-[90%] navbarSM:ml-[10px]">
                             {display.map((d, index)=>{
+                              console.log(d)
                               return (
                                 <table className="mb-10 font-inter font-light text-xl">
                                 <tbody>
@@ -398,7 +395,7 @@ function BidHistSection(props) {
                                   </tr>
                                   <tr>
                                     <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Win Num</p></td>
-                                    <td className="border-2 border-black  text-center">{d.winning_number===null?"-":d.winning_number}</td>
+                                    <td className="border-2 border-black  text-center">{d.winning_number===null || d.winning_number===undefined?"-":d.winning_number.specialNumber}</td>
                                   </tr>
                                   <tr>
                                     <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>End Time</p></td>

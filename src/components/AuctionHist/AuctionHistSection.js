@@ -80,7 +80,8 @@ function AuctionHistSection(props) {
   
     useEffect(()=>{
         try{    
-            let auctionId = [];          
+            let auctionId = [];     
+            let arr = [];    
             let data = qs.stringify({
                 'statues': ["OPEN_NOT_LIVE", "OPEN_LIVE", "WAITING_FOR_DRAW", "NO_WINNER_WINNER_NOTIFIED"],
                 'ownerId': auth().id,
@@ -96,14 +97,13 @@ function AuctionHistSection(props) {
               };
               axios(config)
               .then((response) => {
+          
                 let data = response.data;
 
                 data.forEach((e)=>{
                   auctionId.push(e.id);
                 })
 
-
-                let arr = [];
                 data.forEach((e, index)=>{
                     console.log(e)
                     arr.push(e)
@@ -112,6 +112,30 @@ function AuctionHistSection(props) {
                 setDisplay(arr)
                 setMOCK_DATA(arr);
                 setImgPos(new Array(arr.length).fill(0));
+              })
+              .then((response)=>{
+
+                let data = qs.stringify({
+                  'statues': ["OPEN_NOT_LIVE", "OPEN_LIVE", "WAITING_FOR_DRAW", "NO_WINNER_WINNER_NOTIFIED"],
+                  'ownerId': auth().id,
+                }, {arrayFormat:`indices`});
+  
+                let config = {
+                  method: 'post',
+                  url: `${ip}/auction/auctionWinNumber`,
+                  headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded', 
+                  },
+                  data : data
+                };
+
+                axios(config)
+                .then((response) => {
+                  let arr1= response.data;
+                  const mergedArr = _.merge(_.keyBy(arr1, 'id'), _.keyBy(arr, 'id'));
+                  const result = Object.values(mergedArr);
+                  setDisplay(result)
+                })                
               })
               .then((response)=>{
                 let data = qs.stringify({
@@ -324,7 +348,7 @@ function AuctionHistSection(props) {
                                 <div className="flex flex-row">
                                   <div className="font-inter mb-2 w-1/2">
                                       <span className="font-inter font-medium">Winning number</span>
-                                      <p>{'\u00A0'}{'\u00A0'}{d.winnning_number===null?"-":d.winnning_number}</p>
+                                      <p>{'\u00A0'}{'\u00A0'}{d.winNum===null || d.winNum===undefined?"-":d.winNum.specialNumber}</p>
                                   </div>
 
 

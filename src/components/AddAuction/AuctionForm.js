@@ -25,8 +25,9 @@ function AuctionForm(props) {
 
     const [selectedImages, setSelectedImages] = useState([]);
 
-    const onSelectFile = (event) => {
-    
+    const onSelectFile = async(event) => {   
+      setSuccessMsg("")  
+      setErrMsg("")
       const selectedFiles = event.target.files;
       const selectedFilesArray = Array.from(selectedFiles);  
       // setstate is async
@@ -38,8 +39,6 @@ function AuctionForm(props) {
 
     }
   
-
-
     let priceRegex = /^[1-9][0-9]*$/;
 
     const oneDayAhead = (endTime)=>{
@@ -60,6 +59,8 @@ function AuctionForm(props) {
 
 
     const handleDayNightChange = (event) => {
+        setSuccessMsg("")
+        setErrMsg("")
         setDayNight(event.target.value);
       };
 
@@ -70,6 +71,7 @@ function AuctionForm(props) {
     const handleSubmit= async(e)=>{
         e.preventDefault();
         try{
+            setSuccessMsg("Form Submitting...")
             let endTimeDate = new Date(endTime+'T'+myMap[dayNight])
             if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(endTimeDate)){
                 throw new Error(_.startCase("Fields must be valid or end time must be 24 hours from current time"));
@@ -104,10 +106,24 @@ function AuctionForm(props) {
                         formData.append('image', selectedImages[i]);
                         formData.append('auctionId', auctionId);
                         }
-                    axios.post(`${ip}/api/posts`, formData, 
-                    {headers: {'Content-Type': 'multipart/form-data'}}).then(
-                        (response)=>{
-                            setSuccessMsg("Game Created Successfully")
+                    if(selectedImages.length != 0){
+                        axios.post(`${ip}/api/posts`, formData, 
+                        {headers: {'Content-Type': 'multipart/form-data'}}).then(
+                            (response)=>{
+                                setSuccessMsg("Game Created Successfully")
+                                setTimeout(()=>{
+                                    setName("")
+                                    setDescription("")
+                                    setPrice("")
+                                    setEndTime("")
+                                    setSuccessMsg("")
+                                    setErrMsg("")
+                                    setSelectedImages([])
+                                },1000);
+                            }
+                        ).catch(()=>{
+                            setSuccessMsg("")
+                            setErrMsg("Failed to Add Game");
                             setTimeout(()=>{
                                 setName("")
                                 setDescription("")
@@ -117,21 +133,42 @@ function AuctionForm(props) {
                                 setErrMsg("")
                                 setSelectedImages([])
                             },1000);
-                        }
-                    ).catch(()=>{
-                        setErrMsg("Failed to Add Game");
-                    })
+                        })
+                    }else{
+                        setSuccessMsg("Game Created Successfully")
+                        setTimeout(()=>{
+                            setName("")
+                            setDescription("")
+                            setPrice("")
+                            setEndTime("")
+                            setSuccessMsg("")
+                            setErrMsg("")
+                            setSelectedImages([])
+                        },1000);
+                    }
                 }
             ).catch(()=>{
+                setSuccessMsg("")
                 setErrMsg("Failed to Add Game");
+                setTimeout(()=>{
+                    setName("")
+                    setDescription("")
+                    setPrice("")
+                    setEndTime("")
+                    setSuccessMsg("")
+                    setErrMsg("")
+                    setSelectedImages([])
+                },1000);
             })
 
 
         }catch(err){
             if (err.response?.status) {
+                setSuccessMsg("")
                 setErrMsg('Failed to Add Game');
             }
             else{
+                setSuccessMsg("")
                 setErrMsg(err.message);
             }
         }
@@ -180,7 +217,7 @@ function AuctionForm(props) {
 
 
                                     <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor='date' className='label'>End Date</label>
+                                        <label htmlFor='date' className='label'>End Date <span className='text-base'>(Must Be At Least 24 hours From Current Time)</span></label>
 
                                         <input id='date' name='date' type="date" className='input' value={endTime}
                                             onChange={(e)=>{
@@ -188,7 +225,6 @@ function AuctionForm(props) {
                                             setSuccessMsg("");
                                             setEndTime(e.target.value)}}/>
 
-                                        <p className="mt-2 text-sm text-gray-500">End Date must be 24 hours from current time.</p>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -208,7 +244,6 @@ function AuctionForm(props) {
                                             <input
                                                 ref={imgRef}
                                                 type="file" multiple accept="image/*"
-            
                                                 name="image"
                                                 onChange={onSelectFile} className="mt-1 py-1 block w-[105px] rounded-md text-sm" 
                                                 />
@@ -269,8 +304,8 @@ function AuctionForm(props) {
                                                 setSelectedImages([]);
                                                 setSuccessMsg("")
                                             }}><i className="material-icons inline navbarSM:text-sm">cancel</i><span>Cancel</span></button>
-                                            <button className='button navbarSM:text-xs '
-                                            onClick={handleSubmit}><i className="material-icons inline navbarSM:text-sm">add_circle</i><span>Submit</span></button>
+                                            <button className={`button navbarSM:text-xs`}
+                                            onClick={handleSubmit}><i className={`material-icons inline navbarSM:text-sm`}>add_circle</i><span>Submit</span></button>
                                         </div>
                                     </div>
         </div> 
