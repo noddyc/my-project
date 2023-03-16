@@ -98,20 +98,20 @@ const Login = (props) =>{
 
     return(
         <div className="ml-[200px] mt-10 w-1/2 font-inter font-light text-xl navbarSM:ml-[20vw]">
-            <div class="md:grid md:grid-cols-3 md:gap-6">
-                <div class="md:col-span-1">
-                    <div class="px-4 sm:px-0">
-                        <h3 class="text-4xl font-inter font-bold">Login</h3>
+            <div className="md:grid md:grid-cols-3 md:gap-6">
+                <div className="md:col-span-1">
+                    <div className="px-4 sm:px-0">
+                        <h3 className="text-4xl font-inter font-bold">Login</h3>
                     </div>
                 </div>
 
-                <div class="mt-5 md:col-span-2 md:mt-0">
+                <div className="mt-5 md:col-span-2 md:mt-0">
                     <div>
-                        <div class="overflow-hidden sm:rounded-md">
-                            <div class="bg-white px-4 py-5 sm:p-6">
-                                <div class="grid grid-cols-6 gap-6">
+                        <div className="overflow-hidden sm:rounded-md">
+                            <div className="bg-white px-4 py-5 sm:p-6">
+                                <div className="grid grid-cols-6 gap-6">
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
 
                                         <label htmlFor="email" className="label">Email <span className="text-red-700">*</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" 
@@ -135,7 +135,7 @@ const Login = (props) =>{
 
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
 
                                         <label htmlFor="password" className="label">Password<span className="text-red-700">*</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" 
@@ -158,7 +158,7 @@ const Login = (props) =>{
                                         </p>
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-3">
 
                                         <p ref={errRef} className={errMsg ? "warning" : "warning invisible"} aria-live="assertive">{errMsg}</p>
 

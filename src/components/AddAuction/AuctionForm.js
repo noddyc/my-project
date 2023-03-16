@@ -52,9 +52,7 @@ function AuctionForm(props) {
     }
 
     const dateConversion = (e)=>{
-        const timeInA = moment.tz(e, props.info.timezone);
-        const timeInB = timeInA.clone().tz('UTC');
-        return timeInB.format();
+        return e;
     }
 
 
@@ -72,7 +70,8 @@ function AuctionForm(props) {
         e.preventDefault();
         try{
             setSuccessMsg("Form Submitting...")
-            let endTimeDate = new Date(endTime+'T'+myMap[dayNight])
+            // console.log(endTime)
+            let endTimeDate = (endTime+'T'+myMap[dayNight]+".000Z").toString()
             if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(endTimeDate)){
                 throw new Error(_.startCase("Fields must be valid or end time must be 24 hours from current time"));
             }
@@ -80,14 +79,15 @@ function AuctionForm(props) {
                 throw new Error(_.startCase("Maximum of 4 Images to Upload"))
             }
             let obj = {
-                start_time: dateConversion(new Date()),
-                end_time: dateConversion(endTimeDate),
+                start_time: (new Date()),
+                end_time: new Date(dateConversion(endTimeDate)),
                 product_price: price,
                 product_name: name,
                 product_description: description,
                 status: "OPEN_NOT_LIVE",
                 ownerId: auth().id,
             }
+            // console.log(obj.end_time)
             let data = qs.stringify(obj);
             let config = {
                 method: 'put',
