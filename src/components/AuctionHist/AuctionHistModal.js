@@ -38,7 +38,7 @@ function isCurrentTimeInRange() {
   //
 
   const endTimeMidDay = new Date(currentTime);
-  endTimeMidDay.setHours(12);
+  endTimeMidDay.setHours(14);
   endTimeMidDay.setMinutes(40);
   endTimeMidDay.setSeconds(40);
 
