@@ -30,7 +30,7 @@ let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slo
 let dayStartHour = 7;
 let dayStartMin = 30;
 let dayStartSec = 40;
-let dayEndHour = 12;
+let dayEndHour = 20;
 let dayEndMin = 40;
 let dayEndSec = 40;
 
