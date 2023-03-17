@@ -27,30 +27,46 @@ const OVERLAY_STYLES = {
 }
 let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7','slot8','slot9']
 
+let dayStartHour = 7;
+let dayStartMin = 30;
+let dayStartSec = 40;
+let dayEndHour = 8;
+let dayEndMin = 40;
+let dayEndSec = 40;
+
+let nightStartHour = 21;
+let nightStartMin = 17;
+let nightStartSec = 40;
+let nightEndHour = 21;
+let nightEndMin = 22;
+let nightEndSec = 40;
+
+
+
 
 function isCurrentTimeInRange() {
   const currentTime = new Date();
-
+  
   const startTimeMidDay = new Date(currentTime);
-  startTimeMidDay.setHours(12);
-  startTimeMidDay.setMinutes(35);
-  startTimeMidDay.setSeconds(40);
+  startTimeMidDay.setHours(dayStartHour);
+  startTimeMidDay.setMinutes(dayStartMin);
+  startTimeMidDay.setSeconds(dayStartSec);
   //
 
   const endTimeMidDay = new Date(currentTime);
-  endTimeMidDay.setHours(14);
-  endTimeMidDay.setMinutes(40);
-  endTimeMidDay.setSeconds(40);
+  endTimeMidDay.setHours(dayEndHour);
+  endTimeMidDay.setMinutes(dayEndMin);
+  endTimeMidDay.setSeconds(dayEndSec);
 
   const startTimeEvening = new Date(currentTime);
-  startTimeEvening.setHours(21);
-  startTimeEvening.setMinutes(17);
-  startTimeEvening.setSeconds(40);
+  startTimeEvening.setHours(nightStartHour);
+  startTimeEvening.setMinutes(nightStartMin);
+  startTimeEvening.setSeconds(nightStartSec);
 
   const endTimeEvening = new Date(currentTime);
-  endTimeEvening.setHours(21);
-  endTimeEvening.setMinutes(22);
-  endTimeEvening.setSeconds(40);
+  endTimeEvening.setHours(nightEndHour);
+  endTimeEvening.setMinutes(nightEndMin);
+  endTimeEvening.setSeconds(nightEndSec);
 
   return (currentTime >= startTimeMidDay && currentTime <= endTimeMidDay) || (currentTime >= startTimeEvening && currentTime <= endTimeEvening);
 }
@@ -173,7 +189,7 @@ export default function AuctionHistModal(props) {
                         }}><i className="material-icons inline navbarSM:text-sm">cancel</i>Close</button>
 
 
-                        <button className={`button text-xs ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'':'invisible'}`}
+                        <button className={`button text-xs ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || (d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange()) ?'':'invisible'}`}
                             onClick={()=>{
                                     setOpenConfirm(true)
                                   }
