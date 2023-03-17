@@ -39,6 +39,10 @@ function slotFilled(dataValues){
   return count;
 }
 
+function calcInSec(H,M,S){
+  return H*3600+M*60+S;
+}
+
 export default function ConfirmAuctionHistModal(props) {
     console.log(props.data)
     const auth = useAuthUser();
@@ -47,6 +51,34 @@ export default function ConfirmAuctionHistModal(props) {
     const navigate = useNavigate()
 
     const submitHandler = _.debounce(async (e)=>{
+          let endTime = new Date(props.data.end_time);
+          let endTimeUTCYear = endTime.getUTCFullYear();
+          let endTimeUTCMonth = endTime.getUTCMonth();
+          let endTimeUTCDay = endTime.getUTCDate();
+          let endTimeUTCHour = endTime.getUTCHours();
+          let endTimeUTCMin = endTime.getUTCMinutes();
+          let endTimeUTCSec = endTime.getUTCSeconds();
+          let endTimeSec = calcInSec(endTimeUTCHour, endTimeUTCMin, endTimeUTCSec)
+          // console.log(endTimeUTCYear + " " + endTimeUTCMonth + " " + endTimeUTCDay + " " + endTimeUTCHour + " " + endTimeUTCMin + " " + endTimeUTCSec)
+
+
+          let curTime = new Date();
+          let curTimeUTCYear = curTime.getUTCFullYear();
+          let curTimeUTCMonth = curTime.getUTCMonth();
+          let curTimeUTCDay = curTime.getUTCDate();
+          let curTimeUTCHour = curTime.getUTCHours();
+          let curTimeUTCMin = curTime.getUTCMinutes();
+          let curTimeUTCSec = curTime.getUTCSeconds();
+          let curTimeSec = calcInSec(curTimeUTCHour, curTimeUTCMin, curTimeUTCSec);
+        
+          // let res = (endTimeUTCYear === curTimeUTCYear && endTimeUTCMonth === curTimeUTCMonth && endTimeUTCDay === curTimeUTCDay
+          //     && (endTimeSec > curTimeSec));
+
+          // // test
+          let res = (endTimeUTCYear >= curTimeUTCYear && endTimeUTCMonth >= curTimeUTCMonth && endTimeUTCDay >= curTimeUTCDay
+              && (endTimeSec > curTimeSec));
+          console.log(res)
+          
           if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
               try{
                 let data = qs.stringify({
@@ -68,19 +100,23 @@ export default function ConfirmAuctionHistModal(props) {
                 }).catch((error) => {
                     console.log("error222")
                     setErrMsg("Failed to roll over");
-                    setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
+                    setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
                   })
-                setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
+                setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
             }catch(err){
                 console.log("here111");
                 console.log(err);
                 setErrMsg("Failed to Roll Over");
+                setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
                 return ;
             }
           }
 
           if(props.data.status === 'WAITING_FOR_DRAW'){
             try{
+              if(!res){
+                throw new Error("This game was closed")
+              }
               let data = qs.stringify({
                 'auctionId': props.data.id,
                 'userId': auth().id,
@@ -101,14 +137,14 @@ export default function ConfirmAuctionHistModal(props) {
               }).catch((error) => {
                   console.log("error222")
                   setErrMsg("Failed to Join Game");
-                  setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
+                  setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose();props.setUpperOnClose(); return;}, 1500);
                 })
-              setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
+              setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
           }catch(err){
               console.log("here111");
               console.log(err);
               setErrMsg("Failed to Join Game");
-              return;
+              setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose();props.setUpperOnClose(); return;}, 1500);
           }
         }
     }, 800)

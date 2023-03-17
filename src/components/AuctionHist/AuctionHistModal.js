@@ -30,7 +30,7 @@ let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slo
 let dayStartHour = 7;
 let dayStartMin = 30;
 let dayStartSec = 40;
-let dayEndHour = 8;
+let dayEndHour = 12;
 let dayEndMin = 40;
 let dayEndSec = 40;
 
@@ -42,34 +42,29 @@ let nightEndMin = 22;
 let nightEndSec = 40;
 
 
+function calcInSec(H,M,S){
+    return H*3600+M*60+S;
+}
 
 
 function isCurrentTimeInRange() {
   const currentTime = new Date();
-  console.log(currentTime)
+  const currentTimeHour = currentTime.getUTCHours();
+  const currentTimeMin = currentTime.getUTCMinutes();
+  const currentTimeSec = currentTime.getUTCSeconds();
 
-  const startTimeMidDay = new Date(currentTime);
-  startTimeMidDay.setHours(dayStartHour);
-  startTimeMidDay.setMinutes(dayStartMin);
-  startTimeMidDay.setSeconds(dayStartSec);
-  //
+  const currentTimeSecTotal = calcInSec(currentTimeHour, currentTimeMin, currentTimeSec);
 
-  const endTimeMidDay = new Date(currentTime);
-  endTimeMidDay.setHours(dayEndHour);
-  endTimeMidDay.setMinutes(dayEndMin);
-  endTimeMidDay.setSeconds(dayEndSec);
+  const dayStartSecTotal = calcInSec(dayStartHour, dayStartMin, dayStartSec);
+  const dayEndSecTotal = calcInSec(dayEndHour, dayEndMin, dayEndSec);
 
-  const startTimeEvening = new Date(currentTime);
-  startTimeEvening.setHours(nightStartHour);
-  startTimeEvening.setMinutes(nightStartMin);
-  startTimeEvening.setSeconds(nightStartSec);
+  const nightStartSecTotal = calcInSec(nightStartHour, nightStartMin, nightStartSec);
+  const nightEndSecTotal = calcInSec(nightEndHour, nightEndMin, nightEndSec);
 
-  const endTimeEvening = new Date(currentTime);
-  endTimeEvening.setHours(nightEndHour);
-  endTimeEvening.setMinutes(nightEndMin);
-  endTimeEvening.setSeconds(nightEndSec);
-
-  return (currentTime >= startTimeMidDay && currentTime <= endTimeMidDay) || (currentTime >= startTimeEvening && currentTime <= endTimeEvening);
+  let res = (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal) || 
+  (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal);
+  console.log(res)
+  return res
 }
 
 
@@ -174,7 +169,7 @@ export default function AuctionHistModal(props) {
 
                      <div className="font-inter mt-5">
                           <span className="font-inter font-medium">Winning Number</span>
-                          <p>{'\u00A0'}{'\u00A0'}{d.winnning_number===null?"-":d.winnning_number}</p>
+                          <p>{'\u00A0'}{'\u00A0'}{d.winNum===null || d.winNum===undefined?"-":d.winNum.specialNumber}</p>
                     </div>
 
                      <div className="font-inter mt-5">
@@ -190,7 +185,10 @@ export default function AuctionHistModal(props) {
                         }}><i className="material-icons inline navbarSM:text-sm">cancel</i>Close</button>
 
 
-                        <button className={`button text-xs ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || (d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange()) ?'':'invisible'}`}
+                        <button className={`button 
+                        ${d.status ==='NO_WINNER_WINNER_NOTIFIED'?'w-40':''} 
+                        navbarSM:text-xs 
+                        ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || (d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange()) ?'':'invisible'}`}
                             onClick={()=>{
                                     setOpenConfirm(true)
                                   }
