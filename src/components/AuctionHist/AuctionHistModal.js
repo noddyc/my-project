@@ -46,7 +46,8 @@ let nightEndSec = 40;
 
 function isCurrentTimeInRange() {
   const currentTime = new Date();
-  
+  console.log(currentTime)
+
   const startTimeMidDay = new Date(currentTime);
   startTimeMidDay.setHours(dayStartHour);
   startTimeMidDay.setMinutes(dayStartMin);
