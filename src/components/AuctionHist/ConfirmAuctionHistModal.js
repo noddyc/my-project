@@ -76,7 +76,7 @@ export default function ConfirmAuctionHistModal(props) {
 
           // // test
           let res = (endTimeUTCYear >= curTimeUTCYear && endTimeUTCMonth >= curTimeUTCMonth && endTimeUTCDay >= curTimeUTCDay
-              && (endTimeSec > curTimeSec));
+              || (endTimeSec > curTimeSec));
           console.log(res)
           
           if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
