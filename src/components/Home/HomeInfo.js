@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import React from 'react';
 import {useNavigate} from "react-router-dom"
 import { useAuthUser } from "react-auth-kit";
@@ -16,6 +16,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 
 const HomeInfo = (props)=>{
+    const descriptionRef = useRef(null);
    
     const navigate = useNavigate();
     const [display, setDisplay] = useState({});
@@ -263,8 +264,9 @@ const HomeInfo = (props)=>{
 
                                     <div className="col-span-6 sm:col-span-3 mb-12">
                                         <label className="label">Address</label>
-                                        <textarea type='text' maxLength="100" rows="3" className="input" placeholder={display.address}
+                                        <textarea type='text' maxLength="100" rows="3" className="input" placeholder={display.address} ref={descriptionRef}
                                         onChange={(e)=>{setAddress(e.target.value)}}></textarea>
+                                        <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} characters remaining</span>
                                     </div> 
 
                                     <div className='col-span-6 mb-20'>

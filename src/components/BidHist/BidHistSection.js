@@ -262,7 +262,7 @@ function BidHistSection(props) {
                 </div>
 
 
-                <div className="flex flex-row flex-wrap overflow-scroll gap-12 px-4 w-full mt-5 navbarSM:justify-center">
+                <div className="flex flex-row flex-wrap  gap-12 px-4 w-full mt-5 navbarSM:justify-center">
                 {
                  detail !=='false' ? display.map((d, index) => {
                   console.log(d)

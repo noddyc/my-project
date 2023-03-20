@@ -10,6 +10,8 @@ import FormModal from './FormModal';
 
 
 function AuctionForm(props) {
+    const descriptionRef = useRef(null)
+
     const imgRef = useRef(null)
     const [name, setName]= useState("");
     const [description, setDescription] = useState("");
@@ -218,11 +220,12 @@ function AuctionForm(props) {
 
                                     <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor='description' className="label">Description<span className='text-red-500'>*</span></label>
-                                         <textarea id='description' type='text' maxLength="200" rows="3"
+                                         <textarea id='description' type='text' maxLength="200" rows="3" ref={descriptionRef}
                                          value={description} onChange={(e)=>{setErrMsg("");
                                          setSuccessMsg("");
                                          setDescription(e.target.value)}} placeholder="Enter Description"
                                          className="input"/>
+                                         <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} characters remaining</span>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -285,12 +288,14 @@ function AuctionForm(props) {
                                             </div>
                                             {selectedImages.length > 0 &&
                                                 selectedImages.length > 4 ? (
-                                                <p>
-                                                    You can't upload more than 4 images! <br />
-                                                    <span>
-                                                    please delete {selectedImages.length - 4} of them{" "}
-                                                    </span>
-                                                </p>
+                                                <div className='mt-2'>
+                                                    <p>
+                                                        {_.startCase("You can't upload more than 4 images!") }<br />
+                                                        <span>
+                                                        {_.startCase(`please delete ${selectedImages.length - 4} of them `)}
+                                                        </span>
+                                                    </p>
+                                                </div>
                                                 ): <p></p>}
                                         </form>
                                     </div>
