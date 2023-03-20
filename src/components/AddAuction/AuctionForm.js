@@ -6,6 +6,7 @@ import { useAuthUser} from 'react-auth-kit';
 import { useNavigate} from "react-router-dom"
 import {ip} from '../Utils/ip'
 import _ from 'lodash'
+import FormModal from './FormModal';
 
 
 function AuctionForm(props) {
@@ -19,6 +20,9 @@ function AuctionForm(props) {
     const [dayNight, setDayNight] = useState("day");
     const auth = useAuthUser();
     const navigate = useNavigate();
+
+    const [isOpen, setIsOpen] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
 
     // multi version
     ///////////////////
@@ -69,7 +73,7 @@ function AuctionForm(props) {
     const handleSubmit= async(e)=>{
         e.preventDefault();
         try{
-            setSuccessMsg("Form Submitting...")
+            // setSuccessMsg("Form Submitting...")
             // console.log(endTime)
             let endTimeDate = (endTime+'T'+myMap[dayNight]+".000Z").toString()
             if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(endTimeDate)){
@@ -78,6 +82,7 @@ function AuctionForm(props) {
             if(selectedImages.length > 0 && selectedImages.length > 4){
                 throw new Error(_.startCase("Maximum of 4 Images to Upload"))
             }
+            setIsOpen(true)
             let obj = {
                 start_time: (new Date()),
                 end_time: new Date(dateConversion(endTimeDate)),
@@ -110,7 +115,11 @@ function AuctionForm(props) {
                         axios.post(`${ip}/api/posts`, formData, 
                         {headers: {'Content-Type': 'multipart/form-data'}}).then(
                             (response)=>{
-                                setSuccessMsg("Game Created Successfully")
+                                // setSuccessMsg("Game Created Successfully")
+
+                                setSubmitting(true)
+                                
+
                                 setTimeout(()=>{
                                     setName("")
                                     setDescription("")
@@ -119,10 +128,11 @@ function AuctionForm(props) {
                                     setSuccessMsg("")
                                     setErrMsg("")
                                     setSelectedImages([])
-                                },1000);
+                                },500);
                             }
                         ).catch(()=>{
                             setSuccessMsg("")
+                            setIsOpen(false);
                             setErrMsg("Failed to Add Game");
                             setTimeout(()=>{
                                 setName("")
@@ -135,7 +145,8 @@ function AuctionForm(props) {
                             },1000);
                         })
                     }else{
-                        setSuccessMsg("Game Created Successfully")
+                        // setSuccessMsg("Game Created Successfully")
+                        setSubmitting(true)
                         setTimeout(()=>{
                             setName("")
                             setDescription("")
@@ -144,12 +155,15 @@ function AuctionForm(props) {
                             setSuccessMsg("")
                             setErrMsg("")
                             setSelectedImages([])
-                        },1000);
+                        },500);
                     }
                 }
             ).catch(()=>{
                 setSuccessMsg("")
+                setIsOpen(false);
+
                 setErrMsg("Failed to Add Game");
+
                 setTimeout(()=>{
                     setName("")
                     setDescription("")
@@ -158,17 +172,21 @@ function AuctionForm(props) {
                     setSuccessMsg("")
                     setErrMsg("")
                     setSelectedImages([])
-                },1000);
+                }, 1000);
             })
-
-
         }catch(err){
             if (err.response?.status) {
                 setSuccessMsg("")
+
+                setIsOpen(false);
+
                 setErrMsg('Failed to Add Game');
             }
             else{
                 setSuccessMsg("")
+
+                setIsOpen(false);
+
                 setErrMsg(err.message);
             }
         }
@@ -191,7 +209,7 @@ function AuctionForm(props) {
                             <div className="bg-white px-4 py-5 sm:p-6">
                                 <div className="grid grid-cols-6 gap-6">
                                     <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor="name" className="label">Name<span>*</span></label>
+                                        <label htmlFor="name" className="label">Name<span className='text-red-500'>*</span></label>
                                         <input id='name' type='text' maxLength="20" 
                                             value={name} onChange={(e)=>{setErrMsg("");
                                             setSuccessMsg("");
@@ -199,7 +217,7 @@ function AuctionForm(props) {
                                     </div>         
 
                                     <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor='description' className="label">Description</label>
+                                        <label htmlFor='description' className="label">Description<span className='text-red-500'>*</span></label>
                                          <textarea id='description' type='text' maxLength="200" rows="3"
                                          value={description} onChange={(e)=>{setErrMsg("");
                                          setSuccessMsg("");
@@ -208,7 +226,7 @@ function AuctionForm(props) {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor='price' className='label'>Price</label>
+                                        <label htmlFor='price' className='label'>Price<span className='text-red-500'>*</span></label>
                                         <input id='price' type="numeric" min="1" step="1" className='input'
                                             value={price} onChange={(e)=>{setErrMsg("");
                                             setSuccessMsg("");
@@ -217,7 +235,7 @@ function AuctionForm(props) {
 
 
                                     <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor='date' className='label'>End Date <span className='text-base'>(Must Be At Least 24 hours From Current Time)</span></label>
+                                        <label htmlFor='date' className='label'>End Date<span className='text-red-500'>*</span></label>
 
                                         <input id='date' name='date' type="date" className='input' value={endTime}
                                             onChange={(e)=>{
@@ -228,7 +246,7 @@ function AuctionForm(props) {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor='day-night' className='label'>Time Option</label>
+                                        <label htmlFor='day-night' className='label'>Time Option<span  className='text-red-500'>*</span></label>
                                         <select id='day-night' name='day-night' value={dayNight} onChange={handleDayNightChange} className='input'>
                                             <option value="day">Day: 12:40:00</option>
                                             <option value="night">Night: 21:22:00</option>
@@ -308,6 +326,8 @@ function AuctionForm(props) {
                                             onClick={handleSubmit}><i className={`material-icons inline navbarSM:text-sm`}>add_circle</i><span>Submit</span></button>
                                         </div>
                                     </div>
+        
+            <FormModal  open={isOpen} onClose={() => setIsOpen(false)} submitting={submitting} setSubmitting={setSubmitting}></FormModal>
         </div> 
     );
 }

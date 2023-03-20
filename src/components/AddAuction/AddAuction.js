@@ -7,7 +7,7 @@ import AuctionForm from "./AuctionForm";
 import {useNavigate, useOutletContext} from 'react-router-dom'
 import {io} from 'socket.io-client'
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
-
+import FormModal from "./FormModal";
 
 const AddAuction = (props)=>{
     const isAuthenticated = useIsAuthenticated();
