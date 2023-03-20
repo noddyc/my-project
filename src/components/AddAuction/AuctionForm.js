@@ -191,7 +191,7 @@ function AuctionForm(props) {
                             <div className="bg-white px-4 py-5 sm:p-6">
                                 <div className="grid grid-cols-6 gap-6">
                                     <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor="name" className="label">Name</label>
+                                        <label htmlFor="name" className="label">Name<span>*</span></label>
                                         <input id='name' type='text' maxLength="20" 
                                             value={name} onChange={(e)=>{setErrMsg("");
                                             setSuccessMsg("");
