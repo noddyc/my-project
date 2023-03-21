@@ -31,7 +31,7 @@ let dayStartHour = 9;
 let dayStartMin = 46;
 let dayStartSec = 40;
 let dayEndHour = 9;
-let dayEndMin = 50;
+let dayEndMin = 55;
 let dayEndSec = 40;
 
 let nightStartHour = 21;
