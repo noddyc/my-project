@@ -28,10 +28,10 @@ const OVERLAY_STYLES = {
 let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7','slot8','slot9']
 
 let dayStartHour = 9;
-let dayStartMin = 36;
+let dayStartMin = 46;
 let dayStartSec = 40;
 let dayEndHour = 9;
-let dayEndMin = 41;
+let dayEndMin = 50;
 let dayEndSec = 40;
 
 let nightStartHour = 21;
