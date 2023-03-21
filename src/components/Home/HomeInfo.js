@@ -237,13 +237,15 @@ const HomeInfo = (props)=>{
                                     <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor="name" className="label">Username</label>
                                         <input id='name' type='text' maxLength="10" className="input" placeholder={display.username} onChange={usernameHandler}></input>
-                                        <p className={`${username && !usernameValid ? "flex":"invisible"}`}>duplicate username or invalid username</p>
+                                        <p className={`warning ${username && !usernameValid ? "flex":"invisible"}`}>
+                                        <i className="material-icons inline text-lg">error</i>{'\u00A0'}{_.startCase("duplicate username or invalid username")}</p>
                                     </div> 
 
                                     <div className="col-span-6 sm:col-span-3">
                                         <label className="label">Email</label>
                                         <input className="input" placeholder={display.email} onChange={emailHandler}></input>
-                                        <p className={`${email && !emailValid? "flex":"invisible"}`}>duplicate email or invalid email</p>
+                                        <p className={`warning ${email && !emailValid? "flex":"invisible"}`}>                                        
+                                        <i className="material-icons inline text-lg">error</i>{'\u00A0'}{_.startCase("duplicate email or invalid email")}</p>
                                     </div> 
 
 

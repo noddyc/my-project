@@ -169,7 +169,7 @@ export default function ConfirmAuctionHistModal(props) {
                      </div>
 
                      <div className='w-full  '> 
-                        <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{errMsg}</p>
+                        <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i><i className="material-icons inline text-lg">error</i>  {errMsg}</p>
                     </div>
 
                     <div className='w-full  '> 
