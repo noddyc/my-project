@@ -290,7 +290,7 @@ function AuctionForm(props) {
                                                 selectedImages.length > 4 ? (
                                                 <div className='mt-2'>
                                                     <p>
-                                                        {_.startCase("You can't upload more than 4 images!") }<br />
+                                                        {_.startCase("You can not upload more than 4 images!") }<br />
                                                         <span>
                                                         {_.startCase(`please delete ${selectedImages.length - 4} of them `)}
                                                         </span>
