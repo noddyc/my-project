@@ -27,19 +27,19 @@ const OVERLAY_STYLES = {
 }
 let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7','slot8','slot9']
 
-let dayStartHour = 9;
-let dayStartMin = 46;
-let dayStartSec = 40;
-let dayEndHour = 9;
+let dayStartHour = 12;
+let dayStartMin = 0;
+let dayStartSec = 50;
+let dayEndHour = 12;
 let dayEndMin = 55;
-let dayEndSec = 40;
+let dayEndSec = 50;
 
 let nightStartHour = 21;
 let nightStartMin = 17;
-let nightStartSec = 40;
+let nightStartSec = 50;
 let nightEndHour = 21;
 let nightEndMin = 22;
-let nightEndSec = 40;
+let nightEndSec = 50;
 
 
 function calcInSec(H,M,S){
