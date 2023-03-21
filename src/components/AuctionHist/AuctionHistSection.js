@@ -50,7 +50,7 @@ function AuctionHistSection(props) {
       }else if(status === "NO_WINNER_WINNER_NOTIFIED"){
         return "WinNum Posted"
       }else if(status === "WAITING_FOR_DRAW"){
-        return "Wait For DRAW"
+        return "Wait For Draw"
       }
     }
 
