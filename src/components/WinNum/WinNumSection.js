@@ -125,7 +125,7 @@ function WinNumSection(props) {
 
             <div className='col-span-6 mb-20'>
                                         <div className='flex justify-between navbarSM:gap-[4vw]'>
-                                            <button className='button navbarSM:text-xs navbarSM:w-3/4' onClick={()=>{
+                                            <button className='button_light navbarSM:text-xs navbarSM:w-3/4' onClick={()=>{
                                                 setFirstNumber("");
                                                 setSecondNumber("");
                                                 setSpecialNumber("");

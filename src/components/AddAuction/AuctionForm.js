@@ -317,7 +317,7 @@ function AuctionForm(props) {
             </div>
             <div className='col-span-6 mb-20'>
                                         <div className='flex justify-between navbarSM:gap-[4vw]'>
-                                            <button className='button navbarSM:text-xs'
+                                            <button className='button_light navbarSM:text-xs'
                                             onClick={(e)=>{
                                                 e.preventDefault();
                                                 setName("");
