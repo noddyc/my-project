@@ -66,7 +66,7 @@ export default function ConfirmModal(props) {
                 setSuccessMsg("Joined Game Successfully");
             }).catch((error) => {
                 console.log("error222")
-                setErrMsg("Failed to Join Game");
+                setErrMsg("Failed to Join Game Please Refresh Page");
                 setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose()}, 1500);
               })
             setTimeout(()=>{setSuccessMsg(""); props.onClose(); props.setUpperOnClose()}, 1500);

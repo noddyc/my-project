@@ -117,7 +117,7 @@ export default function Modal(props) {
 
 
                     <div className= {`flex flex-col w-[300px] mt-5 gap-2  navbarSM:w-[90%] ${slotFilled()?'hidden':''}`}>
-                        <label htmlFor="slots" className='font-medium'>Choose an Open Slot: </label>
+                        <label htmlFor="slots" className='font-medium'>Choose an Open Slot <span className='text-red-500'>*</span></label>
                         <select name="slots" id="slots" className= {`w-3/4 border-2 border-inputColor rounded-full`} ref={slotRef} onChange={handleSelectChange}>
                             <option value=''>{'\u00A0'}-</option>
                             {
@@ -148,7 +148,7 @@ export default function Modal(props) {
                     </div>
 
                     <div className={`flex flex-col  w-[300px] mt-5 gap-2  navbarSM:w-[90%] ${slotFilled()?'hidden':''}`}>
-                              <label htmlFor="splitOption" className='font-medium'>Split Option: </label>
+                              <label htmlFor="splitOption" className='font-medium'>Split Option <span className='text-red-500'>*</span></label>
                               <select name="splitOption" id="splitOption" className='w-3/4 border-2 border-inputColor rounded-full' ref={splitRef}>
                                 {
                                     selectedSlot === ''?<option value=''>{'\u00A0'}-</option>: 
