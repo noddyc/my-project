@@ -5,6 +5,8 @@ import moment from 'moment'
 import {useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
 import ConfirmAuctionHistModal from './ConfirmAuctionHistModal';
+import { dayStartHour, dayStartMin, dayStartSec, dayEndHour, dayEndMin, dayEndSec, dayStartHourSaving, dayEndHourSaving,
+        nightStartHour, nightStartMin, nightStartSec, nightEndHour, nightEndMin, nightEndSec, nightStartHourSaving, nightEndHourSaving} from '../Utils/time';  
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -26,23 +28,6 @@ const OVERLAY_STYLES = {
   zIndex: 1000
 }
 let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7','slot8','slot9']
-
-let dayStartHour = 17;
-let dayStartMin = 35;
-let dayStartSec = 50;
-
-let dayEndHour = 17;
-let dayEndMin = 40;
-let dayEndSec = 50;
-
-let nightStartHour = 21;
-let nightStartMin = 17;
-let nightStartSec = 50;
-
-let nightEndHour = 21;
-let nightEndMin = 22;
-let nightEndSec = 50;
-
 
 function calcInSec(H,M,S){
     return H*3600+M*60+S;
@@ -68,11 +53,22 @@ function isCurrentTimeInRange() {
 
   const currentTimeSecTotal = calcInSec(currentTimeHour, currentTimeMin, currentTimeSec);
 
-  const dayStartSecTotal = calcInSec(dayStartHour, dayStartMin, dayStartSec);
-  const dayEndSecTotal = calcInSec(dayEndHour, dayEndMin, dayEndSec);
 
-  const nightStartSecTotal = calcInSec(nightStartHour, nightStartMin, nightStartSec);
-  const nightEndSecTotal = calcInSec(nightEndHour, nightEndMin, nightEndSec);
+  let dayStartSecTotal, dayEndSecTotal, nightStartSecTotal, nightEndSecTotal;
+
+  if(currentTime.isDstObserved()){
+    dayStartSecTotal = calcInSec(dayStartHourSaving, dayStartMin, dayStartSec);
+    dayEndSecTotal = calcInSec(dayEndHourSaving, dayEndMin, dayEndSec);
+  
+    nightStartSecTotal = calcInSec(nightStartHourSaving, nightStartMin, nightStartSec);
+    nightEndSecTotal = calcInSec(nightEndHourSaving, nightEndMin, nightEndSec);
+  }else{
+    dayStartSecTotal = calcInSec(dayStartHour, dayStartMin, dayStartSec);
+    dayEndSecTotal = calcInSec(dayEndHour, dayEndMin, dayEndSec);
+  
+    nightStartSecTotal = calcInSec(nightStartHour, nightStartMin, nightStartSec);
+    nightEndSecTotal = calcInSec(nightEndHour, nightEndMin, nightEndSec);
+  }
 
   let res = (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal) || 
   (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal);
