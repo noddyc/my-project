@@ -36,7 +36,7 @@ function calcInSec(H,M,S){
 checkDayLightSaving()
 
 function isCurrentTimeInRange(e) {
-  const currentTime = e;
+  const currentTime = new Date(e);
 
   const currentTimeHour = currentTime.getUTCHours();
   const currentTimeMin = currentTime.getUTCMinutes();
