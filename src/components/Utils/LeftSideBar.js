@@ -24,7 +24,7 @@ function LeftSideBar(props) {
                 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300 gap-2' style={navLinkStyles} to='/liveauction'>
                     <i className="material-icons text-4xl">star</i>
-                    <div className='flex-col justify-center items-center'><span className='text-center table'>LIVE GAMES</span></div>
+                    <div className='flex-col justify-center items-center'><span className='text-center table'>OPEN GAMES</span></div>
                 </NavLink>
 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300 gap-2' style={navLinkStyles} to='/auctionhist'>

@@ -118,11 +118,11 @@ export default function ConfirmModal(props) {
                     </div>
 
                     <div className='w-full   '> 
-                        <p className={errMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {errMsg}</p>
+                        <p className={errMsg ? "warning" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {errMsg}</p>
                     </div>
 
                     <div className='w-full   '> 
-                        <p className={successMsg ? "font-bold p-2 mb-2 text-black rounded-lg bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
+                        <p className={successMsg ? "success" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">check</i> {successMsg}</p>
                     </div>
                     
                     <div className="flex flex-row justify-center items-center gap-20 w-full h-8 mb-4 navbarSM:justify-start navbarSM:gap-x-[10vw]">

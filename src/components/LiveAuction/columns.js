@@ -18,7 +18,7 @@ export const COLUMNS = [
     sticky: 'left',
     Cell: (row)=>{
       // console.log(row.cell.row.original.id)
-      return _.startCase(row.cell.value)+" (ID: "+row.cell.row.original.id+")"
+      return _.startCase(row.cell.value)
     }
   },
   {
@@ -49,7 +49,7 @@ export const COLUMNS = [
     Header: 'Price',
     Footer: 'price',
     accessor: (data)=>{
-      return Math.round(data.product_price);
+      return '$ ' + Math.round(data.product_price);
     },
     sticky: 'left'
   },

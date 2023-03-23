@@ -168,8 +168,8 @@ export default function ConfirmAuctionHistModal(props) {
                               props.data.status === 'WAITING_FOR_DRAW'? <p>Number of Slot Filled: <strong>{slotFilled(props.data)}</strong></p> : props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?
                                <p>Winning Number: <strong>{props.data.winNum === null ?'-': props.data.winNum.specialNumber}</strong></p>: ''
                             }
-                            <p>{props.data.status === 'WAITING_FOR_DRAW'?<strong>As host, you can join a game with six filled slots to make it live within five minutes before drawing</strong>: 
-                            props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>As host, you can roll over this game if no winner is declared</strong>:''}</p>
+                            <p>{props.data.status === 'WAITING_FOR_DRAW'?<strong>{_.startCase("As host, you can join a game with six filled slots to make it live within five minutes before drawing")}</strong>: 
+                            props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>{_.startCase("As host, you can roll over this game if no winner is declared or game did not go live")}</strong>:''}</p>
                      </div>
 
                      <div className='w-full  '> 

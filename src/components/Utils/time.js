@@ -1,34 +1,34 @@
 import moment from 'moment'
 
-// export const dayStartHourSaving = 5;
-// export const dayEndHourSaving = 5;
+export const dayStartHourSaving = 5;
+export const dayEndHourSaving = 5;
 
-// export const dayStartHour = 6;
-// export const dayEndHour = 6;
+export const dayStartHour = 6;
+export const dayEndHour = 6;
 
-export const dayStartHourSaving = 8;
-export const dayEndHourSaving = 8;
+// export const dayStartHourSaving = 8;
+// export const dayEndHourSaving = 8;
 
-export const dayStartHour = 9;
-export const dayEndHour = 9;
+// export const dayStartHour = 9;
+// export const dayEndHour = 9;
 
-export const dayStartMin = 10;
+export const dayStartMin = 35;
 export const dayStartSec = 50;
 
-export const dayEndMin = 55;
+export const dayEndMin = 40;
 export const dayEndSec = 50;
-
-// export const nightStartHourSaving = 2;
-// export const nightEndHourSaving = 2;
-
-// export const nightStartHour = 3;
-// export const nightEndHour = 3;
 
 export const nightStartHourSaving = 2;
 export const nightEndHourSaving = 2;
 
 export const nightStartHour = 3;
 export const nightEndHour = 3;
+
+// export const nightStartHourSaving = 2;
+// export const nightEndHourSaving = 2;
+
+// export const nightStartHour = 3;
+// export const nightEndHour = 3;
 
 export const nightStartMin = 17;
 export const nightStartSec = 50;

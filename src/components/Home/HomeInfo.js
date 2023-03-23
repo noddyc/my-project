@@ -221,7 +221,7 @@ const HomeInfo = (props)=>{
               <div className="md:grid md:grid-cols-3 md:gap-6">
                 <div className="md:col-span-1">
                         <div className="px-4 sm:px-0">
-                            <h3 className="text-4xl font-inter font-bold">Personal Information</h3>
+                            <h3 className="text-4xl font-inter font-bold">PERSONAL INFORMATION</h3>
                         </div>
                 </div>
                 <div className="mt-5 md:col-span-2 md:mt-0">
@@ -268,7 +268,7 @@ const HomeInfo = (props)=>{
                                         <label className="label">Address</label>
                                         <textarea type='text' maxLength="100" rows="3" className="input" placeholder={display.address} ref={descriptionRef}
                                         onChange={(e)=>{setAddress(e.target.value)}}></textarea>
-                                        <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} characters remaining</span>
+                                        <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} Characters Remaining</span>
                                     </div> 
 
                                     <div className='col-span-6 mb-20'>

@@ -21,7 +21,7 @@ export const COLUMNS = [
     sticky: 'left',
     Cell: (row)=>{
       console.log(row.cell.row.original)
-      return _.startCase(row.cell.value)+" (ID: "+row.cell.row.original.auctionId+")"
+      return _.startCase(row.cell.value)
     }
   },
   {

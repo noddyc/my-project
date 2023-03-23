@@ -378,9 +378,9 @@ const Registration = () =>{
                                 </div>
                                 
                                 <div class="col-span-6 sm:col-span-3">
-                                    <p ref={errRef} className={errMsg ? "warning" :"warning invisible"} aria-live="assertive">Failed to Register: {errMsg}</p>
+                                    <p ref={errRef} className={errMsg ? "warning" :"warning invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> Failed to Register: {errMsg}</p>
 
-                                    <p  className={success ? "warning" :"warning invisible"} aria-live="assertive">Successfully Register</p>
+                                    <p  className={success ? "success" :"warning invisible"} aria-live="assertive"><i className="material-icons inline text-lg">check</i> Successfully Register</p>
                                  
                                     <div  className="flex justify-center mt-5">
                                         <button onClick={handleSubmit} 

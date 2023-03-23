@@ -244,7 +244,7 @@ function AuctionHistSection(props) {
             <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6  navbarSM:ml-[10px]'>
 
                 <div className="px-4 sm:px-0">
-                  <h3 className="text-4xl font-inter font-bold">Game History</h3>
+                  <h3 className="text-4xl font-inter font-bold">GAME HISTORY</h3>
                 </div>
 
                 <div className="mt-5 px-4 text-2xl font-inter font-medium">
@@ -362,8 +362,7 @@ function AuctionHistSection(props) {
 
                           <div className="h-30 w-full">
                                   <span className="font-inter font-medium">Description</span>
-                                  <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
-                                    " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
+                                  <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
                           </div>
                       </div>
                     </div>

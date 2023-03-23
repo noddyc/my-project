@@ -32,6 +32,15 @@ let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slo
 checkDayLightSaving()
 
 function spotWinner(d){
+  let count = 0;
+  for(let i = 0; i < slotArr.length; i++){
+    if(d[slotArr[i]] != null){
+      count++;
+    }
+  }
+  if(count < 7){
+    return false;
+  }
   if(d.winnning_number === null){
     return false;
   }else{
@@ -132,8 +141,7 @@ export default function AuctionHistModal(props) {
 
                     <div className="h-30 mt-5 navbarSM:mt-0">
                           <span className="font-inter font-medium">Description</span>
-                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description +
-                             " I am from USA I am from USA I am from USA I am from USA I am from USA ")} </p></div>
+                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
                     </div>
 
 

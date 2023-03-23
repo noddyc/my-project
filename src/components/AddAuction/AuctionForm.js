@@ -212,7 +212,7 @@ function AuctionForm(props) {
             <div className="md:grid md:grid-cols-3 md:gap-6">
                 <div className="md:col-span-1">
                     <div className="px-4 sm:px-0">
-                        <h3 className="text-4xl font-inter font-bold">Create New Game</h3>
+                        <h3 className="text-4xl font-inter font-bold">CREATE NEW GAME</h3>
                     </div>
                 </div>
 
@@ -236,7 +236,7 @@ function AuctionForm(props) {
                                          setSuccessMsg("");
                                          setDescription(e.target.value)}} placeholder="Enter Description"
                                          className="input"/>
-                                         <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} characters remaining</span>
+                                         <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} Characters Remaining</span>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">

@@ -49,8 +49,8 @@ export default function FormModal(props) {
                                 <div><i className='material-icons text-5xl'>autorenew</i></div>
                             </div>:
                             <div className='text-xl font-inter font-bold w-full flex flex-col items-center gap-10'>
-                                <div><p>Form Succefully Submitted</p></div>
-                                <div><i className='material-icons text-5xl'>check_circle</i></div>
+                                <div className='text-green-700'><p>Form Succefully Submitted</p></div>
+                                <div className='text-green-700'><i className='material-icons text-5xl'>check_circle</i></div>
                             </div>
                             
                      }

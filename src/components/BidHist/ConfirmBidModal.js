@@ -139,11 +139,11 @@ export default function ConfirmBidModal(props) {
 
 
                     <div className='w-full '> 
-                        <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {errMsg}</p>
+                        <p className={errMsg ? "warning" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {errMsg}</p>
                     </div>
 
                     <div className='w-full'> 
-                        <p className={successMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
+                        <p className={successMsg ? "success" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">check</i> {successMsg}</p>
                     </div>
 
                     
