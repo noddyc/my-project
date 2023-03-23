@@ -7,11 +7,12 @@ import { useNavigate} from "react-router-dom"
 import {ip} from '../Utils/ip'
 import _ from 'lodash'
 import FormModal from './FormModal';
+import { checkDayLightSaving } from '../Utils/time';
 
+checkDayLightSaving()
 
 function AuctionForm(props) {
     const descriptionRef = useRef(null)
-
     const imgRef = useRef(null)
     const [name, setName]= useState("");
     const [description, setDescription] = useState("");
@@ -74,11 +75,21 @@ function AuctionForm(props) {
 
     const handleSubmit= async(e)=>{
         e.preventDefault();
+        // not daylight saving time -6
+        // daylight saving time -5
+        let dayLightAdjustDate = new Date((endTime+'T'+'09:00:00'+'.000Z').toString());
+        let isDayLightSaving = dayLightAdjustDate.isDstObserved()
+        let endTimeDate;
+        if(isDayLightSaving){
+            endTimeDate = new Date((endTime+'T'+myMap[dayNight]+"-05:00").toString());
+        }else{
+            endTimeDate = new Date((endTime+'T'+myMap[dayNight]+"-06:00").toString());
+        }
+        let storeEndTime = (endTimeDate.toISOString())
+        console.log(storeEndTime)
+ 
         try{
-            // setSuccessMsg("Form Submitting...")
-            // console.log(endTime)
-            let endTimeDate = (endTime+'T'+myMap[dayNight]+".000Z").toString()
-            if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(endTimeDate)){
+            if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(storeEndTime)){
                 throw new Error(_.startCase("Fields must be valid or end time must be 24 hours from current time"));
             }
             if(selectedImages.length > 0 && selectedImages.length > 4){
@@ -87,14 +98,14 @@ function AuctionForm(props) {
             setIsOpen(true)
             let obj = {
                 start_time: (new Date()),
-                end_time: new Date(dateConversion(endTimeDate)),
+                end_time: storeEndTime,
                 product_price: price,
                 product_name: name,
                 product_description: description,
                 status: "OPEN_NOT_LIVE",
                 ownerId: auth().id,
             }
-            // console.log(obj.end_time)
+
             let data = qs.stringify(obj);
             let config = {
                 method: 'put',
@@ -251,8 +262,8 @@ function AuctionForm(props) {
                                     <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor='day-night' className='label'>Time Option<span  className='text-red-500'>*</span></label>
                                         <select id='day-night' name='day-night' value={dayNight} onChange={handleDayNightChange} className='input'>
-                                            <option value="day">Day: 12:40:00</option>
-                                            <option value="night">Night: 21:22:00</option>
+                                            <option value="day">Day: 12:40:00 (Central Time)</option>
+                                            <option value="night">Night: 21:22:00 (Central Time)</option>
                                         </select>
                                     </div>
 

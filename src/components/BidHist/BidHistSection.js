@@ -14,6 +14,7 @@ import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 import _ from 'lodash'
 import BHTableLg from "./BHTableLg";
+import { UTCToCentral } from "../Utils/time";
 
 function BidHistSection(props) {
     const auth = useAuthUser();
@@ -325,8 +326,7 @@ function BidHistSection(props) {
 
                                     <div className="font-inter mb-2 w-1/2">
                                       <span className="font-inter font-medium">End Time</span>
-                                      <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
-                                      {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                                      <p>{'\u00A0'}{'\u00A0'}{(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))}</p>  
                                   </div>
 
                                 </div>
@@ -387,7 +387,7 @@ function BidHistSection(props) {
                             {display.map((d, index)=>{
                               console.log(d)
                               return (
-                                <table className="mb-10 font-inter font-light text-xl">
+                                <table key={index} className="mb-10 font-inter font-light text-xl">
                                 <tbody>
                                   <tr>
                                     <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Name</p></td>
@@ -400,9 +400,7 @@ function BidHistSection(props) {
                                   <tr>
                                     <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>End Time</p></td>
                                     <td className="border-2 border-black text-center">
-                                      {(moment(d.end_time).clone().tz(props.info.timezone)) !== undefined ? 
-                                      (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD ") : ""}
-                                      ({moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss") === "12:40:00" ? 'DAY' : 'NIGHT'})
+                                      {'\u00A0'}{'\u00A0'}{(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))} 
                                     </td>
                                   </tr>
                                   <tr>

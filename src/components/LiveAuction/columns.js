@@ -1,5 +1,6 @@
 import moment from 'moment'
 import _ from 'lodash'
+import { UTCToCentral } from '../Utils/time'
 
 export const COLUMNS = [
   {
@@ -36,7 +37,7 @@ export const COLUMNS = [
     sticky: 'left',
     Cell:(row)=>{
       let val = row.cell.value;
-      return (moment(val).clone().tz('UTC')).format("YY-MM-DD")+" "+((moment(val).clone().tz('UTC')).format("HH")==21?'NIGHT':'DAY')
+      return (UTCToCentral(val).split(' ')[0]+" "+(UTCToCentral(val).split(' ')[1]==="12:40:00"?'DAY':'NIGHT'))
     },
     
     sortType:(a,b) => {

@@ -1,5 +1,6 @@
 import moment from 'moment'
 import _ from 'lodash'
+import { UTCToCentral } from '../Utils/time'
 
 export const COLUMNS = [
   {
@@ -8,7 +9,10 @@ export const COLUMNS = [
     accessor: 'id',
     disableFilters: true,
     disableSortBy: true,
-    sticky: 'left'
+    sticky: 'left',
+    Cell: (row) =>{
+      return row.cell.row.original.auctionId
+    }
   },
   {
     Header: 'Name',
@@ -16,15 +20,19 @@ export const COLUMNS = [
     accessor: 'product_name',
     sticky: 'left',
     Cell: (row)=>{
-      // console.log(row.cell.row.original.id)
-      return _.startCase(row.cell.value)+" (ID: "+row.cell.row.original.id+")"
+      console.log(row.cell.row.original)
+      return _.startCase(row.cell.value)+" (ID: "+row.cell.row.original.auctionId+")"
     }
   },
   {
     Header: 'Winning Number',
     Footer: 'Winning Number',
     accessor: 'winning_number',
-    sticky: 'left'
+    sticky: 'left',
+    Cell: (row)=>{
+      let e  = row.cell.row.original
+      return e.winNum === undefined?"-":e.winNum.specialNumber;
+    }
   },
   {
     Header: 'End Time',
@@ -33,7 +41,7 @@ export const COLUMNS = [
     sticky: 'left',
     Cell:(row)=>{
       let val = row.cell.value;
-      return (moment(val).clone().tz('UTC')).format("YY-MM-DD")+" "+((moment(val).clone().tz('UTC')).format("HH")==21?'NIGHT':'DAY')
+      return (UTCToCentral(val.end_time).split(' ')[0]+" "+(UTCToCentral(val.end_time).split(' ')[1]==="12:40:00"?'DAY':'NIGHT'))
     },
     sortType:(a,b) => {
         console.log(a.values.end_time);

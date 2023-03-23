@@ -6,7 +6,7 @@ import {useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
 import ConfirmAuctionHistModal from './ConfirmAuctionHistModal';
 import { dayStartHour, dayStartMin, dayStartSec, dayEndHour, dayEndMin, dayEndSec, dayStartHourSaving, dayEndHourSaving,
-        nightStartHour, nightStartMin, nightStartSec, nightEndHour, nightEndMin, nightEndSec, nightStartHourSaving, nightEndHourSaving} from '../Utils/time';  
+        nightStartHour, nightStartMin, nightStartSec, nightEndHour, nightEndMin, nightEndSec, nightStartHourSaving, nightEndHourSaving, checkDayLightSaving, UTCToCentral} from '../Utils/time';  
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -33,19 +33,10 @@ function calcInSec(H,M,S){
     return H*3600+M*60+S;
 }
 
-Date.prototype.stdTimezoneOffset = function () {
-  let jan = new Date(this.getFullYear(), 0, 1);
-  let jul = new Date(this.getFullYear(), 6, 1);
-  return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-}
+checkDayLightSaving()
 
-Date.prototype.isDstObserved = function () {
-    return this.getTimezoneOffset() < this.stdTimezoneOffset();
-}
-
-
-function isCurrentTimeInRange() {
-  const currentTime = new Date();
+function isCurrentTimeInRange(e) {
+  const currentTime = e;
 
   const currentTimeHour = currentTime.getUTCHours();
   const currentTimeMin = currentTime.getUTCMinutes();
@@ -144,11 +135,8 @@ export default function AuctionHistModal(props) {
             
                     <div className="font-inter mt-5">
                           <span className="font-inter font-medium">End time</span>
-                          <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
-                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                          <p>{'\u00A0'}{'\u00A0'}{(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))}</p>
                     </div>
-
-                
 
                     <div className="flex flex-col flex-wrap overflow-scroll w-full h-76 mt-5   ">
                                 <p className='font-inter font-medium'>Slots</p>
@@ -197,12 +185,12 @@ export default function AuctionHistModal(props) {
                         <button className={`button 
                         ${d.status ==='NO_WINNER_WINNER_NOTIFIED'?'w-40':''} 
                         navbarSM:text-xs 
-                        ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || (d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange()) ?'':'invisible'}`}
+                        ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || (d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange(d.end_time)) ?'':'invisible'}`}
                             onClick={()=>{
                                     setOpenConfirm(true)
                                   }
                                   // open not live
-                                }><i className="material-icons inline navbarSM:text-sm">check_circle</i>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange() ?'Join':''}</button>
+                                }><i className="material-icons inline navbarSM:text-sm">check_circle</i>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange(d.end_time) ?'Join':''}</button>
                     </div>
                 </div>
                 <ConfirmAuctionHistModal open={openConfirm} data={d} onClose={()=>{setOpenConfirm(false)}} 

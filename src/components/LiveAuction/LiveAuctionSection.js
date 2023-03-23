@@ -15,6 +15,7 @@ import {debounce} from 'lodash'
 import {io} from 'socket.io-client'
 import _ from 'lodash'
 import LATableLg from "./LATableLg";
+import { UTCToCentral } from "../Utils/time";
 
 
 function upperFirstLetter(text){
@@ -293,8 +294,7 @@ function LiveAuctionSection(props) {
 
                                   <div className="font-inter mb-2">
                                     <span className="font-inter font-medium">End Time</span>
-                                    <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
-                                    {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
+                                    <p>{'\u00A0'}{'\u00A0'}{(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))}</p>  
                                   </div>
                           
 
@@ -346,7 +346,7 @@ function LiveAuctionSection(props) {
                       <div className="hidden navbarSM:flex navbarSM:flex-col navbarSM:w-[90%] navbarSM:ml-[10px]">
                           {display.map((d, index)=>{
                             return (
-                              <table className="mb-10 font-inter font-light text-xl">
+                              <table key={index} className="mb-10 font-inter font-light text-xl">
                               <tbody>
                                 <tr>
                                   <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>Name</p></td>
@@ -359,9 +359,7 @@ function LiveAuctionSection(props) {
                                 <tr>
                                   <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>End Time</p></td>
                                   <td className="border-2 border-black text-center">
-                                    {(moment(d.end_time).clone().tz(props.info.timezone)) !== undefined ? 
-                                    (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD ") : ""}
-                                    ({moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss") === "12:40:00" ? 'DAY' : 'NIGHT'})
+                                    {'\u00A0'}{'\u00A0'}{(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))}
                                   </td>
                                 </tr>
                                 <tr>

@@ -14,6 +14,7 @@ import {ip} from '../Utils/ip'
 import {debounce} from 'lodash'
 import _ from 'lodash'
 import AHTableLg from "./AHTableLg";
+import { UTCToCentral } from "../Utils/time";
 
 function AuctionHistSection(props) {
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
@@ -109,8 +110,8 @@ function AuctionHistSection(props) {
                     arr.push(e)
                 })
                 // console.log(arr);
-                setDisplay(arr)
-                setMOCK_DATA(arr);
+                // setDisplay(arr)
+                // setMOCK_DATA(arr);
                 setImgPos(new Array(arr.length).fill(0));
               })
               .then((response)=>{
@@ -135,6 +136,7 @@ function AuctionHistSection(props) {
                   const mergedArr = _.merge(_.keyBy(arr1, 'id'), _.keyBy(arr, 'id'));
                   const result = Object.values(mergedArr);
                   setDisplay(result)
+                  setMOCK_DATA(result)
                 })                
               })
               .then((response)=>{
@@ -340,8 +342,7 @@ function AuctionHistSection(props) {
 
                                 <div className="font-inter mb-2">
                                       <span className="font-inter font-medium">End Time</span>
-                                      <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
-                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>  
+                                      <p>{'\u00A0'}{'\u00A0'}{(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))}</p>  
                                 </div>
 
 
@@ -401,9 +402,7 @@ function AuctionHistSection(props) {
                                 <tr>
                                   <td className="border-2 border-black text-center font-inter font-medium text-xl  px-2"><p>End Time</p></td>
                                   <td className="border-2 border-black text-center">
-                                    {(moment(d.end_time).clone().tz(props.info.timezone)) !== undefined ? 
-                                    (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD ") : ""}
-                                    ({moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss") === "12:40:00" ? 'DAY' : 'NIGHT'})
+                                    {(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))}
                                   </td>
                                 </tr>
                                 <tr>
