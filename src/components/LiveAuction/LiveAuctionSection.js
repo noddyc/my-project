@@ -235,6 +235,7 @@ function LiveAuctionSection(props) {
               <div className="flex flex-row flex-wrap gap-12 px-4 w-full mt-5 navbarSM:justify-center">
               {
               detail !=='false' ? display.map((d, index) => {
+              console.log(d.end_time)
               return (
                 <div className="border-1 border-black flex flex-col items-start
                 isolate w-[450px] rounded-2xl bg-cardBg
