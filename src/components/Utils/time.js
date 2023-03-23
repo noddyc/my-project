@@ -1,10 +1,10 @@
 import moment from 'moment'
 
-export const dayStartHourSaving = 5;
-export const dayEndHourSaving = 5;
+export const dayStartHourSaving = 17;
+export const dayEndHourSaving = 17;
 
-export const dayStartHour = 6;
-export const dayEndHour = 6;
+export const dayStartHour = 18;
+export const dayEndHour = 18;
 
 // export const dayStartHourSaving = 8;
 // export const dayEndHourSaving = 8;
