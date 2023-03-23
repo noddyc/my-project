@@ -71,13 +71,13 @@ export default function ConfirmAuctionHistModal(props) {
           let curTimeUTCSec = curTime.getUTCSeconds();
           let curTimeSec = calcInSec(curTimeUTCHour, curTimeUTCMin, curTimeUTCSec);
         
-          // let res = (endTimeUTCYear === curTimeUTCYear && endTimeUTCMonth === curTimeUTCMonth && endTimeUTCDay === curTimeUTCDay
-          //     && (endTimeSec > curTimeSec));
+          let res = (endTimeUTCYear === curTimeUTCYear && endTimeUTCMonth === curTimeUTCMonth && endTimeUTCDay === curTimeUTCDay
+              && (endTimeSec > curTimeSec));
 
           // // test
-          let res = (endTimeUTCYear >= curTimeUTCYear && endTimeUTCMonth >= curTimeUTCMonth && endTimeUTCDay >= curTimeUTCDay
-              || (endTimeSec > curTimeSec));
-          console.log(res)
+          // let res = (endTimeUTCYear >= curTimeUTCYear && endTimeUTCMonth >= curTimeUTCMonth && endTimeUTCDay >= curTimeUTCDay
+          //     || (endTimeSec > curTimeSec));
+          // console.log(res)
           
           if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
               try{
@@ -161,10 +161,10 @@ export default function ConfirmAuctionHistModal(props) {
                             <h1>{(props.data.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':props.data.status==='WAITING_FOR_DRAW'?'Join':'') + ' Detail Confirmation'} {'\u00A0'}{'\u00A0'}</h1>
                             <p>Product Name: <strong>{props.data.product_name}</strong></p>
                             {
-                              props.data.status === 'WAITING_FOR_DRAW'? <p>Slot Filled: <strong>{slotFilled(props.data)}</strong></p> : props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?
+                              props.data.status === 'WAITING_FOR_DRAW'? <p>Number of Slot Filled: <strong>{slotFilled(props.data)}</strong></p> : props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?
                                <p>Winning Number: <strong>{props.data.winnning_number === null ?'-': props.data.winnning_number}</strong></p>: ''
                             }
-                            <p>{props.data.status === 'WAITING_FOR_DRAW'?<strong>As host, you can join a game with 6 filled slots to make it live within five minutes before drawing</strong>: 
+                            <p>{props.data.status === 'WAITING_FOR_DRAW'?<strong>As host, you can join a game with six filled slots to make it live within five minutes before drawing</strong>: 
                             props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>As host, you can roll over this game if no winner is declared</strong>:''}</p>
                      </div>
 

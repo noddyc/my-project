@@ -37,6 +37,7 @@ checkDayLightSaving()
 
 function isCurrentTimeInRange(e) {
   const currentTime = new Date(e);
+  console.log(currentTime)
 
   const currentTimeHour = currentTime.getUTCHours();
   const currentTimeMin = currentTime.getUTCMinutes();
@@ -84,8 +85,6 @@ export default function AuctionHistModal(props) {
           count++;
         }
       }
-      console.log("line 48");
-      console.log(count);
       return count === 6;
     }
 
