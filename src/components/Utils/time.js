@@ -9,7 +9,7 @@ export const dayStartMin = 10;
 export const dayStartSec = 50;
 
 export const dayEndHour = 7;
-export const dayEndMin = 40;
+export const dayEndMin = 55;
 export const dayEndSec = 50;
 
 
