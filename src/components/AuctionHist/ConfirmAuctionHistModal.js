@@ -166,18 +166,18 @@ export default function ConfirmAuctionHistModal(props) {
                             <p>Product Name: <strong>{props.data.product_name}</strong></p>
                             {
                               props.data.status === 'WAITING_FOR_DRAW'? <p>Number of Slot Filled: <strong>{slotFilled(props.data)}</strong></p> : props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?
-                               <p>Winning Number: <strong>{props.data.winnning_number === null ?'-': props.data.winnning_number}</strong></p>: ''
+                               <p>Winning Number: <strong>{props.data.winNum === null ?'-': props.data.winNum.specialNumber}</strong></p>: ''
                             }
                             <p>{props.data.status === 'WAITING_FOR_DRAW'?<strong>As host, you can join a game with six filled slots to make it live within five minutes before drawing</strong>: 
                             props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>As host, you can roll over this game if no winner is declared</strong>:''}</p>
                      </div>
 
                      <div className='w-full  '> 
-                        <p className={errMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {errMsg}</p>
+                        <p className={errMsg ? "warning" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {_.startCase(errMsg)}</p>
                     </div>
 
                     <div className='w-full  '> 
-                        <p className={successMsg ? "font-bold p-2 mb-2 text-black bg-stone-300" : "invisible"} aria-live="assertive">{successMsg}</p>
+                        <p className={successMsg ? "success" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">check</i> {_.startCase(successMsg)}</p>
                     </div>
 
                     

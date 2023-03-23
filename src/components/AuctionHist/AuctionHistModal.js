@@ -29,15 +29,28 @@ const OVERLAY_STYLES = {
 }
 let slotArr=['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7','slot8','slot9']
 
-function calcInSec(H,M,S){
-    return H*3600+M*60+S;
+checkDayLightSaving()
+
+function spotWinner(d){
+  if(d.winnning_number === null){
+    return false;
+  }else{
+    const winNum = d.winNum.specialNumber;
+    if(d[slotArr[winNum]] != null){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }
 
-checkDayLightSaving()
+function calcInSec(H,M,S){
+  return H*3600+M*60+S;
+}
 
 function isCurrentTimeInRange(e) {
   const currentTime = new Date(e);
-  console.log(currentTime)
+  // console.log(currentTime)
 
   const currentTimeHour = currentTime.getUTCHours();
   const currentTimeMin = currentTime.getUTCMinutes();
@@ -48,6 +61,7 @@ function isCurrentTimeInRange(e) {
 
   let dayStartSecTotal, dayEndSecTotal, nightStartSecTotal, nightEndSecTotal;
 
+  // console.log(currentTime.isDstObserved())
   if(currentTime.isDstObserved()){
     dayStartSecTotal = calcInSec(dayStartHourSaving, dayStartMin, dayStartSec);
     dayEndSecTotal = calcInSec(dayEndHourSaving, dayEndMin, dayEndSec);
@@ -64,17 +78,14 @@ function isCurrentTimeInRange(e) {
 
   let res = (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal) || 
   (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal);
-  console.log(res)
+  // console.log(res)
   return res
 }
 
 
 export default function AuctionHistModal(props) {
-    console.log(props)
-    // check count slots and time is between range
-
-
     let d = props.d.original
+    console.log(d)
     const [openConfirm, setOpenConfirm] = useState(false)
     const auth = useAuthUser();
 
@@ -184,7 +195,7 @@ export default function AuctionHistModal(props) {
                         <button className={`button 
                         ${d.status ==='NO_WINNER_WINNER_NOTIFIED'?'w-40':''} 
                         navbarSM:text-xs 
-                        ${d.status ==='NO_WINNER_WINNER_NOTIFIED' || (d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange(d.end_time)) ?'':'invisible'}`}
+                        ${(d.status ==='NO_WINNER_WINNER_NOTIFIED' && !spotWinner(d)) || (d.status ==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange(d.end_time)) ?'':'invisible'}`}
                             onClick={()=>{
                                     setOpenConfirm(true)
                                   }

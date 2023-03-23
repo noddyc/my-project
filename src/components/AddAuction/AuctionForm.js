@@ -317,7 +317,8 @@ function AuctionForm(props) {
                                     </div>
 
                                     <div className='col-span-6 sm:col-span-3 mb-1 '> 
-                                        <p className={successMsg ? "warning" : "invisible"} aria-live="assertive">{successMsg}</p>
+                                        <p className={successMsg ? "success" : "invisible"} aria-live="assertive">
+                                        <i className="material-icons inline text-lg">check</i> {successMsg}</p>
                                     </div>
 
 
