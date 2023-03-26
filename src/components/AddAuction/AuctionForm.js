@@ -5,7 +5,7 @@ import qs from 'qs'
 import { useAuthUser} from 'react-auth-kit';
 import { useNavigate} from "react-router-dom"
 import {ip} from '../Utils/ip'
-import _ from 'lodash'
+import _, { set } from 'lodash'
 import FormModal from './FormModal';
 import { checkDayLightSaving } from '../Utils/time';
 
@@ -26,6 +26,7 @@ function AuctionForm(props) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [submitting, setSubmitting] = useState(false)
+
 
     // multi version
     ///////////////////
@@ -221,32 +222,6 @@ function AuctionForm(props) {
                         <div className="overflow-hidden sm:rounded-md">
                             <div className="bg-white px-4 py-5 sm:p-6">
                                 <div className="grid grid-cols-6 gap-6">
-                                    <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor="name" className="label">Name<span className='text-red-500'>*</span></label>
-                                        <input id='name' type='text' maxLength="20" 
-                                            value={name} onChange={(e)=>{setErrMsg("");
-                                            setSuccessMsg("");
-                                            setName(e.target.value)}} placeholder="Enter Game Name" className="input"/>
-                                    </div>         
-
-                                    <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor='description' className="label">Description<span className='text-red-500'>*</span></label>
-                                         <textarea id='description' type='text' maxLength="200" rows="3" ref={descriptionRef}
-                                         value={description} onChange={(e)=>{setErrMsg("");
-                                         setSuccessMsg("");
-                                         setDescription(e.target.value)}} placeholder="Enter Description"
-                                         className="input"/>
-                                         <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} Characters Remaining</span>
-                                    </div>
-
-                                    <div className="col-span-6 sm:col-span-3">
-                                        <label htmlFor='price' className='label'>Price<span className='text-red-500'>*</span></label>
-                                        <input id='price' type="numeric" min="1" step="1" className='input'
-                                            value={price} onChange={(e)=>{setErrMsg("");
-                                            setSuccessMsg("");
-                                            setPrice(e.target.value)}} placeholder="0"/>
-                                    </div>
-
 
                                     <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor='date' className='label'>End Date<span className='text-red-500'>*</span></label>
@@ -266,6 +241,34 @@ function AuctionForm(props) {
                                             <option value="night">Night: 21:22:00 (Central Time)</option>
                                         </select>
                                     </div>
+
+                                    <div className="col-span-6 sm:col-span-3">
+                                        <label htmlFor="name" className="label">Product Name<span className='text-red-500'>*</span></label>
+                                        <input id='name' type='text' maxLength="20" 
+                                            value={name} onChange={(e)=>{setErrMsg("");
+                                            setSuccessMsg("");
+                                            setName(e.target.value)}} placeholder="Enter Game Name" className="input"/>
+                                    </div>         
+
+                                    <div className="col-span-6 sm:col-span-3">
+                                        <label htmlFor='description' className="label">Product Description<span className='text-red-500'>*</span></label>
+                                         <textarea id='description' type='text' maxLength="200" rows="3" ref={descriptionRef}
+                                         value={description} onChange={(e)=>{setErrMsg("");
+                                         setSuccessMsg("");
+                                         setDescription(e.target.value)}} placeholder="Enter Description"
+                                         className="input"/>
+                                         <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} Characters Remaining</span>
+                                    </div>
+
+                                    <div className="col-span-6 sm:col-span-3">
+                                        <label htmlFor='price' className='label'>Product Price<span className='text-red-500'>*</span></label>
+                                        <input id='price' type="numeric" min="1" step="1" className='input'
+                                            value={price} onChange={(e)=>{setErrMsg("");
+                                            setSuccessMsg("");
+                                            setPrice(e.target.value)}} placeholder="0"/>
+                                    </div>
+
+
 
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -328,7 +331,17 @@ function AuctionForm(props) {
                     </div>
                 </div>
             </div>
-            <div className='col-span-6 mb-20'>
+
+            <div className='flex flex-row'>
+                <div className='border-dashed border-black border-2 flex-1 mx-3 h-0 mt-3'></div>
+                <div>
+                    <button><span>Add Product</span></button>
+                </div>
+                <div className='border-dashed border-black border-2 flex-1 mx-3 h-0 mt-3'></div>
+            </div>
+
+
+            <div className='col-span-6 mt-10 mb-20'>
                                         <div className='flex justify-between navbarSM:gap-[4vw]'>
                                             <button className='button_light navbarSM:text-xs'
                                             onClick={(e)=>{
