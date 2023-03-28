@@ -54,7 +54,7 @@ const Login = (props) =>{
         const v2 = PWD_REGEX.test(pwd);
 
         if(!v1 || !v2){
-            setErrMsg("Invalid Entry");
+            setErrMsg(_.startCase("Invalid Entry for Username or Password"));
             return;
         }
         try{
@@ -85,7 +85,7 @@ const Login = (props) =>{
             });
             navigate("/main")
         }catch(err){
-            console.log(err.message)
+            setErrMsg(_.startCase("Failed to Login Check Username or Password"));
         }
     }
 
@@ -160,7 +160,7 @@ const Login = (props) =>{
 
                                     <div className="col-span-6 sm:col-span-3">
 
-                                        <p ref={errRef} className={errMsg ? "warning" : "warning invisible"} aria-live="assertive">{errMsg}</p>
+                                        <p ref={errRef} className={errMsg ? "warning" : "warning invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {errMsg}</p>
 
                                         <div  className="flex justify-center mt-5">
                                             <button onClick={handleSubmit} 
