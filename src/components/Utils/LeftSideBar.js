@@ -42,6 +42,11 @@ function LeftSideBar(props) {
                     <div className='flex-col justify-center items-center'><span className='text-center table'>NEW GAME</span></div>
                 </NavLink>
 
+                <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/test'>
+                    <i className="material-icons text-4xl">open_in_new</i>
+                    <div className='flex-col justify-center items-center'><span className='text-center table'>Test</span></div>
+                </NavLink>
+
                 {props.info.identity === 'ADMIN' && 
                 <NavLink className='flex flex-col justify-center items-center h-20  mb-10 border-l-4 border-l-slate-300' style={navLinkStyles} to='/winnum'>
                     <i className="material-icons text-4xl">library_add</i>

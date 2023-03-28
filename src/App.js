@@ -13,6 +13,7 @@ import React, {useState, useEffect} from 'react'
 import {ip} from './components/Utils/ip.js'
 import {useAuthUser} from 'react-auth-kit';
 import { io } from "socket.io-client";
+import Test from "./components/Test/Test";
 
 function App() {
   const auth = useAuthUser();
@@ -66,6 +67,10 @@ function App() {
             detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 
             <Route path="/winnum" element={<WinNum socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
+            setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
+            detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
+
+            <Route path="/test" element={<Test socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
             detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 
