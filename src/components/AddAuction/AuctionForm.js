@@ -94,17 +94,9 @@ function AuctionForm(props) {
         console.log(storeEndTime)
  
         try{
-            // for(let i = 0; i < state.length; i++){
-            //     const obj = state[i];
 
-            // }
-            // if(name === "" || description === "" || price === ""  || !priceRegex.test(price) || !oneDayAhead(storeEndTime)){
-            //     throw new Error(_.startCase("Fields must be valid or end time must be 24 hours from current time"));
-            // }
-        //     if(selectedImages.length > 0 && selectedImages.length > 4){
-        //         throw new Error(_.startCase("Maximum of 4 Images to Upload"))
-        //     }
             setIsOpen(true)
+            let auctionId;
             let obj = {
                 start_time: (new Date()),
                 end_time: storeEndTime,
@@ -124,61 +116,40 @@ function AuctionForm(props) {
               };
             axios(config).then(
                 (response)=>{
+                    auctionId = response.data.id;
                     for(let i = 0; i < state.length; i++){
-                        let obj = {
-                            product_name: state[i].name,
-                            product_description: state[i].description,
-                            product_price: state[i].price
+                        const images = state[i].images;
+                        const formData = new FormData();
+                        for(let j = 0; j < images.length; j++){
+                            formData.append('image', images[j]);
                         }
-                        let data = qs.stringify(obj);
-                        let config = {
-                            method: 'put',
-                            url: `${ip}/product/addProduct`,
-                            headers: { 
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            data : data
-                            };
-                        axios(config).then(
-                            (response)=>{
-                                setSubmitting(true)
+                        // be ware of images.length
+                        formData.append('product_name', state[i].name);
+                        formData.append('product_descirption', state[i].description);
+                        formData.append('product_price', state[i].price);
 
+                        axios.post(`${ip}/product/addProduct`, formData, 
+                        {headers: {'Content-Type': 'multipart/form-data'}}).then(
+                            (response)=>{
+                                console.log(response.data)
+                            }
+                        ).catch(
+                            ()=>{
+                                setSuccessMsg("")
+                                setIsOpen(false);
+                
+                                setErrMsg("Failed to Add Game");
+                        
                                 setTimeout(()=>{
                                     setEndTime("")
                                     setSuccessMsg("")
                                     setErrMsg("")
-                                    const obj = new Product();
-                                    setState([obj]);
-                                },500);
+                                }, 1000);
                             }
+            
                         )
+                    }
                 }
-
-
-                }
-                // (response)=>{
-                //     for(let i = 0; i < state.length; i++){
-                //         let obj = {
-                //             product_name: state[i].name,
-                //             product_description: state[i].description,
-                //             product_price: state[i].price
-                //         }
-                //         let data = qs.stringify(obj);
-                //         let config1 = {
-                //             method: 'put',
-                //             url: `${ip}/product/addProduct`,
-                //             headers: { 
-                //               'Content-Type': 'application/x-www-form-urlencoded'
-                //             },
-                //             data : data
-                //           };
-                //         axios(config1).then(
-                //             (response)=>{
-                //                 console.log(response.data)
-                //             }
-                //         )
-                //     }
-                // }
             ).catch(
                 ()=>{
                     setSuccessMsg("")
@@ -187,89 +158,13 @@ function AuctionForm(props) {
                     setErrMsg("Failed to Add Game");
             
                     setTimeout(()=>{
-                        // setName("")
-                        // setDescription("")
-                        // setPrice("")
                         setEndTime("")
                         setSuccessMsg("")
                         setErrMsg("")
-                        // setSelectedImages([])
                     }, 1000);
                 }
 
-            )
-        //     axios(config).then(
-        //         (response)=>{
-        //             console.log(JSON.stringify(response.data))
-        //             let auctionId = response.data.id;
-        //             const formData = new FormData();
-        //             for (let i = 0; i < selectedImages.length; i++) {
-        //                 formData.append('image', selectedImages[i]);
-        //                 formData.append('auctionId', auctionId);
-        //                 }
-        //             if(selectedImages.length != 0){
-        //                 axios.post(`${ip}/api/posts`, formData, 
-        //                 {headers: {'Content-Type': 'multipart/form-data'}}).then(
-        //                     (response)=>{
-        //                         // setSuccessMsg("Game Created Successfully")
-
-        //                         setSubmitting(true)
-                                
-
-        //                         setTimeout(()=>{
-        //                             setName("")
-        //                             setDescription("")
-        //                             setPrice("")
-        //                             setEndTime("")
-        //                             setSuccessMsg("")
-        //                             setErrMsg("")
-        //                             setSelectedImages([])
-        //                         },500);
-        //                     }
-        //                 ).catch(()=>{
-        //                     setSuccessMsg("")
-        //                     setIsOpen(false);
-        //                     setErrMsg("Failed to Add Game");
-        //                     setTimeout(()=>{
-        //                         setName("")
-        //                         setDescription("")
-        //                         setPrice("")
-        //                         setEndTime("")
-        //                         setSuccessMsg("")
-        //                         setErrMsg("")
-        //                         setSelectedImages([])
-        //                     },1000);
-        //                 })
-        //             }else{
-        //                 // setSuccessMsg("Game Created Successfully")
-        //                 setSubmitting(true)
-        //                 setTimeout(()=>{
-        //                     setName("")
-        //                     setDescription("")
-        //                     setPrice("")
-        //                     setEndTime("")
-        //                     setSuccessMsg("")
-        //                     setErrMsg("")
-        //                     setSelectedImages([])
-        //                 },500);
-        //             }
-        //         }
-        //     ).catch(()=>{
-        //         setSuccessMsg("")
-        //         setIsOpen(false);
-
-        //         setErrMsg("Failed to Add Game");
-
-        //         setTimeout(()=>{
-        //             setName("")
-        //             setDescription("")
-        //             setPrice("")
-        //             setEndTime("")
-        //             setSuccessMsg("")
-        //             setErrMsg("")
-        //             setSelectedImages([])
-        //         }, 1000);
-        //     })
+            )   
         }catch(err){
             if (err.response?.status) {
                 setSuccessMsg("")
