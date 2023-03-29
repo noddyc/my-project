@@ -364,12 +364,16 @@ function BidHistSection(props) {
                         </div>
                     </div>
 
-                    <div className="flex justify-end items-center w-full mb-6 pr-6">
+                    <div className="flex flex-row justify-center items-center gap-32 w-full mb-6 navbarSM:gap-[calc(10%)]">
+                      <button className={`button ${d.status ==='OPEN_NOT_LIVE' || d.status === 'OPEN_LIVE' ? "":"invisible"}`}
+                      onClick={()=>{
+                        navigate("/liveauction", {state:{relocate: d.auctionId}})
+                      }}>
+                        <i className="material-icons inline">add_circle</i><span>Add</span></button>
                       <button className={`button ${d.ownerId === auth().id ? "invisible":"" }`}
                       onClick={() => {  
                               setInd({original:{...display[index]}});
                               setIsOpen(true);
-                        
                           }}><i className="material-icons inline">search</i><span>Detail</span></button>
                     </div>
 

@@ -65,7 +65,7 @@ export default function BidModal(props) {
                 <div className="flex flex-col items-start p-0
                   isolate w-[450px]  navbarSM:w-[90%] ">
                     <div className="h-14 overflow-scroll">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)}{'\u00A0'}
                           </p>
                     </div>
 
@@ -89,7 +89,7 @@ export default function BidModal(props) {
 
                     <div className="font-inter mt-5">
                           <span className="font-inter font-medium">Host</span>
-                          <p>{'\u00A0'}{'\u00A0'}{d.onwerId}</p>     
+                          <p>{'\u00A0'}{'\u00A0'}{_.startCase(d.User.firstname)} {_.startCase(d.User.lastname)}</p>     
                     </div>
 
                     <div className="font-inter mt-5">

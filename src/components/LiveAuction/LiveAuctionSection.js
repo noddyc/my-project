@@ -1,7 +1,7 @@
 import {useState, useEffect, useMemo } from "react";
 import React from 'react';
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
 import Modal from './Modal'
@@ -23,7 +23,12 @@ function upperFirstLetter(text){
 }
 
 function LiveAuctionSection(props) {
-   
+    window.history.replaceState({}, document.title)
+    const location = useLocation();
+    const relocate = location.state ? location.state.relocate : null;
+    console.log(relocate)
+
+
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
     const auth = useAuthUser();
     const isAuthenticated = useIsAuthenticated();
