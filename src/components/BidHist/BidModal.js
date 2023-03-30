@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom"
 import {useAuthUser} from 'react-auth-kit';
 import _ from 'lodash'
 import ConfirmBidModal from './ConfirmBidModal'
+import { UTCToCentral } from "../Utils/time";
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -65,47 +66,56 @@ export default function BidModal(props) {
                 <div className="flex flex-col items-start p-0
                   isolate w-[450px]  navbarSM:w-[90%] ">
                     <div className="h-14 overflow-scroll">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)}{'\u00A0'}
+                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)+" (ID: "+d.auctionId+ ")"} {'\u00A0'}
                           </p>
                     </div>
 
-              
+                    <div className="flex flex-row w-full">
+                        <div className="font-inter mb-2 w-1/2">
+                          <span className="font-inter font-medium">Total Price</span>
+                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
+                        </div>
+
+                          <div className="font-inter mb-2 w-1/2">
+                            <span className="font-inter font-medium">End Time</span>
+                            <p>{'\u00A0'}{'\u00A0'}{(UTCToCentral(d.end_time).split(' ')[0]+" "+(UTCToCentral(d.end_time).split(' ')[1]==="12:40:00"?'(DAY)':'(NIGHT)'))}</p>  
+                        </div>
+                    </div>
+
+
+                    <div className="flex flex-row w-full">
+                          <div className="font-inter mb-2 w-1/2">
+                            <span className="font-inter font-medium">Host</span>
+                            <p>{'\u00A0'}{'\u00A0'}{_.startCase(d.User.firstname)} {_.startCase(d.User.lastname)}</p> 
+                          </div>
+
+                          <div className="font-inter mb-2">
+                            <span className="font-inter font-medium">Slot Picked</span>
+                            <p>{'\u00A0'}{'\u00A0'}{d.slot_number}</p> 
+                          </div>
+                    </div>
+
+                    <div className="flex flex-row w-full"> 
+                          <div className="font-inter mb-2 w-1/2">
+                            <span className="font-inter font-medium">Winning Number</span>
+                            <p>{'\u00A0'}{'\u00A0'}{d.winning_number===null || d.winning_number===undefined?"-":d.winning_number.specialNumber}</p> 
+                          </div>
+
+                          <div className="font-inter mb-2 w-1/2">
+                            <span className="font-inter font-medium">Status</span>
+                            <p>{'\u00A0'}{'\u00A0'}{statusConversion(d.status)}</p>
+                          </div>
+                    </div>
+
+
+      
                     <div className="h-30 mt-5 navbarSM:mt-0">
                           <span className="font-inter font-medium">Description</span>
                           <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
                     </div>
-
-
-                    <div className="font-inter mt-5">
-                          <span className="font-inter font-medium">Total Price</span>
-                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
-                    </div>
-
-                    <div className="font-inter mt-5">
-                          <span className="font-inter font-medium">End time</span>
-                          <p>{'\u00A0'}{'\u00A0'}{(moment(d.end_time).clone().tz(props.info.timezone))!==undefined? (moment(d.end_time).clone().tz(props.info.timezone)).format("YYYY-MM-DD"):""}
-                                  {'\u00A0'}({(moment(d?.end_time).clone().tz('UTC').format("HH:mm:ss")==="12:40:00"?'DAY':'NIGHT')})</p>    
-                    </div>
-
-                    <div className="font-inter mt-5">
-                          <span className="font-inter font-medium">Host</span>
-                          <p>{'\u00A0'}{'\u00A0'}{_.startCase(d.User.firstname)} {_.startCase(d.User.lastname)}</p>     
-                    </div>
-
-                    <div className="font-inter mt-5">
-                          <span className="font-inter font-medium">Slot Picked</span>
-                          <p>{'\u00A0'}{'\u00A0'}{d.slot_number}</p>     
-                    </div>
-
-      
-                    <div className="font-inter mt-5">
-                          <span className="font-inter font-medium">Status</span>
-                          <p>{'\u00A0'}{'\u00A0'}{statusConversion(d.status)}</p>     
-                    </div>
-                
                     
 
-                     <div className="flex flex-row justify-center items-center gap-32 w-full mt-5  navbarSM:gap-[calc(10%)]">
+                     <div className="flex flex-row gap-32 w-full mt-5 navbarSM:gap-[calc(10%)]">
                         <button className="button_light"
                         onClick={()=>{
                             props.onClose();

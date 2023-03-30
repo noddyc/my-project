@@ -9,6 +9,12 @@
 
 
 @layer components{
+    .warningIcon{
+        @apply block text-lg pr-1
+    }
+    .img{
+        @apply min-w-[440px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl navbarSM:min-w-[300px] navbarSM:min-h-[200px]
+    }
     .label{
         @apply block text-2xl font-inter font-medium;
     }
@@ -16,10 +22,10 @@
         @apply mt-1 px-2 py-1 block w-full rounded-md border-2 border-inputColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
     }
     .warning{
-        @apply font-medium text-lg font-inter px-2 mb-2 rounded-xl  bg-red-100 text-red-700 navbarSM:text-sm;
+        @apply flex flex-row font-medium text-lg font-inter pl-2 pr-4 py-1 mb-2 rounded-xl  bg-red-100 text-red-700 navbarSM:text-sm;
     }
     .success{
-        @apply font-medium text-lg font-inter px-2 mb-2 rounded-xl  bg-green-100 text-green-700 navbarSM:text-sm;
+        @apply flex flex-row font-medium text-lg font-inter pl-2 pr-4 py-1 mb-2 rounded-xl  bg-green-100 text-green-700 navbarSM:text-sm;
     }
     .button{
         @apply flex flex-row justify-center items-center w-36 p-4 h-[36px] gap-2 bg-darkBg text-lightBg text-xl

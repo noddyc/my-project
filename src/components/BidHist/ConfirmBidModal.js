@@ -122,7 +122,7 @@ export default function ConfirmBidModal(props) {
                     </div>
 
                     <div className="h-10 overflow-scroll mb-2">
-                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name)} {'\u00A0'}</p>
+                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name)+" (ID: "+props.data.auctionId+ ")"} {'\u00A0'}</p>
                     </div>
 
                     <div className='flex gap-4 mb-5'>
@@ -138,12 +138,14 @@ export default function ConfirmBidModal(props) {
                     </div>
 
 
-                    <div className='w-full '> 
-                        <p className={errMsg ? "warning" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {errMsg}</p>
+                    <div className={`w-full ${errMsg ? "warning" : "invisible"}`}> 
+                        <i className="material-icons warningIcon">error</i> 
+                        <p className= '' aria-live="assertive">{errMsg}</p>
                     </div>
 
-                    <div className='w-full'> 
-                        <p className={successMsg ? "success" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">check</i> {successMsg}</p>
+                    <div className={`w-full ${successMsg ? "success" : "invisible"}`}>
+                        <i className="material-icons warningIcon">check</i> 
+                        <p className='' aria-live="assertive">{successMsg}</p>
                     </div>
 
                     

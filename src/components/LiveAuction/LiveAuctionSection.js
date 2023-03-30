@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo } from "react";
+import {useState, useEffect, useMemo, useRef} from "react";
 import React from 'react';
 import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 import {useNavigate, useLocation} from 'react-router-dom'
@@ -26,7 +26,7 @@ function LiveAuctionSection(props) {
     window.history.replaceState({}, document.title)
     const location = useLocation();
     const relocate = location.state ? location.state.relocate : null;
-    console.log(relocate)
+    const divRefs = useRef([]);
 
 
     const slotArr = ['slot0', 'slot1', 'slot2', 'slot3', 'slot4', 'slot5','slot6', 'slot7', 'slot8','slot9']
@@ -40,16 +40,18 @@ function LiveAuctionSection(props) {
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
     const [MOCK_DATA, setMOCK_DATA] = useState([]);
-    const [keyword, setKeyWord] = useState("");
+    const [keyword, setKeyWord] = useState("")
+
     const [imgPos, setImgPos] = useState([]);
 
     const [img, setImg] = useState(null);
 
+
+
     const keywordHandler = debounce((e)=>{
       setKeyWord(e.target.value)
     }, 500)
-  
-
+      
     useEffect(()=>{
       if(!isAuthenticated()){
           navigate('/')
@@ -80,9 +82,11 @@ function LiveAuctionSection(props) {
               .then((response) => {
                 let data = response.data;
 
-                data.forEach((e)=>{
+                data.forEach((e, index)=>{
                   auctionId.push(e.id);
                 })
+
+                divRefs.current = data.map(() => React.createRef());
 
                 // console.log(data)
 
@@ -123,7 +127,7 @@ function LiveAuctionSection(props) {
                   const myMap = new Map();
                   response.data.forEach(
                     (e)=>{
-                      console.log(e)
+                      // console.log(e)
                       let key = e.auctionId;
                       if(!myMap.has(key)){
                         let arr = [];
@@ -152,7 +156,6 @@ function LiveAuctionSection(props) {
                     }
                   )
                   setImg(myMap);
-                  console.log(myMap)
                 })
                 .catch((error) => {
                   console.log(error);
@@ -209,6 +212,23 @@ function LiveAuctionSection(props) {
     const { pageIndex, pageSize } = state
 
 
+    useEffect(()=>{
+      if(relocate){
+        console.log(display)
+        console.log(relocate)
+        let index = display.findIndex((e)=>{
+          return e.id == relocate
+        })
+        if(divRefs.current[index] != undefined){
+          divRefs.current[index].current.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest',
+          });
+        }
+      }
+    }, [display, img])
+
     return (
             <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
             navbarSM:ml-[10px]'>
@@ -241,10 +261,10 @@ function LiveAuctionSection(props) {
               {
               detail !=='false' ? display.map((d, index) => {
               return (
-                <div className="border-1 border-black flex flex-col items-start
-                isolate w-[450px] rounded-2xl bg-cardBg
-                hover:bg-cardHoverColor navbarSM:w-[300px]" 
-                key={index} >  
+                <div className={`border-4 flex flex-col items-start
+                isolate w-[450px] rounded-2xl bg-cardBg ${relocate && relocate==d.id ? 'border-black border-dashed':'border-white'}
+                hover:bg-cardHoverColor navbarSM:w-[300px]`}
+                key={index} ref={divRefs.current[index]}>  
 
                     <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded navbarSM:max-w-[300px]  navbarSM:max-h-[200px]">
                         <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"
@@ -261,11 +281,9 @@ function LiveAuctionSection(props) {
                         }}>
                             <i className="material-icons text-sm pl-1">arrow_back_ios</i>
                         </button>
-                        {d.id && img  &&  img.has(d.id) && <img className="min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl
-                        navbarSM:min-w-[300px]  navbarSM:min-h-[200px]" 
+                        {d.id && img  &&  img.has(d.id) && <img className="img" 
                         src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
-                        {d.id && img && !img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] rounded-tl-2xl rounded-tr-2xl object-center
-                        navbarSM:min-w-[300px] navbarSM:min-h-[200px]" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+                        {d.id && img && !img.has(d.id) && <img className="img" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
 
                         <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"
                         onClick={(e)=>{
@@ -334,7 +352,6 @@ function LiveAuctionSection(props) {
                       onClick={() => {  
                               setInd({original:{...display[index]}});
                               setIsOpen(true);
-                        
                           }}><i className="material-icons inline">add_circle</i><span>Join</span></button>
                   </div>
                 </div> )}
@@ -378,7 +395,6 @@ function LiveAuctionSection(props) {
                             onClick={() => {  
                                     setInd({original:{...display[index]}});
                                     setIsOpen(true);
-                              
                                 }}><span className="underline">Join</span></button></td>
                                 </tr>
                               </tbody>

@@ -163,7 +163,7 @@ export default function ConfirmAuctionHistModal(props) {
                     
                     <div className=" flex flex-col w-[250px] h-8 pl-2 mb-36  ">
                             <h1>{(props.data.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':props.data.status==='WAITING_FOR_DRAW'?'Join':'') + ' Detail Confirmation'} {'\u00A0'}{'\u00A0'}</h1>
-                            <p>Product Name: <strong>{props.data.product_name}</strong></p>
+                            <p>Product Name: <strong>{_.startCase(props.data.product_name)+" (ID: "+props.data.id+ ")"} {'\u00A0'}</strong></p>
                             {
                               props.data.status === 'WAITING_FOR_DRAW'? <p>Number of Slot Filled: <strong>{slotFilled(props.data)}</strong></p> : props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?
                                <p>Winning Number: <strong>{props.data.winNum === null ?'-': props.data.winNum.specialNumber}</strong></p>: ''
@@ -172,12 +172,14 @@ export default function ConfirmAuctionHistModal(props) {
                             props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>{_.startCase("As host, you can roll over this game if no winner is declared or game did not go live")}</strong>:''}</p>
                      </div>
 
-                     <div className='w-full  '> 
-                        <p className={errMsg ? "warning" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">error</i> {_.startCase(errMsg)}</p>
+                     <div className={`w-full  ${errMsg ? "warning" : "invisible"}`}> 
+                        <i className="material-icons warningIcon">error</i> 
+                        <p className='' aria-live="assertive">{_.startCase(errMsg)}</p>
                     </div>
 
-                    <div className='w-full  '> 
-                        <p className={successMsg ? "success" : "invisible"} aria-live="assertive"><i className="material-icons inline text-lg">check</i> {_.startCase(successMsg)}</p>
+                    <div className={`w-full  ${successMsg ? "success" : "invisible"}`}> 
+                        <i className="material-icons inline warningIcon">check</i> 
+                        <p className='' aria-live="assertive">{_.startCase(successMsg)}</p>
                     </div>
 
                     

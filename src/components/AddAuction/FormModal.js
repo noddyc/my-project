@@ -45,7 +45,7 @@ export default function FormModal(props) {
                      {
                         !props.submitting?
                             <div className='text-xl font-inter font-bold w-full flex flex-col items-center gap-10'>
-                                <div><p>Form Submmiting...</p></div>
+                                <div><p>Form Submmiting, Please Don't Close Window...</p></div>
                                 <div><i className='material-icons text-5xl'>autorenew</i></div>
                             </div>:
                             <div className='text-xl font-inter font-bold w-full flex flex-col items-center gap-10'>

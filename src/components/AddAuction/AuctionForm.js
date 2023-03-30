@@ -311,14 +311,14 @@ function AuctionForm(props) {
                                         </form>
                                     </div>
 
-                                    <div className='col-span-6 sm:col-span-3 mb-1'> 
-                                        <p className={errMsg ? "warning" : "invisible"} aria-live="assertive">
-                                            <i className="material-icons inline text-lg">error</i> {errMsg}</p>
+                                    <div className={`col-span-6 ${errMsg ? "warning" : "invisible"} sm:col-span-3 mt-5 mb-1`}> 
+                                        <i className="material-icons warningIcon">error</i>
+                                        <p className='' aria-live="assertive">{errMsg}</p>
                                     </div>
 
-                                    <div className='col-span-6 sm:col-span-3 mb-1 '> 
-                                        <p className={successMsg ? "success" : "invisible"} aria-live="assertive">
-                                        <i className="material-icons inline text-lg">check</i> {successMsg}</p>
+                                    <div className={`col-span-6 ${successMsg ? "success" : "invisible"} sm:col-span-3 mt-5 mb-1`}> 
+                                        <i className="material-icons warningIcon">check</i> 
+                                        <p className='' aria-live="assertive">{successMsg}</p>                                       
                                     </div>
 
 

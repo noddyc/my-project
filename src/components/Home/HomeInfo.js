@@ -30,6 +30,8 @@ const HomeInfo = (props)=>{
     const [timezone, setTimeZone] = useState("");
     const auth = useAuthUser();
 
+    const [errMsg, setErrMsg] = useState("");
+
     const count=()=>{
         let count = 0;
         if(username){
@@ -207,6 +209,7 @@ const HomeInfo = (props)=>{
               )
         }catch(err){
             console.log(err.message)
+            setErrMsg("Failed To Update Information")
         }
           
     }
@@ -237,15 +240,15 @@ const HomeInfo = (props)=>{
                                     <div className="col-span-6 sm:col-span-3">
                                         <label htmlFor="name" className="label">Username</label>
                                         <input id='name' type='text' maxLength="10" className="input" placeholder={display.username} onChange={usernameHandler}></input>
-                                        <p className={`warning ${username && !usernameValid ? "flex":"invisible"}`}>
-                                        <i className="material-icons inline text-lg">error</i>{'\u00A0'}{_.startCase("duplicate username or invalid username")}</p>
+                                        <div className={`warning mt-2 ${username && !usernameValid ? "flex":"invisible"}`}>
+                                        <i className="material-icons inline warningIcon">error</i>{'\u00A0'}{_.startCase("duplicate username or invalid username")}</div>
                                     </div> 
 
                                     <div className="col-span-6 sm:col-span-3">
                                         <label className="label">Email</label>
                                         <input className="input" placeholder={display.email} onChange={emailHandler}></input>
-                                        <p className={`warning ${email && !emailValid? "flex":"invisible"}`}>                                        
-                                        <i className="material-icons inline text-lg">error</i>{'\u00A0'}{_.startCase("duplicate email or invalid email")}</p>
+                                        <div className={`warning mt-2 ${email && !emailValid? "flex":"invisible"}`}>                                        
+                                        <i className="material-icons warningIcon">error</i>{'\u00A0'}{_.startCase("duplicate email or invalid email")}</div>
                                     </div> 
 
 
@@ -270,6 +273,11 @@ const HomeInfo = (props)=>{
                                         onChange={(e)=>{setAddress(e.target.value)}}></textarea>
                                         <span className="block text-right font-inter font-medium text-xs">{200-descriptionRef.current?.value.length} Characters Remaining</span>
                                     </div> 
+
+                                    <div className={`col-span-6 ${errMsg ? "warning" : "invisible"} sm:col-span-3 mt-5 mb-1`}> 
+                                        <i className="material-icons warningIcon">error</i>
+                                         <p className='' aria-live="assertive">{errMsg}</p>
+                                    </div>
 
                                     <div className='col-span-6 mb-20'>
                                         <div className="flex justify-end">

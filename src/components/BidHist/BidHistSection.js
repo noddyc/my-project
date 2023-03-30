@@ -287,10 +287,9 @@ function BidHistSection(props) {
                           }}>
                               <i className="material-icons text-sm pl-1">arrow_back_ios</i>
                           </button>
-                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl navbarSM:min-w-[300px]  navbarSM:min-h-[200px]" 
+                          {d.id && img  &&  img.has(d.id) && <img className="img" 
                           src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
-                          {d.id && img && !img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] rounded-tl-2xl rounded-tr-2xl object-center
-                          navbarSM:min-w-[300px]  navbarSM:min-h-[200px]" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
+                          {d.id && img && !img.has(d.id) && <img className="img" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
 
                           <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"
                           onClick={(e)=>{
@@ -367,7 +366,7 @@ function BidHistSection(props) {
                     <div className="flex flex-row justify-center items-center gap-32 w-full mb-6 navbarSM:gap-[calc(10%)]">
                       <button className={`button ${d.status ==='OPEN_NOT_LIVE' || d.status === 'OPEN_LIVE' ? "":"invisible"}`}
                       onClick={()=>{
-                        navigate("/liveauction", {state:{relocate: d.auctionId}})
+                        navigate("/liveauction", {state:{relocate: ""+d.auctionId}})
                       }}>
                         <i className="material-icons inline">add_circle</i><span>Add</span></button>
                       <button className={`button ${d.ownerId === auth().id ? "invisible":"" }`}
