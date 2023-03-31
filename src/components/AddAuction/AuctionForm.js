@@ -115,7 +115,7 @@ function AuctionForm(props) {
                 data : data
               };
             axios(config).then(
-                (response)=>{
+                async (response)=>{
                     auctionId = response.data.id;
                     for(let i = 0; i < state.length; i++){
                         const images = state[i].images;
@@ -125,13 +125,22 @@ function AuctionForm(props) {
                         }
                         // be ware of images.length
                         formData.append('product_name', state[i].name);
-                        formData.append('product_descirption', state[i].description);
+                        formData.append('product_description', state[i].description);
                         formData.append('product_price', state[i].price);
+                        formData.append('auctionId', auctionId);
 
-                        axios.post(`${ip}/product/addProduct`, formData, 
+                        await axios.post(`${ip}/product/addProduct`, formData, 
                         {headers: {'Content-Type': 'multipart/form-data'}}).then(
                             (response)=>{
                                 console.log(response.data)
+                                setSubmitting(true);
+                                setTimeout(()=>{
+                                    setEndTime("")
+                                    setSuccessMsg("")
+                                    setErrMsg("")
+                                    const product = new Product(); 
+                                    setState([product])
+                                },500);
                             }
                         ).catch(
                             ()=>{
@@ -144,6 +153,8 @@ function AuctionForm(props) {
                                     setEndTime("")
                                     setSuccessMsg("")
                                     setErrMsg("")
+                                    const product = new Product(); 
+                                    setState([product])
                                 }, 1000);
                             }
             
@@ -161,6 +172,8 @@ function AuctionForm(props) {
                         setEndTime("")
                         setSuccessMsg("")
                         setErrMsg("")
+                        const product = new Product(); 
+                        setState([product])
                     }, 1000);
                 }
 
@@ -172,6 +185,9 @@ function AuctionForm(props) {
                 setIsOpen(false);
 
                 setErrMsg('Failed to Add Game');
+
+                const product = new Product(); 
+                setState([product])
             }
             else{
                 setSuccessMsg("")
@@ -179,6 +195,9 @@ function AuctionForm(props) {
                 setIsOpen(false);
 
                 setErrMsg(err.message);
+
+                const product = new Product(); 
+                setState([product])
             }
         }
     }
