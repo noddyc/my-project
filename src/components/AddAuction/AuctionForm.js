@@ -80,20 +80,36 @@ function AuctionForm(props) {
 
     const handleSubmit= async(e)=>{
         e.preventDefault();
-        // not daylight saving time -6
-        // daylight saving time -5
-        let dayLightAdjustDate = new Date((endTime+'T'+'09:00:00'+'.000Z').toString());
-        let isDayLightSaving = dayLightAdjustDate.isDstObserved()
-        let endTimeDate;
-        if(isDayLightSaving){
-            endTimeDate = new Date((endTime+'T'+myMap[dayNight]+"-05:00").toString());
-        }else{
-            endTimeDate = new Date((endTime+'T'+myMap[dayNight]+"-06:00").toString());
-        }
-        let storeEndTime = (endTimeDate.toISOString())
-        console.log(storeEndTime)
  
         try{
+            if(endTime === ""){
+                throw new Error(_.startCase("Fields must be valid and each product should include one to four images"));
+            }
+            // not daylight saving time -6
+            // daylight saving time -5
+            let dayLightAdjustDate = new Date((endTime+'T'+'09:00:00'+'.000Z').toString());
+            let isDayLightSaving = dayLightAdjustDate.isDstObserved()
+            let endTimeDate;
+            if(isDayLightSaving){
+                endTimeDate = new Date((endTime+'T'+myMap[dayNight]+"-05:00").toString());
+            }else{
+                endTimeDate = new Date((endTime+'T'+myMap[dayNight]+"-06:00").toString());
+            }
+            let storeEndTime = (endTimeDate.toISOString())
+            console.log(storeEndTime)
+
+            if(state.length === 0){
+                throw new Error(_.startCase("Game must include at least one product"));
+            }
+            if(!oneDayAhead(storeEndTime)){
+                throw new Error(_.startCase("end time must be 24 hours from current time"))
+            }
+
+            for(let i = 0; i < state.length; i++){
+                if(state[i].name === "" || state[i].description === "" || state[i].price === ""  || !priceRegex.test(state[i].price) || !(state[i].images.length >= 1 && state[i].images.length <= 4)){
+                    throw new Error(_.startCase("Fields must be valid and each product should include one to four images"));
+                }
+            }
 
             setIsOpen(true)
             let auctionId;
@@ -186,6 +202,8 @@ function AuctionForm(props) {
 
                 setErrMsg('Failed to Add Game');
 
+                setEndTime("")
+
                 const product = new Product(); 
                 setState([product])
             }
@@ -194,7 +212,9 @@ function AuctionForm(props) {
 
                 setIsOpen(false);
 
-                setErrMsg(err.message);
+                setErrMsg("Fields must be valid and each product should include one to four images");
+
+                setEndTime("")
 
                 const product = new Product(); 
                 setState([product])
@@ -390,12 +410,10 @@ function AuctionForm(props) {
                                             <button className='button_light navbarSM:text-xs'
                                             onClick={(e)=>{
                                                 e.preventDefault();
-                                                // setName("");
-                                                // setDescription("");
-                                                // setPrice("");
-                                                // setEndTime("");
-                                                // setSelectedImages([]);
-                                                // setSuccessMsg("")
+                                                setEndTime("")
+                                                setSuccessMsg("")
+                                                setErrMsg("")
+                                                const product = new Product(); 
                                             }}><i className="material-icons inline navbarSM:text-sm">cancel</i><span>Cancel</span></button>
                                             <button className={`button navbarSM:text-xs`}
                                             onClick={handleSubmit}><i className={`material-icons inline navbarSM:text-sm`}>add_circle</i><span>Submit</span></button>
