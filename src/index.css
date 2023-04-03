@@ -13,7 +13,7 @@
         @apply block text-lg pr-1
     }
     .img{
-        @apply min-w-[440px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl navbarSM:min-w-[300px] navbarSM:min-h-[200px]
+        @apply min-w-[440px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl navbarSM:min-w-[290px] navbarSM:min-h-[200px]
     }
     .label{
         @apply block text-2xl font-inter font-medium;

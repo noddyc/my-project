@@ -283,7 +283,7 @@ function BidHistSection(props) {
                 <div className="px-4 sm:px-0">
                   <h3 className="text-4xl font-inter font-bold">SELECTIONS</h3>
                 </div>
-                <div className="mt-5 px-4 text-2xl font-inter font-medium">
+                <div className="mt-5 px-4 text-2xl font-inter font-medium invisible">
                     <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{

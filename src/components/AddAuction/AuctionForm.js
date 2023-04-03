@@ -81,6 +81,7 @@ function AuctionForm(props) {
 
     const handleSubmit= async(e)=>{
         e.preventDefault();
+        console.log(state.length)
  
         try{
             if(endTime === ""){
@@ -155,6 +156,7 @@ function AuctionForm(props) {
                                     setEndTime("")
                                     setSuccessMsg("")
                                     setErrMsg("")
+                                    setMultiGame(false);
                                     const product = new Product(); 
                                     setState([product])
                                 },500);
@@ -170,6 +172,7 @@ function AuctionForm(props) {
                                     setEndTime("")
                                     setSuccessMsg("")
                                     setErrMsg("")
+                                    setMultiGame(false);
                                     const product = new Product(); 
                                     setState([product])
                                 }, 1000);
@@ -189,6 +192,7 @@ function AuctionForm(props) {
                         setEndTime("")
                         setSuccessMsg("")
                         setErrMsg("")
+                        setMultiGame(false);
                         const product = new Product(); 
                         setState([product])
                     }, 1000);
@@ -205,6 +209,7 @@ function AuctionForm(props) {
 
                 setEndTime("")
 
+                setMultiGame(false);
                 const product = new Product(); 
                 setState([product])
             }
@@ -217,8 +222,10 @@ function AuctionForm(props) {
 
                 setEndTime("")
 
+                setMultiGame(false);
                 const product = new Product(); 
                 setState([product])
+
             }
         }
     }
@@ -375,7 +382,7 @@ function AuctionForm(props) {
                                                 </div>
 
                                                 {/* ${state.length >= 4 || state.length-index>1?"invisible":""} */}
-                                                <div className={`col-span-6 mt-2 mb-5 border-2 border-darkBg sm:col-span-3 ${state.length-index>1?"invisible":""}`}>
+                                                <div className={`col-span-6 mt-5 mb-5 border-2 border-darkBg sm:col-span-3 ${state.length-index>1?"invisible":""}`}>
                                                         <div className='flex flex-row'>
                                                             {/* <div className='border-dashed border-black border-2 mr-0.5 flex-1 h-0 mt-3'></div> */}
                                                             <button className={`flex flex-row  mx-3`}  onClick={()=>{
@@ -396,7 +403,7 @@ function AuctionForm(props) {
                                                                     setState(newState);
                                                                     setMultiGame((prev) => !prev)
                                                                 }
-                                                            }}><i className='material-icons text-green-700 warningIcon'>arrow_forward_ios</i><span>{multiGame?'Create Single-Product Game':'Create Multi-Products Game'}</span></button>
+                                                            }}><i className='material-icons text-green-700 warningIcon'>{multiGame?'arrow_back_ios':'arrow_forward_ios'}</i><span>{multiGame?'Create Single-Product Game':'Create Multi-Products Game'}</span></button>
                                                             {/* <div className='border-dashed border-black border-2 ml-0.5 flex-1 h-0 mt-3'></div> */}
                                                         </div>
                                                 </div>

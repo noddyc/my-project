@@ -47,6 +47,8 @@ function LiveAuctionSection(props) {
     //should be array [];
     const [productIndex, setProductIndex] = useState([]);
     const [imgIndex, setImgIndex] = useState([]);
+
+    // const [renderStatus, setRenderStatus] = useState(false);
     
 
     const imageLen = (d, index)=>{
@@ -61,7 +63,7 @@ function LiveAuctionSection(props) {
 
 
     const imageConversion = (d, index)=>{
-      console.log(imgIndex)
+      // console.log(imgIndex)
       let imageData = d.Products[productIndex[index]][`image_${imgIndex[index]}`].data;
       const base64Image = btoa(
         new Uint8Array(imageData).reduce(
@@ -117,12 +119,13 @@ function LiveAuctionSection(props) {
               axios(config)
               .then((response) => {
                 let data = response.data;
-                console.log(data)
+                // console.log(data)
 
                 data.forEach((e, index)=>{
                   auctionId.push(e.id);
                 })
 
+                divRefs.current = data.map(() => React.createRef());
                 let arr = [];
                 data.filter((e)=>{
                   if(keyword === ""){
@@ -202,6 +205,8 @@ function LiveAuctionSection(props) {
         let index = display.findIndex((e)=>{
           return e.id == relocate
         })
+        console.log(index)
+        console.log(divRefs.current)
         if(divRefs.current[index] != undefined){
           divRefs.current[index].current.scrollIntoView({ 
             behavior: 'smooth',
@@ -210,7 +215,7 @@ function LiveAuctionSection(props) {
           });
         }
       }
-    }, [display, img])
+    }, [display])
 
     return (
             <div className='after-margin-200 overflow-scroll h-full flex flex-col mt-10 ml-[200px] relative font-inter font-light gap-6
@@ -219,7 +224,7 @@ function LiveAuctionSection(props) {
                 <h3 className="text-4xl font-inter font-bold">OPEN GAMES</h3>
               </div>
 
-              <div className="mt-5 px-4 text-2xl font-inter font-medium ">
+              <div className="mt-5 px-4 text-2xl font-inter font-medium invisible">
                     <label htmlFor="cardbutton">Table Display:{'\u00A0'}</label>
                     <input type="checkbox" id="cardbutton" 
                     onClick={(e)=>{
@@ -267,8 +272,7 @@ function LiveAuctionSection(props) {
                         </button>
 
 
-                        {d.Products && d.Products[productIndex[index]] && <img className="min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl
-                        navbarSM:min-w-[300px]  navbarSM:min-h-[200px]"
+                        {d.Products && d.Products[productIndex[index]] && <img className="img"
                         src={`data:image;base64,${imageConversion(d, index)}`} alt="image"></img>}
 
                         <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"

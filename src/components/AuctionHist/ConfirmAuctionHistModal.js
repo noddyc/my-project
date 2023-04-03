@@ -43,6 +43,39 @@ function calcInSec(H,M,S){
   return H*3600+M*60+S;
 }
 
+
+const checkForRollOver = (d)=>{
+  if(d.winNum === undefined || d.winNum === null){
+    return false;
+  }
+  console.log(d.winNum)
+  let num1 = d.winNum.firstNumber;
+  let num2 = d.winNum.secondNumber;
+  let num3 = d.winNum.thirdNumber;
+  let special = d.winNum.specialNumber;
+  let status = d.multiGame;
+
+  console.log(num1);
+  console.log(num2);
+  console.log(num3);
+  console.log(special);
+  if(status){
+    for(let i = 0; i < slotArr.length; i++){
+      console.log(d[`slot${i}`])
+      if(d[`slot${i}`] != null && (i == num1 || i == num2 || i == num3 || i == special)){
+        return false;
+      }
+    }
+  }else{
+    for(let i = 0; i < slotArr.length; i++){
+      if(d[`slot${i}`] != null && (i == special)){
+        return false;
+      }     
+    }
+  }
+  return true;
+}
+
 export default function ConfirmAuctionHistModal(props) {
     console.log(props.data)
     const auth = useAuthUser();
@@ -85,6 +118,10 @@ export default function ConfirmAuctionHistModal(props) {
           
           if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
               try{
+                console.log(checkForRollOver(props.data))
+                if(!checkForRollOver(props.data)){
+                  throw new Error();
+                }
                 let data = qs.stringify({
                   'auctionId': props.data.id,
                 });

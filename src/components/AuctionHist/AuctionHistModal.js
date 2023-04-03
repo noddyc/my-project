@@ -196,10 +196,10 @@ export default function AuctionHistModal(props) {
                     </div>
 
 
-                    <div className="h-30 mt-5 navbarSM:mt-0">
+                    {/* <div className="h-30 mt-5 navbarSM:mt-0">
                           <span className="font-inter font-medium">Description</span>
                           <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
-                    </div>
+                    </div> */}
 
                      <div className="flex flex-row justify-center items-center gap-32 w-full mt-5   navbarSM:gap-10">
                         <button className="button_light "

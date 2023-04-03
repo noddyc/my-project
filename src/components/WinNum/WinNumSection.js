@@ -44,7 +44,7 @@ function WinNumSection(props) {
               axios(config)
               .then((response) => {
                 console.log(JSON.stringify(response.data));
-                setSuccessMsg("Successfully Submitted Winning Number")
+                setSuccessMsg(" Successfully Submitted Winning Number")
                 setTimeout(()=>{
                     setFirstNumber("");
                     setSecondNumber("");
@@ -103,7 +103,7 @@ function WinNumSection(props) {
                                         <input id='specialNum' type='numeric' min="0" max="9" step="1" placeholder="Enter Special Number"  required
                                         value={specialNumber} onChange={(e)=>{
                                             setErrMsg("")
-                                            setSpecialNumber(e.target.value)}} className="input"/>
+                                            setSpecialNumber(e.target.value)}} className="input"/> 
                                     </div>   
 
 
