@@ -95,14 +95,10 @@ export default function ConfirmModal(props) {
                       
                                 
                       <div className="h-10 overflow-scroll mb-2">
-                          <p className="font-inter font-medium text-xl navbarSM:text-base">{_.startCase(props.data.product_name)} {'\u00A0'}</p>
+                          <p className="font-inter font-medium text-xl navbarSM:text-base">ID: {props.data.id} {'\u00A0'}</p>
                       </div>
 
                       <div className='flex gap-4 mb-5 navbarSM:flex-col'>
-                        <div className="font-inter">
-                            <span className="font-inter font-medium">Total Price</span>
-                            <p>{'\u00A0'}{'\u00A0'}$ {Math.round(props.data.product_price/10)}.00</p>    
-                        </div>
 
                         <div className="font-inter">
                             <span className="font-inter font-medium">Slot Picked</span>

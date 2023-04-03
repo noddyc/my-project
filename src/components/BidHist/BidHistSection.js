@@ -31,6 +31,44 @@ function BidHistSection(props) {
     const [MOCK_DATA, setMOCK_DATA] = useState([])
     const [keyword, setKeyWord] = useState("");
 
+
+    const [productIndex, setProductIndex] = useState([]);
+    const [imgIndex, setImgIndex] = useState([]);
+
+    const imageLen = (d, index)=>{
+      let len = 0;
+      for(let i = 1; i <= 4; i++){
+        if(d.Products[productIndex[index]][`image_${i}`] !== null){
+          len++;
+        }
+      }
+      return len;
+    }
+
+
+    const imageConversion = (d, index)=>{
+      console.log(imgIndex)
+      let imageData = d.Products[productIndex[index]][`image_${imgIndex[index]}`].data;
+      const base64Image = btoa(
+        new Uint8Array(imageData).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ''
+        )
+      );
+
+      return base64Image;
+    }
+
+    const totalPriceCalculator = (d) =>{
+      let totalPrice = 0;
+      for(let i = 0; i < 4; i++){
+        if(d.Products[i]){
+          totalPrice += d.Products[i].product_price;
+        }
+      }
+      return totalPrice;
+    }
+
     const keywordHandler = debounce((e)=>{
       setKeyWord(e.target.value)
     }, 500)
@@ -109,12 +147,16 @@ function BidHistSection(props) {
                     slotsOpen: e.Auction['slotsOpen'],
                     status: e.Auction['status'],
                     onwerId: e.Auction['ownerId'],
-                    winning_number: e.Auction['winNum']})
+                    winning_number: e.Auction['winNum'],
+                    Products: e.Auction['Products'],
+                })
                 })
                 console.log(arr);
                 setDisplay(arr)
                 setMOCK_DATA(arr);
                 setImgPos(new Array(arr.length).fill(0));
+                setProductIndex(new Array(arr.length).fill(0));
+                setImgIndex(new Array(arr.length).fill(1));
               })
               .then((response)=>{
 
@@ -272,47 +314,70 @@ function BidHistSection(props) {
                   isolate w-[450px] rounded-2xl bg-cardBg hover:bg-cardHoverColor ${d.status==="OPEN_NOT_LIVE" || d.status==="OPEN_LIVE"  ?"bg-green-100":""} ${d.status==="NO_WINNER_WINNER_NOTIFIED" || d.status==="WAITING_FOR_DRAW" ?"bg-red-100":""}
                   navbarSM:w-[300px]`} key={index} >          
        
-                      <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded  navbarSM:max-w-[300px]  navbarSM:max-h-[200px]">
-                          <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"
-                          onClick={(e)=>{
-                            const updatedItems = [...imgPos];
-                            const newImgPos = updatedItems[index]-1;
-                            if(newImgPos < 0){
-                              updatedItems[index] = img.has(d.id)?img.get(d.id).length:3;
-                              setImgPos(updatedItems);
-                              return;
-                            }
-                            updatedItems[index] = newImgPos;
-                            setImgPos(updatedItems);
-                          }}>
-                              <i className="material-icons text-sm pl-1">arrow_back_ios</i>
-                          </button>
-                          {d.id && img  &&  img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl navbarSM:min-w-[300px]  navbarSM:min-h-[200px]" 
-                          src={`data:image;base64,${img.get(d.id)[imgPos[index]]}`} alt="image"></img> }
-                          {d.id && img && !img.has(d.id) && <img className=" min-w-[450px] min-h-[300px] rounded-tl-2xl rounded-tr-2xl object-center
-                          navbarSM:min-w-[300px]  navbarSM:min-h-[200px]" src={require(`../../assets/card-img${imgPos[index]}.jpeg`)} alt="" />}
-
-                          <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"
-                          onClick={(e)=>{
-                            const updatedItems = [...imgPos];
-                            const newImgPos = updatedItems[index]+1;
-                            if(newImgPos > (img.has(d.id)?img.get(d.id).length-1:3)){
-                              updatedItems[index] = 0;
-                              setImgPos(updatedItems);
-                              return;
-                            }
-                            updatedItems[index] = newImgPos;
-                            setImgPos(updatedItems);
-                          }}>
-                            <i className="material-icons text-sm">arrow_forward_ios</i>
-                          </button>
-                      </div>
+                    <div className="max-w-[450px] max-h-[300px] overflow-hidden relative rounded navbarSM:max-w-[300px]  navbarSM:max-h-[200px]">
+                        <button className="z-50 absolute top-[80px] left-0 border-inputColor border-y-2 border-r-2 bg-inputColor w-6 h-24 rounded-r-2xl opacity-70 hover:w-6"
+                        onClick={(e)=>{
+                          const len = imageLen(d, index);
+                          if(imgIndex[index] > 1){
+                            const newArray = [...imgIndex];
+                            newArray[index] -= 1;
+                            setImgIndex(newArray);
+                          }else{
+                            const newArray = [...imgIndex];
+                            newArray[index] = len;
+                            setImgIndex(newArray);
+                          }
+                        }}>
+                            <i className="material-icons text-sm pl-1">arrow_back_ios</i>
+                        </button>
 
 
-                    <div className="w-full p-5 navbarSM:text-sm">              
-                        <div className="h-14 overflow-scroll mb-2 navbarSM:h-8">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)+" (ID: "+d.auctionId+ ")"} {'\u00A0'}
-                          </p>
+                        {d.Products && d.Products[productIndex[index]] && <img className="min-w-[450px] min-h-[300px] object-center rounded-tl-2xl rounded-tr-2xl
+                        navbarSM:min-w-[300px]  navbarSM:min-h-[200px]"
+                        src={`data:image;base64,${imageConversion(d, index)}`} alt="image"></img>}
+
+                        <button className="z-50 absolute top-[80px] right-0 border-inputColor border-y-2 border-l-2 bg-inputColor w-6 h-24 rounded-l-2xl opacity-70 hover:w-6"
+                        onClick={(e)=>{
+                          const len = imageLen(d, index);
+                          if(imgIndex[index] < len){
+                            const newArray = [...imgIndex];
+                            newArray[index] += 1;
+                            setImgIndex(newArray);
+                          }else{
+                            const newArray = [...imgIndex];
+                            newArray[index] = 1;
+                            setImgIndex(newArray);
+                          }
+                        }}>
+                          <i className="material-icons text-sm">arrow_forward_ios</i>
+                        </button>
+                    </div>
+
+
+                    <div className="w-full p-5">  
+
+                    <div className="flex flex-row items-center mb-2">
+                          {d.Products[productIndex[index]] && <div className="w-1/2 h-8 overflow-x-scroll"> 
+                            <p className="font-inter font-bold text-xl">{_.startCase(d.Products[productIndex[index]].product_name) +" (ID: "+d.auctionId+ ")" } {'\u00A0'}</p>
+                          </div>}
+                         
+
+                          <div className="w-1/2">
+                                  <select id="products" className='input' onChange={(e)=>{
+                                    const newArray = [...productIndex];
+                                    newArray[index] = e.target.value;
+                                    setProductIndex(newArray)
+                                  }}>
+                                    {
+                                      d.Products.map((o, index)=>{
+                                        return (
+                                          <option key={index} value={index}>Product {index+1}</option>
+                                        )
+                                      })
+
+                                    }
+                                  </select>
+                          </div>
                         </div>
 
                         <div className="flex gap-6 flex-col navbarSM:gap-0">
@@ -321,7 +386,7 @@ function BidHistSection(props) {
                                 <div className="flex flex-row">
                                   <div className="font-inter mb-2 w-1/2">
                                     <span className="font-inter font-medium">Total Price</span>
-                                    <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}.00</p>    
+                                    <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.Products[productIndex[index]].product_price)}.00</p>    
                                   </div>
 
                                     <div className="font-inter mb-2 w-1/2">
@@ -359,7 +424,7 @@ function BidHistSection(props) {
 
                             <div className="h-30 w-full">
                                 <span className="font-inter font-medium">Description</span>
-                                <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
+                                <div className="not-italic h-30 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.Products[productIndex[index]].product_description)} </p></div>
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,9 @@
 
 
 @layer components{
+    .warningIcon{
+        @apply block text-lg pr-1
+    }
     .label{
         @apply block text-2xl font-inter font-medium;
     }

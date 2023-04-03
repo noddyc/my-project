@@ -134,20 +134,19 @@ export default function AuctionHistModal(props) {
                 <div className="flex flex-col items-start p-0
                   isolate w-[450px]   navbarSM:w-[90%]">
                     <div className="h-14 overflow-scroll">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name)} {'\u00A0'}
+                          <p className="font-inter font-bold text-xl">ID: {_.startCase(d.id)} {'\u00A0'}
                           </p>
                     </div>
 
 
                     <div className="h-30 mt-5 navbarSM:mt-0">
-                          <span className="font-inter font-medium">Description</span>
-                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
-                    </div>
-
-
-                    <div className="font-inter mt-5">
-                          <span className="font-inter font-medium">Selection Price</span>
-                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price/10)}.00</p>    
+                    {
+                        d.Products.map((p, index)=>{
+                          return (
+                            <div key={index} className="font-inter "><span className='font-medium'>Product {index+1}</span>: {p.product_name} / Price: $ {p.product_price}.00</div>
+                          )
+                        })
+                      }
                     </div>
 
             

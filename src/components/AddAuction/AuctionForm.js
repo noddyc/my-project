@@ -1,4 +1,4 @@
-import {React, useState, useRef} from 'react';
+import {React, useState, useRef, Fragment} from 'react';
 import moment from 'moment'
 import axios from 'axios'
 import qs from 'qs'
@@ -24,6 +24,7 @@ function AuctionForm(props) {
 
     const product = new Product(); 
     const [state, setState] = useState([product]);
+    const [multiGame, setMultiGame] = useState(false);
 
 
     // multi version
@@ -261,7 +262,8 @@ function AuctionForm(props) {
                                     <div className="col-span-6 sm:col-span-3">
                                         {
                                             state.map((s,index)=>{
-                                                return <div className='grid grid-cols-6 gap-6' key={index}>
+                                                return <Fragment key={index}>
+                                                <div className='grid grid-cols-6 gap-6 border-2 border-darkBg px-4 py-5 rounded-lg'>
                                                     <div className='col-span-6 sm:col-span-3'>
 
                                                         <div className='flex flex-row'>
@@ -273,7 +275,9 @@ function AuctionForm(props) {
                                                                         const newState=[...state];
                                                                         newState.splice(index, 1);
                                                                         setState(newState);
-                                                                    }}><i className='material-icons text-red-500'>remove</i></button>
+                                                                    }}>
+                                                                        {/* <i className='material-icons text-red-500'>remove</i> */}
+                                                                        </button>
                                                             )
                                                             }
             
@@ -368,20 +372,35 @@ function AuctionForm(props) {
                                                                 ): <p></p>}
                                                         </form>
                                                     </div>
-
-                                                    <div className={`col-span-6 mb-5 sm:col-span-3`}>
-                                                        <div className='flex flex-row'>
-                                                            <div className='border-dashed border-black border-2 mr-0.5 flex-1 h-0 mt-3'></div>
-                                                            <button className={`block mx-3 ${state.length >= 4 || state.length-index>1?"hidden":""}`}  onClick={()=>{
-                                                                const newState = [...state];
-                                                                const newProduct= new Product();
-                                                                newState.push(newProduct);
-                                                                setState(newState);
-                                                            }}><span>Add Product</span></button>
-                                                            <div className='border-dashed border-black border-2 ml-0.5 flex-1 h-0 mt-3'></div>
-                                                        </div>
-                                                    </div>
                                                 </div>
+
+                                                {/* ${state.length >= 4 || state.length-index>1?"invisible":""} */}
+                                                <div className={`col-span-6 mt-2 mb-5 border-2 border-darkBg sm:col-span-3 ${state.length-index>1?"invisible":""}`}>
+                                                        <div className='flex flex-row'>
+                                                            {/* <div className='border-dashed border-black border-2 mr-0.5 flex-1 h-0 mt-3'></div> */}
+                                                            <button className={`flex flex-row  mx-3`}  onClick={()=>{
+                                                                console.log(multiGame)
+                                                                if(multiGame){
+                                                                    const newState = [...state];
+                                                                    newState.splice(1);
+                                                                    setState(newState);
+                                                                    setMultiGame((prev) => !prev)
+                                                                }else{
+                                                                    const newState = [...state];
+                                                                    const newProduct1= new Product();
+                                                                    const newProduct2 = new Product();
+                                                                    const newProduct3 = new Product();
+                                                                    newState.push(newProduct1);
+                                                                    newState.push(newProduct2);
+                                                                    newState.push(newProduct3);
+                                                                    setState(newState);
+                                                                    setMultiGame((prev) => !prev)
+                                                                }
+                                                            }}><i className='material-icons text-green-700 warningIcon'>arrow_forward_ios</i><span>{multiGame?'Create Single-Product Game':'Create Multi-Products Game'}</span></button>
+                                                            {/* <div className='border-dashed border-black border-2 ml-0.5 flex-1 h-0 mt-3'></div> */}
+                                                        </div>
+                                                </div>
+                                                </Fragment>
                                             })
 
                                         }
