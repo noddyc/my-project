@@ -118,7 +118,6 @@ export default function ConfirmAuctionHistModal(props) {
           
           if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
               try{
-                console.log(checkForRollOver(props.data))
                 if(!checkForRollOver(props.data)){
                   throw new Error();
                 }
