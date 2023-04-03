@@ -60,14 +60,14 @@ const checkForRollOver = (d)=>{
   console.log(num3);
   console.log(special);
   if(status){
-    for(let i = 0; i < slotArr.length; i++){
+    for(let i = 0; i < 10; i++){
       console.log(d[`slot${i}`])
       if(d[`slot${i}`] != null && (i == num1 || i == num2 || i == num3 || i == special)){
         return false;
       }
     }
   }else{
-    for(let i = 0; i < slotArr.length; i++){
+    for(let i = 0; i < 10; i++){
       if(d[`slot${i}`] != null && (i == special)){
         return false;
       }     
@@ -118,9 +118,9 @@ export default function ConfirmAuctionHistModal(props) {
           
           if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
               try{
-                if(!checkForRollOver(props.data)){
-                  throw new Error();
-                }
+                // if(!checkForRollOver(props.data)){
+                //   throw new Error();
+                // }
                 let data = qs.stringify({
                   'auctionId': props.data.id,
                 });
@@ -202,7 +202,8 @@ export default function ConfirmAuctionHistModal(props) {
                             <p>ID: <strong>{props.data.id}</strong></p>
                             {
                               props.data.status === 'WAITING_FOR_DRAW'? <p>Number of Slot Filled: <strong>{slotFilled(props.data)}</strong></p> : props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?
-                               <p>Winning Number: <strong>{props.data.winNum === null || props.data.winNum === undefined ?'-': props.data.winNum.specialNumber}</strong></p>: ''
+                               <p>Winning Number: <strong>{props.data.winNum === null || props.data.winNum === undefined ?'-':
+                               props.data.winNum.firstNumber+"/" + props.data.winNum.secondNumber+"/" + props.data.winNum.thirdNumber + "/" + props.data.winNum.specialNumber}</strong></p>: ''
                             }
                             <p>{props.data.status === 'WAITING_FOR_DRAW'?<strong>{_.startCase("As host, you can join a game with six filled slots to make it live within five minutes before drawing")}</strong>: 
                             props.data.status ==='NO_WINNER_WINNER_NOTIFIED'?<strong>{_.startCase("As host, you can roll over this game if no winner is declared or game did not go live")}</strong>:''}</p>

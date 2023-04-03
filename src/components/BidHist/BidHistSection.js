@@ -412,7 +412,8 @@ function BidHistSection(props) {
                                 <div className="flex flex-row"> 
                                   <div className="font-inter mb-2 w-1/2">
                                     <span className="font-inter font-medium">Winning Number</span>
-                                    <p>{'\u00A0'}{'\u00A0'}{d.winning_number===null || d.winning_number===undefined?"-":d.winning_number.specialNumber}</p> 
+                                    <p>{'\u00A0'}{'\u00A0'}{d.winning_number===null || d.winning_number===undefined?"-": d.winning_number.firstNumber+"/" 
+                                    +d.winning_number.secondNumber+"/"+d.winning_number.thirdNumber+"/"+d.winning_number.specialNumber}</p> 
                                   </div>
 
                                   <div className="font-inter mb-2">

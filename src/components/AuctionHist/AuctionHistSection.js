@@ -368,7 +368,8 @@ function AuctionHistSection(props) {
                                 <div className="flex flex-row">
                                   <div className="font-inter mb-2 w-1/2">
                                       <span className="font-inter font-medium">Winning number</span>
-                                      <p>{'\u00A0'}{'\u00A0'}{d.winNum===null || d.winNum===undefined?"-":d.winNum.specialNumber}</p>
+                                      <p>{'\u00A0'}{'\u00A0'}{d.winNum===null || d.winNum===undefined?"-":d.winNum.firstNumber+"/" 
+                                    +d.winNum.secondNumber+"/"+d.winNum.thirdNumber+"/"+d.winNum.specialNumber}</p>
                                   </div>
 
 
