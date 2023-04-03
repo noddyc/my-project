@@ -69,6 +69,7 @@ function App() {
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
             detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
 
+
           </Route>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/logout' element={<Logout/>}/>

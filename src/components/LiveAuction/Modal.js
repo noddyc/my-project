@@ -69,6 +69,16 @@ export default function Modal(props) {
     const [selectedSlot, setSelectedSlot] = useState('');
 
 
+    const totalPriceCalculator = (d) =>{
+        let totalPrice = 0;
+        for(let i = 0; i < 4; i++){
+          if(d.Products[i]){
+            totalPrice += d.Products[i].product_price;
+          }
+        }
+        return totalPrice;
+      }
+
     function handleSelectChange(e){
         setErrMsg('');
         setSelectedSlot(e.target.value);
@@ -83,30 +93,41 @@ export default function Modal(props) {
                 <div className="flex flex-col items-start p-0
                   isolate w-[450px] navbarSM:w-[90%]">
                     <div className="h-14 overflow-scroll ">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name) +" (ID: "+d.id+ ")" }{'\u00A0'} 
+                          <p className="font-inter font-bold text-xl">ID: {_.startCase(d.id)} {'\u00A0'}
                           </p>
                     </div>
+
+                    <div className="h-30 mt-5 overflow-y-scroll navbarSM:mt-0">
+                        {
+                        d.Products.map((p, index)=>{
+                          return (
+                            <div key={index} className="font-inter "><span className='font-medium'>Product {index+1}</span>: {p.product_name} / Price: $ {p.product_price}.00</div>
+                          )
+                        })
+                      }
+                    </div>
+
 
                     <div className="flex flex-col flex-wrap overflow-scroll w-full h-76 mt-5 navbarSM:mt-2">
                                 <p className='font-inter font-medium'>Slots:</p>
                                 <div className='grid grid-cols-2 w-full'>
                                     {slotArr.map((i,index)=>{
                                         if(d?.[i] === null){
-                                            return (<div key={index} className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong> - </span></p></div>)
+                                            return (<div className='w-1/2' key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong> - </span></p></div>)
                                         }
                                         if(d?.[i]?.split === true){
                                             if(d?.[i]?.player2 === null){
-                                                return (<div key={index} className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
+                                                return (<div className='w-1/2' key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/-`}</p></div>)
                                             }else if(d?.[i]?.player1 === null){
-                                                return (<div key={index} className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div className='w-1/2' key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`-/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                             else{
-                                                return (<div key={index} className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
+                                                return (<div className='w-1/2' key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}/${_.startCase(d?.[i]?.player_2?.firstname)+" "+_.startCase(d?.[i]?.player_2?.lastname)??'-'}`}</p></div>)
                                             }
                                         }
 
                                         if(d?.[i]?.split === false){
-                                            return (<div key={index} className='w-1/2'><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
+                                            return (<div className='w-1/2' key={index}><p className='leading-7' key={index}><span>{'\u00A0'}{'\u00A0'}<strong>{index}:</strong>{'\u00A0'}{'\u00A0'}</span>{`${_.startCase(d?.[i]?.player_1?.firstname)+" "+_.startCase(d?.[i]?.player_1?.lastname)??'-'}`}</p></div>)
                                         }
                                         
                                     })}
@@ -116,7 +137,7 @@ export default function Modal(props) {
 
                      <div className="font-inter mt-5">
                           <span className="font-inter font-medium">Selection Price:</span>
-                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price/10)}.00</p>    
+                          <p>{'\u00A0'}{'\u00A0'}$ {Math.round(totalPriceCalculator(d)/10)}.00</p>    
                     </div>
 
 

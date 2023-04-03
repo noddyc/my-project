@@ -122,14 +122,14 @@ export default function ConfirmBidModal(props) {
                     </div>
 
                     <div className="h-10 overflow-scroll mb-2">
-                          <p className="font-inter font-medium text-xl">{_.startCase(props.data.product_name)+" (ID: "+props.data.auctionId+ ")"} {'\u00A0'}</p>
+                          <p className="font-inter font-medium text-xl">ID: {_.startCase(props.data.auctionId)} {'\u00A0'}</p>
                     </div>
 
                     <div className='flex gap-4 mb-5'>
-                          <div className="font-inter">
+                          {/* <div className="font-inter">
                               <span className="font-inter font-medium">Slot Price</span>
                               <p>{'\u00A0'}{'\u00A0'}$ {Math.round(props.data.product_price/10)}.00</p>    
-                          </div>
+                          </div> */}
 
                           <div className="font-inter">
                               <span className="font-inter font-medium">Slot Picked</span>

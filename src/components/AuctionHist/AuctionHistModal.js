@@ -134,26 +134,19 @@ export default function AuctionHistModal(props) {
                 <div className="flex flex-col items-start p-0
                   isolate w-[450px]   navbarSM:w-[90%]">
                     <div className="h-14 overflow-scroll">
-                          <p className="font-inter font-bold text-xl">{_.startCase(d.product_name) +" (ID: "+d.id+ ")" }{'\u00A0'} 
+                          <p className="font-inter font-bold text-xl">ID: {_.startCase(d.id)} {'\u00A0'}
                           </p>
                     </div>
 
 
-                    <div className="flex flex-row w-full">
-                          <div className="font-inter mb-2 w-1/2">
-                                <span className="font-inter font-medium">Product Price</span>
-                                <p>{'\u00A0'}{'\u00A0'}$ {Math.round(d.product_price)}</p>
-                          </div>
-
-                          <div className="font-inter mb-2 w-1/2">
-                                <span className="font-inter font-medium">Buyback Price</span>
-                                <p>{'\u00A0'}{'\u00A0'}$ {
-                                    Math.round(
-                                    slotArr.reduce((accumulator, currentValue)=>{
-                                    // console.log(d.currentValue)
-                                    return accumulator + (d[currentValue] !== null ? d.product_price/10 : 0)
-                                  }, 0)*0.9)}.00</p>
-                          </div>           
+                    <div className="h-30 mt-5 navbarSM:mt-0">
+                    {
+                        d.Products.map((p, index)=>{
+                          return (
+                            <div key={index} className="font-inter "><span className='font-medium'>Product {index+1}</span>: {p.product_name} / Price: $ {p.product_price}.00</div>
+                          )
+                        })
+                      }
                     </div>
 
             
