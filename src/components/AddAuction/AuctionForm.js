@@ -419,7 +419,7 @@ function AuctionForm(props) {
                                     </div>
 
                                     <div className={`col-span-6 ${successMsg ? "success" : "invisible"} sm:col-span-3 mt-5 mb-1`}> 
-                                        <i className="material-icons warningIcon">check</i> 
+                                        <i className="material-icons warningIcon">check_circle</i> 
                                         <p className='' aria-live="assertive">{successMsg}</p>                                       
                                     </div>
                                 </div>    
