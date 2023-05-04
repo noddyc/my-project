@@ -1,3 +1,6 @@
+/*
+    component of game history
+*/
 import Navbar from "../Utils/Navbar";
 import React,{useEffect} from 'react';
 import LeftSideBar from "../Utils/LeftSideBar";
@@ -8,13 +11,6 @@ import {useIsAuthenticated, useAuthUser} from 'react-auth-kit';
 
 const AuctionHist = (props)=>{  
     const auth = useAuthUser();
-
-    // useEffect(()=>{
-    //     console.log("line 27")
-    //     const socket = io('http://localhost:9001');
-    //     socket?.emit("newUser", auth().id)
-    //     props.setSocket(socket);
-    // }, []);
 
     return (
     <div className="h-screen relative">

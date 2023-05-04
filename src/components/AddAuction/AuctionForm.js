@@ -27,15 +27,11 @@ function AuctionForm(props) {
     const [multiGame, setMultiGame] = useState(false);
 
 
-    // multi version
-    ///////////////////
-
     const onSelectFile = async(e, index) => {   
         setSuccessMsg("")  
         setErrMsg("")
         const selectedFiles = e.target.files;
         const selectedFilesArray = Array.from(selectedFiles);  
-        // setstate is async
         const newState = [...state];
         const newItem = newState[index];
         newItem.images = [...newItem.images, ...Array.from(e.target.files)];
@@ -87,8 +83,6 @@ function AuctionForm(props) {
             if(endTime === ""){
                 throw new Error(_.startCase("Fields must be valid and each product should include one to four images"));
             }
-            // not daylight saving time -6
-            // daylight saving time -5
             let dayLightAdjustDate = new Date((endTime+'T'+'09:00:00'+'.000Z').toString());
             let isDayLightSaving = dayLightAdjustDate.isDstObserved()
             let endTimeDate;
@@ -141,7 +135,7 @@ function AuctionForm(props) {
                         for(let j = 0; j < images.length; j++){
                             formData.append('image', images[j]);
                         }
-                        // be ware of images.length
+                
                         formData.append('product_name', state[i].name);
                         formData.append('product_description', state[i].description);
                         formData.append('product_price', state[i].price);
@@ -283,7 +277,7 @@ function AuctionForm(props) {
                                                                         newState.splice(index, 1);
                                                                         setState(newState);
                                                                     }}>
-                                                                        {/* <i className='material-icons text-red-500'>remove</i> */}
+                                                                        
                                                                         </button>
                                                             )
                                                             }
@@ -381,10 +375,10 @@ function AuctionForm(props) {
                                                     </div>
                                                 </div>
 
-                                                {/* ${state.length >= 4 || state.length-index>1?"invisible":""} */}
+                                               
                                                 <div className={`col-span-6 mt-5 mb-5 border-2 border-darkBg sm:col-span-3 ${state.length-index>1?"invisible":""}`}>
                                                         <div className='flex flex-row'>
-                                                            {/* <div className='border-dashed border-black border-2 mr-0.5 flex-1 h-0 mt-3'></div> */}
+
                                                             <button className={`flex flex-row  mx-3`}  onClick={()=>{
                                                                 console.log(multiGame)
                                                                 if(multiGame){
@@ -404,7 +398,7 @@ function AuctionForm(props) {
                                                                     setMultiGame((prev) => !prev)
                                                                 }
                                                             }}><i className='material-icons text-green-700 warningIcon'>{multiGame?'arrow_back_ios':'arrow_forward_ios'}</i><span>{multiGame?'Create Single-Product Game':'Create Multi-Products Game'}</span></button>
-                                                            {/* <div className='border-dashed border-black border-2 ml-0.5 flex-1 h-0 mt-3'></div> */}
+
                                                         </div>
                                                 </div>
                                                 </Fragment>

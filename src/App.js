@@ -1,3 +1,6 @@
+/*
+  this is the main page of application
+*/
 import Registration from "./components/Registration/Registration"
 import Notifications from "./components/Notifications/Notifications";
 import Login from "./components/Login/Login"
@@ -26,13 +29,11 @@ function App() {
   });
   const [notifiCount, setNotificount] = useState(()=>{
     const storedCount = localStorage.getItem('count');
-    // return storedCount !== null ? parseInt(storedCount) : notifications?.length;
-      return notifications.length !== null ?  notifications?.length : parseInt(storedCount) ;
+    return notifications.length !== null ?  notifications?.length : parseInt(storedCount) ;
   });
 
   const [detectChange, setDetectChange] = useState(false);
 
-  // Emit a newUser event with a user ID when the component mounts
   useEffect(() => {
     if(auth() != null){
       socket.emit('newUser', auth().id);
@@ -40,6 +41,11 @@ function App() {
   }, [socket, auth]);
 
 
+  /* 
+    router of directing to homepage, page of live games, page of game history, 
+    page of biding history, page of adding new game, page of posting winning number,
+    page of registration, page of notifications and log out 
+  */
   return (
       <div className="App">
         <Routes>
@@ -68,7 +74,6 @@ function App() {
             <Route path="/winnum" element={<WinNum socket={socket} setSocket={setSocket} notifications={notifications} setNotifications={setNotifications}  notifiCount={notifiCount}  
             setNotificount={setNotificount} info={info} setInfo={setInfo} toggleInfo={toggleInfo} setToggleInfo={setToggleInfo}
             detectChange={detectChange} setDetectChange={setDetectChange}/>}/>
-
 
           </Route>
           <Route path='/registration' element={<Registration/>}/>

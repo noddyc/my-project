@@ -1,3 +1,6 @@
+/*
+    component of profile box
+*/
 import React from 'react';
 
 const ProfileBox = (props)=>{

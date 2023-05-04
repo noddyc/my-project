@@ -1,3 +1,6 @@
+/*
+    component of live games
+*/
 import Navbar from "../Utils/Navbar";
 import React,{useEffect} from 'react';
 import LeftSideBar from "../Utils/LeftSideBar";

@@ -1,3 +1,7 @@
+/*
+    component of notification page
+*/
+
 import Navbar from "../Utils/Navbar";
 import React,{useEffect, useState} from 'react';
 import LeftSideBar from "../Utils/LeftSideBar";
@@ -59,8 +63,6 @@ function Notifications(props) {
                 return arr; 
             }
         )
-        // because set notifications is async so props.notifications is not updated yet
-        // let mostRecentArr = props.notifications.map((e)=>{return e.id});
         try{
             let data = qs.stringify({
                 'list':auth().id
@@ -150,7 +152,6 @@ function Notifications(props) {
                                 
                                     <button className="button_light hover:bg-cardHoverColor"
                                     onClick = {async (e)=>{
-                                        // console.log(props.info.firstname+" "+props.info.lastname)
                                         props.socket.emit("increaseCount", 
                                         {
                                             name: (props.info.firstname+" "+props.info.lastname),

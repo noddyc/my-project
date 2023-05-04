@@ -1,3 +1,6 @@
+/*
+    component of log in page
+*/
 import { useRef, useState, useEffect } from "react";
 import axios from 'axios';
 import qs from 'qs';

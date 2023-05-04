@@ -1,3 +1,6 @@
+/*
+  global filter of table
+*/
 import React, { Fragment, useState } from 'react'
 import { useAsyncDebounce } from 'react-table'
 

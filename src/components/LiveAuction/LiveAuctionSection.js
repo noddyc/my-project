@@ -42,13 +42,9 @@ function LiveAuctionSection(props) {
     const [detectChange, setDetectChange] = useState(false);
     const [MOCK_DATA, setMOCK_DATA] = useState([]);
     const [keyword, setKeyWord] = useState("");
-
-
-    //should be array [];
     const [productIndex, setProductIndex] = useState([]);
     const [imgIndex, setImgIndex] = useState([]);
 
-    // const [renderStatus, setRenderStatus] = useState(false);
     
 
     const imageLen = (d, index)=>{
@@ -63,7 +59,6 @@ function LiveAuctionSection(props) {
 
 
     const imageConversion = (d, index)=>{
-      // console.log(imgIndex)
       let imageData = d.Products[productIndex[index]][`image_${imgIndex[index]}`].data;
       const base64Image = btoa(
         new Uint8Array(imageData).reduce(
@@ -104,7 +99,6 @@ function LiveAuctionSection(props) {
     useEffect(()=>{
         try{              
           let auctionId = [];
-          // only display in progress auctions
             let data = qs.stringify({
                 'statues': ['OPEN_LIVE','OPEN_NOT_LIVE'] 
               }, {arrayFormat:`indices`});
@@ -119,8 +113,6 @@ function LiveAuctionSection(props) {
               axios(config)
               .then((response) => {
                 let data = response.data;
-                // console.log(data)
-
                 data.forEach((e, index)=>{
                   auctionId.push(e.id);
                 })
@@ -205,8 +197,6 @@ function LiveAuctionSection(props) {
         let index = display.findIndex((e)=>{
           return e.id == relocate
         })
-        console.log(index)
-        console.log(divRefs.current)
         if(divRefs.current[index] != undefined){
           divRefs.current[index].current.scrollIntoView({ 
             behavior: 'smooth',

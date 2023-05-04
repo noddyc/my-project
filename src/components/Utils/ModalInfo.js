@@ -1,3 +1,6 @@
+/*
+    component of modal
+*/
 import React from 'react'
 import ReactDom from 'react-dom'
 import { useRef} from "react";
@@ -42,9 +45,7 @@ export default function ModalInfo(props) {
                         <label htmlFor="username">username: </label>
                         <input type='text' id="username" style={{border:"solid 1px black"}} placeholder={props.d.username} ref={usernameRef}></input>
                         <button style={{width:"100px", height:"30px", marginLeft:"10px"}}onClick={()=>{
-                            console.log(usernameRef.current.value)
                             props.setInfo({...props.d, username: usernameRef.current.value});
-                            console.log(props.d)
                         }} >submit</button>
                     </div>
 
@@ -52,9 +53,7 @@ export default function ModalInfo(props) {
                         <label htmlFor="email">email: </label>
                         <input type='text' id="email" style={{border:"solid 1px black"}} placeholder={props.d.email} ref={emailRef}></input>
                         <button style={{width:"100px", height:"30px", marginLeft:"10px"}} onClick={()=>{
-                            // console.log(usernameRef.current.value)
                             props.setInfo({...props.d , email: emailRef.current.value});
-                            // console.log(props.d)
                         }} >submit</button>
                     </div>
 
@@ -63,9 +62,7 @@ export default function ModalInfo(props) {
                         <label htmlFor="firstname">firstname: </label>
                         <input type='text' id="firstname" style={{border:"solid 1px black"}} placeholder={props.d.firstname} ref={firstnameRef}></input>
                         <button style={{width:"100px", height:"30px", marginLeft:"10px"}} onClick={()=>{
-                            // console.log(usernameRef.current.value)
                             props.setInfo({...props.d , firstname: firstnameRef.current.value});
-                            // console.log(props.d)
                         }} >submit</button>
                     </div>
 
@@ -74,9 +71,7 @@ export default function ModalInfo(props) {
                         <label htmlFor="lastname">lastname: </label>
                         <input type='text' id="lastname" style={{border:"solid 1px black"}} placeholder={props.d.lastname} ref={lastnameRef}></input>
                         <button style={{width:"100px", height:"30px", marginLeft:"10px"}} onClick={()=>{
-                            // console.log(usernameRef.current.value)
                             props.setInfo({...props.d , lastname: lastnameRef.current.value});
-                            // console.log(props.d)
                         }} >submit</button>
                     </div>
 
@@ -84,9 +79,7 @@ export default function ModalInfo(props) {
                         <label htmlFor="address">address: </label>
                         <input type='text' id="address" style={{border:"solid 1px black"}} placeholder={props.d.address} ref={addressRef}></input>
                         <button style={{width:"100px", height:"30px", marginLeft:"10px"}} onClick={()=>{
-                            // console.log(usernameRef.current.value)
                             props.setInfo({...props.d , address: addressRef.current.value});
-                            // console.log(props.d)
                         }} >submit</button>
                     </div>
 

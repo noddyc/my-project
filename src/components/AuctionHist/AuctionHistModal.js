@@ -59,7 +59,6 @@ function calcInSec(H,M,S){
 
 function isCurrentTimeInRange(e) {
   const currentTime = new Date(e);
-  // console.log(currentTime)
 
   const currentTimeHour = currentTime.getUTCHours();
   const currentTimeMin = currentTime.getUTCMinutes();
@@ -70,7 +69,6 @@ function isCurrentTimeInRange(e) {
 
   let dayStartSecTotal, dayEndSecTotal, nightStartSecTotal, nightEndSecTotal;
 
-  // console.log(currentTime.isDstObserved())
   if(currentTime.isDstObserved()){
     dayStartSecTotal = calcInSec(dayStartHourSaving, dayStartMin, dayStartSec);
     dayEndSecTotal = calcInSec(dayEndHourSaving, dayEndMin, dayEndSec);
@@ -87,7 +85,6 @@ function isCurrentTimeInRange(e) {
 
   let res = (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal) || 
   (currentTimeSecTotal >= dayStartSecTotal && currentTimeSecTotal <= dayEndSecTotal);
-  // console.log(res)
   return res
 }
 
@@ -196,12 +193,6 @@ export default function AuctionHistModal(props) {
                           </div>
                     </div>
 
-
-                    {/* <div className="h-30 mt-5 navbarSM:mt-0">
-                          <span className="font-inter font-medium">Description</span>
-                          <div className="not-italic h-24 tracking-[0.25px] overflow-scroll break-all"><p>{_.capitalize(d.product_description)} </p></div>
-                    </div> */}
-
                      <div className="flex flex-row justify-center items-center gap-32 w-full mt-5   navbarSM:gap-10">
                         <button className="button_light "
                         onClick={()=>{
@@ -216,7 +207,7 @@ export default function AuctionHistModal(props) {
                             onClick={()=>{
                                     setOpenConfirm(true)
                                   }
-                                  // open not live
+                
                                 }><i className="material-icons inline navbarSM:text-sm">check_circle</i>{d.status==='NO_WINNER_WINNER_NOTIFIED'?'Roll Over':d.status==='WAITING_FOR_DRAW' && countSlots() && isCurrentTimeInRange(d.end_time) ?'Join':''}</button>
                     </div>
                 </div>

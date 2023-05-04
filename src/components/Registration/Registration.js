@@ -1,3 +1,6 @@
+/*
+    component of registration page
+*/
 import { useRef, useState, useEffect } from "react";
 import axios from 'axios';
 import qs from 'qs';
@@ -168,7 +171,6 @@ const Registration = () =>{
     
                 let usernameResp = await axios(usernameConfig).then(function (response) {
                     if(JSON.stringify(response.data) === "false"){
-                        // setErrMsg("Username Taken");
                         setValidName(false);
                         userRef.current.focus();
                         const error = new Error("Username Taken");
@@ -199,15 +201,10 @@ const Registration = () =>{
 
                 })
     
-                // // success and show message success
-                setSuccess(true);
-                // clear state and controlled inputs
-                // need value attrib on inputs for this
-      
+                setSuccess(true);      
                 setUser('');
                 setPwd('');
                 setMatchPwd('');
-                //1/18
                 setEmail('');
                 setFirstName('');
                 setLastName('');
@@ -216,9 +213,6 @@ const Registration = () =>{
                 }, 1000);
     
             } catch (err) {
-                // console.log(err.name)
-                // ? means optional chaining, if it is undefined or null
-                // returns undefined instead of throwing an error
                 if (err.response?.status === 404) {
                     setErrMsg('No Server Response');
                 }

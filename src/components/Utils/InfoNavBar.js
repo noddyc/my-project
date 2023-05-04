@@ -1,3 +1,6 @@
+/*
+    component of information navigation bar
+*/
 import {useNavigate} from "react-router-dom";
 import _ from 'lodash'
 

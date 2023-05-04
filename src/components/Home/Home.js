@@ -1,3 +1,7 @@
+/*
+    component of home page
+*/
+
 import Navbar from "../Utils/Navbar";
 import InfoNavBar from "../Utils/InfoNavBar";
 import {useEffect } from "react";

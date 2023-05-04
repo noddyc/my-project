@@ -92,8 +92,6 @@ export default function ConfirmAuctionHistModal(props) {
           let endTimeUTCMin = endTime.getUTCMinutes();
           let endTimeUTCSec = endTime.getUTCSeconds();
           let endTimeSec = calcInSec(endTimeUTCHour, endTimeUTCMin, endTimeUTCSec)
-          // console.log(endTimeUTCYear + " " + endTimeUTCMonth + " " + endTimeUTCDay + " " + endTimeUTCHour + " " + endTimeUTCMin + " " + endTimeUTCSec)
-
 
           let curTime = new Date();
           let curTimeUTCYear = curTime.getUTCFullYear();
@@ -106,21 +104,10 @@ export default function ConfirmAuctionHistModal(props) {
         
           let res = (endTimeUTCYear === curTimeUTCYear && endTimeUTCMonth === curTimeUTCMonth && endTimeUTCDay === curTimeUTCDay
               && (endTimeSec > curTimeSec));
-          console.log(endTime)
-          console.log(endTimeSec)
-          console.log(curTime)
-          console.log(curTimeSec)
-
-          // // test
-          // let res = (endTimeUTCYear >= curTimeUTCYear && endTimeUTCMonth >= curTimeUTCMonth && endTimeUTCDay >= curTimeUTCDay
-          //     || (endTimeSec > curTimeSec));
-          // console.log(res)
+ 
           
           if(props.data.status === 'NO_WINNER_WINNER_NOTIFIED'){
               try{
-                // if(!checkForRollOver(props.data)){
-                //   throw new Error();
-                // }
                 let data = qs.stringify({
                   'auctionId': props.data.id,
                 });
@@ -171,18 +158,14 @@ export default function ConfirmAuctionHistModal(props) {
                   data : data
                 };
               axios(config).then((response) => {
-                  console.log(JSON.stringify(response.data));
                   props.setDetectChange((prev)=>{return !prev})
                   setSuccessMsg("Join Game Successfully");
               }).catch((error) => {
-                  console.log("error222")
                   setErrMsg("Failed to Join Game");
                   setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose();props.setUpperOnClose(); return;}, 1500);
                 })
               setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose(); props.setUpperOnClose(); return;}, 1500);
           }catch(err){
-              console.log("here111");
-              console.log(err);
               setErrMsg("Failed to Join Game");
               setTimeout(()=>{setSuccessMsg(""); setErrMsg(""); props.onClose();props.setUpperOnClose(); return;}, 1500);
           }

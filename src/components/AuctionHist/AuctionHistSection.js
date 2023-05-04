@@ -27,10 +27,6 @@ function AuctionHistSection(props) {
     const [detail, setDetail] = useState("true");
     const [sortDir, setSortDir] = useState(1);
     const [detectChange, setDetectChange] = useState(false);
-
-    ////
-    ////
-
     const [MOCK_DATA, setMOCK_DATA] = useState([])
 
 
@@ -145,9 +141,6 @@ function AuctionHistSection(props) {
                     console.log(e)
                     arr.push(e)
                 })
-                // console.log(arr);
-                // setDisplay(arr)
-                // setMOCK_DATA(arr);
                 setProductIndex(new Array(arr.length).fill(0));
                 setImgIndex(new Array(arr.length).fill(1));
               })

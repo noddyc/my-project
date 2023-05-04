@@ -1,3 +1,6 @@
+/*
+    component of log out 
+*/
 import React, { useEffect } from 'react';
 import { useSignOut } from 'react-auth-kit';
 import {useNavigate} from 'react-router-dom'

@@ -12,7 +12,6 @@ function AHTableLg(props) {
         </button>{' '}
         <button onClick={() => {
 
-          // console.log("hello I clicked");
           props.nextPage()}} disabled={!props.canNextPage}>
             Next
         </button>{' '}

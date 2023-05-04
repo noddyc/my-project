@@ -1,3 +1,7 @@
+/*
+  component of page of adding new game
+*/
+
 import Navbar from "../Utils/Navbar";
 import InfoNavBar from "../Utils/InfoNavBar";
 import {useEffect, useState} from "react";
