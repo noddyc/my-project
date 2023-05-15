@@ -1,6 +1,6 @@
 /*
     ip address deployed on AWS
 */
-export const ip = "http://54.224.203.213:9001"
+export const ip = "http://18.215.172.154:9001"
 
 
